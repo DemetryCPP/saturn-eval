@@ -2,7 +2,7 @@
 
 #pragma once
 
-int parseInt(char *str)
+int parseint(char *str)
 {
     int result = 0;
     for (int i = 0; str[i] != 0; i++)

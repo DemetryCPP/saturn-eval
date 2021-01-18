@@ -3,9 +3,9 @@
 
 #pragma once
 
-size_t getPosDivider(char *expression, size_t size)
+size_t getposdivider(char *expression, size_t size)
 {
-    char operator;
+    char oper;
     int priority = 3;
     size_t pos = 100, i;
 
@@ -17,7 +17,7 @@ size_t getPosDivider(char *expression, size_t size)
 
         if (current == '-' || current == '+')
         {
-            operator = current;
+            oper = current;
             pos = i;
             priority = 0;
             break;
@@ -25,7 +25,7 @@ size_t getPosDivider(char *expression, size_t size)
 
         if (priority > 1 && (current == '/' || current == '*'))
         {
-            operator = current;
+            oper = current;
             pos = i;
             priority = 1;
             continue;
@@ -33,7 +33,7 @@ size_t getPosDivider(char *expression, size_t size)
         
         if (priority == 3 && current == '^')
         {
-            operator = '^';
+            oper = '^';
             pos = i;
             priority = 2;
             continue;

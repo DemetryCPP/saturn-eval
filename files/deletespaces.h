@@ -5,7 +5,7 @@
 
 #include "node.h"
 
-void delete_spaces(node_s *node)
+void deletespaces(node_s *node)
 {
     int nospaces = 0, counter = 0;
 

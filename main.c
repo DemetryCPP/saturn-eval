@@ -2,34 +2,29 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "files/readfile.h"
-#include "files/getPosDivider.h"
 #include "files/node.h"
 #include "files/parse.h"
-#include "files/delete_spaces.h"
-#include "files/parseInt.h"
+#include "files/deletespaces.h"
+#include "files/parseint.h"
 #include "files/solve.h"
-#include "files/getVoidNode.h"
-#include "files/parseInt.h"
-#include "files/toString.h"
 
 int main() 
 {
-    char text[100];
-    fgets(text, 100, stdin);
+    char expression[100];
+    printf("write expression: ");
+    fgets(expression, 100, stdin);
 
     node_s head;
-    head.expression = text;
+    head.expression = expression;
 
     for (head.length = 0; head.length < 100; head.length++)
     {
-        if (text[head.length] == ';' || text[head.length] == '\0') break;
-        head.expression[head.length] = text[head.length];
+        if (expression[head.length] == '\n' || expression[head.length] == '\0') break;
+        head.expression[head.length] = expression[head.length];
     }
 
-    delete_spaces(&head);
-    printf("read: '%s'\n\n", head.expression);
+    deletespaces(&head);
+    printf("read: '%s'\n", head.expression);
     parse(&head);
-    printf("\n");
     printf("result: %d\n", solve(&head));
 }

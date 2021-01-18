@@ -5,8 +5,7 @@
 #pragma once
 
 #include "node.h"
-#include "getVoidNode.h"
-#include "parseInt.h"
+#include "parseint.h"
 
 int mini(int left, int right, char operator)
 {
@@ -24,15 +23,15 @@ int solve(node_s *node)
 {
     if (node->left->left == NULL && node->left->right == NULL && node->right->left == NULL && node->right->right == NULL)
     {
-        return mini(parseInt(node->left->expression), parseInt(node->right->expression), node->oper);
+        return mini(parseint(node->left->expression), parseint(node->right->expression), node->oper);
     }
     else if (node->left->left == NULL && node->left->right == NULL)
     {
-        return mini(parseInt(node->left->expression), solve(node->right), node->oper);
+        return mini(parseint(node->left->expression), solve(node->right), node->oper);
     }
     else if (node->right->left == NULL && node->right->right == NULL)
     {
-        return mini(solve(node->left), parseInt(node->right->expression), node->oper);
+        return mini(solve(node->left), parseint(node->right->expression), node->oper);
     }
     else
     {
