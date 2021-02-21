@@ -12,7 +12,7 @@
     3 - Bracket
 */
 
-void lexerInfoLog(Lexem_s *lexem)
+void lexer_info_log(Lexem_s *lexem)
 {
     switch (lexem->Type) {
         case 1: printf("[      Number      ]"); break;
@@ -46,7 +46,7 @@ Lexem_s **lexer(char *expression, size_t *lexemsLength)
         {
             Lexem_s *newLexem = (Lexem_s*)malloc(sizeof(Lexem_s));
             newLexem = new_lexem(current, type);
-            lexerInfoLog(newLexem);
+            lexer_info_log(newLexem);
             lexems[lexemsCount++] = newLexem;
         }
     }
