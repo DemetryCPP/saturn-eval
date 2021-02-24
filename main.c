@@ -12,12 +12,8 @@
 
 #define TEXT_SIZE 100
 
-int main(int argc, char const *argv[]) 
+double eval(char* expression)
 {
-    char expression[TEXT_SIZE];
-
-    printf("write expression: ");
-    fgets(expression, TEXT_SIZE, stdin);
     printf("\nLexing...\n\n");
 
     size_t lexemsCount;
@@ -34,11 +30,22 @@ int main(int argc, char const *argv[])
     parser(Head);
 
     double result = solve(Head);
-    printf("\nresult: %lf\n", result);
 
     for (int i = 0; i < lexemsCount; i++) free(lexems[i]);
     free(lexems);
     free_tree(Head);
+
+    return result;
+}
+
+int main(int argc, char const *argv[]) 
+{
+    char expression[TEXT_SIZE];
+
+    printf("write expression: ");
+    fgets(expression, TEXT_SIZE, stdin);
+
+    printf("result: %lf\n", eval(expression));
 
     return 0;
 }
