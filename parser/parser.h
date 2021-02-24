@@ -7,14 +7,6 @@
 #include "data.h"
 #include "find_divider_pos.h"
 
-void parser_info_log(Node_s *node)
-{
-    // log expression of node
-    // log left children expression
-    // log operator
-    // log right children expression
-}
-
 void parser(Node_s *node)
 {        
     node->divider_pos = find_divider_pos(node->lexems, node->length);
