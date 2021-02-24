@@ -14,17 +14,17 @@
 
 double eval(char* expression)
 {
-    printf("\nLexing...\n\n");
+    // printf("\nLexing...\n\n");
 
     size_t lexemsCount;
     Lexem_s **lexems = lexer(expression, &lexemsCount);
 
     char* lx_result = lexems_to_text(lexems, lexemsCount);
 
-    printf("\nlexing result: '%s', lexems count: %ld\n", lx_result, lexemsCount);
+    // printf("\nlexing result: '%s', lexems count: %ld\n", lx_result, lexemsCount);
     free(lx_result);
 
-    printf("\nparsing...\n\n");
+    // printf("\nparsing...\n\n");
 
     Node_s *Head = new_node(lexems, lexemsCount, -1, '\0', 0x0, 0x0);
     parser(Head);

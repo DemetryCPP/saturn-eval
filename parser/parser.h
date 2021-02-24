@@ -55,7 +55,7 @@ void parser(Node_s *node)
     char *leftT = lexems_to_text(node->left->lexems, node->left->length);
     char *rightT = lexems_to_text(node->right->lexems, node->right->length);
 
-    printf("%s: '%s' '%c' '%s'\n", t, leftT, node->Operator, rightT);
+    // printf("%s: '%s' '%c' '%s'\n", t, leftT, node->Operator, rightT);
 
     free(t);
     free(leftT);

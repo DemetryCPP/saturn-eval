@@ -45,7 +45,7 @@ Lexem_s **lexer(char *expression, size_t *lexemsLength)
         if (type)
         {
             Lexem_s *newLexem = new_lexem(current, type);
-            lexer_info_log(newLexem);
+            // lexer_info_log(newLexem);
             lexems[lexemsCount++] = newLexem;
         }
     }
