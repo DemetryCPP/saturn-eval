@@ -51,15 +51,15 @@ void parser(Node_s *node)
 
     // printf("pos: %ld; left length: %ld; right length: %ld\n", node->divider_pos, node->left->length, node->right->length);
 
-    char *t = lexems_to_text(node->lexems, node->length);
-    char *leftT = lexems_to_text(node->left->lexems, node->left->length);
-    char *rightT = lexems_to_text(node->right->lexems, node->right->length);
+    // char *t = lexems_to_text(node->lexems, node->length);
+    // char *leftT = lexems_to_text(node->left->lexems, node->left->length);
+    // char *rightT = lexems_to_text(node->right->lexems, node->right->length);
 
     // printf("%s: '%s' '%c' '%s'\n", t, leftT, node->Operator, rightT);
 
-    free(t);
-    free(leftT);
-    free(rightT);
+    // free(t);
+    // free(leftT);
+    // free(rightT);
 
     parser(node->left);
     parser(node->right);
