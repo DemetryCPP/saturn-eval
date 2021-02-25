@@ -4,6 +4,7 @@
 
 #include "lexer/lexer.h"
 #include "lexer/data.h"
+#include "lexer/check_valid.h"
 
 #include "parser/data.h"
 #include "parser/parser.h"
@@ -28,7 +29,9 @@ double eval(char* expression)
     // printf("\nparsing...\n\n");
 
     Node_s *Head = new_node(lexems, lexemsCount, -1, '\0', 0x0, 0x0);
+    if (check_valid(Head->lexems, Head->length)) return -1;
     parser(Head);
+
 
     double result = solve(Head);
 
@@ -52,7 +55,11 @@ int main(int argc, char const *argv[])
 
         if (!strcmp(expression, ".exit\n")) exit(1);
 
-        printf("%lf\n", eval(expression));
+        double result = eval(expression);
+
+        if (result == -1) continue;
+
+        printf("%lf\n", result);
     }
     
     return 0;
