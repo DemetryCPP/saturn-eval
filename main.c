@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "lexer/lexer.h"
 #include "lexer/data.h"
@@ -42,10 +43,17 @@ int main(int argc, char const *argv[])
 {
     char expression[TEXT_SIZE];
 
-    printf("write expression: ");
-    fgets(expression, TEXT_SIZE, stdin);
+    printf("Eval Mathematic Expressions 2.0\nPlease .exit to exit.\n");
 
-    printf("result: %lf\n", eval(expression));
+    while (1)
+    {
+        printf("> ");
+        fgets(expression, TEXT_SIZE, stdin);
 
+        if (!strcmp(expression, ".exit\n")) exit(1);
+
+        printf("%lf\n", eval(expression));
+    }
+    
     return 0;
 }
