@@ -9,7 +9,14 @@
 
 double solve(Node_s *node)
 {
-    if (node->left->left == NULL 
+    if (node->left == NULL && node->right == NULL) 
+    {
+        char *text = lexems_to_text(node->lexems, node->length);
+        double result = atof(text);
+        free(text);
+        return result;
+    } 
+    else if (node->left->left == NULL 
      && node->left->right == NULL 
      && node->right->left == NULL
      && node->right->right == NULL)
