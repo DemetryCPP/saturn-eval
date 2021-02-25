@@ -18,7 +18,7 @@ short check_valid(Lexem_s **lexems, size_t length)
             (current->Type == 2 && last->Type != 1) ||                              // check decimal separators
             (current->Type == 3 && (last->Type != 1 && last->Data != ')')) ||       // check operators
             (current->Type == 4 && ((current->Data == '(' && last->Type != 3) ||    // check brackets
-            (current->Data == ')' && (last->Type != 3 && last->Data != ')'))))
+            (current->Data == ')' && (last->Type != 1 && last->Data != ')'))))
         ) return lexer_error(current->Data, i);
     }
     return 0;
