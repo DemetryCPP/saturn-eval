@@ -43,7 +43,7 @@ int main(int argc, char const *argv[])
 {
     char expression[TEXT_SIZE];
 
-    printf("Eval Mathematic Expressions 2.0\nPlease .exit to exit.\n");
+    printf("Eval Mathematic Expressions 2.0\nType \".exit\" for exit.\n");
 
     while (1)
     {

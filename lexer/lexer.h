@@ -6,10 +6,10 @@
 #include "data.h"
 
 /*
-    0 - Number
-    1 - Decimal Seporator
-    2 - Operator
-    3 - Bracket
+    1 - Number
+    2 - Decimal Seporator
+    3 - Operator
+    4 - Bracket
 */
 
 void lexer_info_log(Lexem_s *lexem)
@@ -24,6 +24,12 @@ void lexer_info_log(Lexem_s *lexem)
     printf(" '%c'\n", lexem->Data);
 }
 
+void lexer_error(char token, char id)
+{
+    printf("Unexped token '%c' at %d\n", token, id + 1);
+    exit(1);
+}
+
 Lexem_s **lexer(char *expression, size_t *lexemsLength)
 {
     int length, lexemsCount = 0;
@@ -34,13 +40,34 @@ Lexem_s **lexer(char *expression, size_t *lexemsLength)
     for (int i = 0; expression[i] != '\0'; i++)
     {
         char current = expression[i];
+        char last = i != 0 ? expression[i - 1] : '\0';
         int type = 0;
 
-        if (current >= '0' && current <= '9')           type = 1;
-        else if (current == '.')                        type = 2;
-        else if (current == '+' || current == '-' ||
-                 current == '*' || current == '/')      type = 3;
-        else if (current == '(' || current == ')')      type = 4;
+        if (current >= '0' && current <= '9')
+        {
+            if (last == ')') lexer_error(current, i);
+            type = 1;
+        }
+        else if (current == '.')
+        {
+            if (last < '0' || last > '9') lexer_error(current, i);
+            type = 2;
+        }
+        else if (current == '+' || current == '-' || current == '*' || current == '/')
+        {
+            if (last < '0' || last > '9') lexer_error(current, i);
+            type = 3;
+        }
+        else if (current == '(' || current == ')')
+        {
+            if (current == '(' && (last != '+' && last != '-' && last != '*' && last != '/') 
+            || current == ')' && (last != ')' && (last < '0' && last > '9'))) lexer_error(current, i);
+            type = 4;
+        }
+        else 
+        {
+            lexer_error(current, i);
+        }
 
         if (type)
         {
