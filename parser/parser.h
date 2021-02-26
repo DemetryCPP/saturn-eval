@@ -38,9 +38,6 @@ void parser(Node_s *node)
     node->right = (Node_s *)malloc(sizeof(Node_s));
 
     node->Operator = node->lexems[node->divider_pos]->Data;
-    
-    node->left = (Node_s *)malloc(sizeof(Node_s));
-    node->right = (Node_s *)malloc(sizeof(Node_s));
 
     node->left->lexems = node->lexems;
     node->right->lexems = node->lexems + (node->divider_pos + 1);
