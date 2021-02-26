@@ -21,7 +21,7 @@ double eval(char* expression)
     size_t lexemsCount;
     Lexem_s **lexems = lexer(expression, &lexemsCount);
 
-    if (lexems) return -1;
+    if ((int)lexems == 1) return -1;
 
     char* lx_result = lexems_to_text(lexems, lexemsCount);
 
