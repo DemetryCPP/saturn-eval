@@ -21,7 +21,7 @@ double eval(char* expression)
     size_t lexemsCount;
     Lexem_s **lexems = lexer(expression, &lexemsCount);
 
-    if ((int)lexems == 1) return -1;
+    if ((unsigned)lexems == 1) return -1;
 
     char* lx_result = lexems_to_text(lexems, lexemsCount);
 
@@ -59,7 +59,7 @@ int main(int argc, char const *argv[])
 
         double result = eval(expression);
 
-        if (result == -1) continue;
+        if (result == (unsigned)-1) continue;
 
         printf("%lf\n", result);
     }
