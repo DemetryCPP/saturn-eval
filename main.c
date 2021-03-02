@@ -31,7 +31,7 @@ double eval(char* expression)
     // printf("\nparsing...\n\n");
 
     Node_s *Head = new_node(lexems, lexemsCount, -1, '\0', 0x0, 0x0);
-    if (check_valid(Head->lexems, Head->length)) return -1;
+    if (check_valid(Head->lexems, Head->length)) return (unsigned)-1;
     parser(Head);
 
 
