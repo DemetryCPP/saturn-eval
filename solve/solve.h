@@ -5,6 +5,7 @@
 
 #include "../parser/data.h"
 #include "../lexer/data.h"
+
 #include "mini.h"
 
 double solve(Node_s *node)

@@ -25,14 +25,22 @@ void parser(Node_s *node)
                 }
                 else break;
             }
-        } 
+        }
         else
         {
+            node->divider_pos = find_divider_pos(node->lexems, node->length);
             node->left = NULL;
             node->right = NULL;
             return;
         }
     }
+
+    if (node->divider_pos == -1)
+    {
+        node->left = NULL;
+        node->right = NULL;
+        return;
+    } // да-да оно работает
 
     node->left = (Node_s *)malloc(sizeof(Node_s));
     node->right = (Node_s *)malloc(sizeof(Node_s));
