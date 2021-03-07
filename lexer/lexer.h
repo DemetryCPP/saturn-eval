@@ -10,6 +10,7 @@
     2 - Decimal Seporator
     3 - Operator
     4 - Bracket
+    5 - text
 */
 
 void lexer_info_log(Lexem_s *lexem)
@@ -49,7 +50,8 @@ Lexem_s **lexer(char *expression, size_t *lexemsLength)
             || current == '*' || current == '/'
             || current == '^')                      type = 3;
         else if (current == '(' || current == ')')  type = 4;
-        else if (current != '\n' && current != ' ') return (unsigned)lexer_error(current, i);
+        else if (current >= 'a' && current <= 'z')  type = 5;
+        else if (current != '\n' && current != ' ') return lexer_error(current, i);
 
         if (type)
         {
