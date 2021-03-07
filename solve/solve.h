@@ -10,11 +10,32 @@
 
 #include "mini.h"
 
+#define big_num (unsigned)-1
+
 double get_constant(char *name)
 {
     if (!strcmp(name, "e")) return exp(1);
     if (!strcmp(name, "pi")) return 3.14159265358979;
     return -1;
+}
+
+double get_value(char *text)
+{
+    double result;
+
+    if (text[0] >= 'a' && text[0] <= 'z') 
+    {
+        result = get_constant(text);
+
+        if (result == -1) 
+        {
+            printf("\"%s\" is not defined\n", text);
+            return big_num;
+        }
+    }
+    else result = atof(text);
+
+    return result;
 }
 
 double solve(Node_s *node)
@@ -24,17 +45,7 @@ double solve(Node_s *node)
         char *text = lexems_to_text(node->lexems, node->length);
         double result;
 
-        if (text[0] >= 'a' && text[0] <= 'z') 
-        {
-            result = get_constant(text);
-
-            if (result == -1) 
-            {
-                printf("\"%s\" is not defined\n", text);
-                return (unsigned)-1;
-            }
-        }
-        else result = atof(text);
+        result = get_value(text);
 
         free(text);
         return result;
@@ -50,29 +61,10 @@ double solve(Node_s *node)
         double leftN;
         double rightN;
 
-        if (leftT[0] >= 'a' && leftT[0] <= 'z') 
-        {
-            leftN = get_constant(leftT);
+        leftN = get_value(leftT);
+        rightN = get_value(rightT);
 
-            if (leftN == -1) 
-            {
-                printf("\"%s\" is not defined\n", leftT);
-                return (unsigned)-1;
-            }
-        }
-        else leftN = atof(leftT);
-
-        if (rightT[0] >= 'a' && rightT[0] <= 'z') 
-        {
-            rightN = get_constant(rightT);
-
-            if (rightN == -1) 
-            {
-                printf("\"%s\" is not defined\n", rightT);
-                return (unsigned)-1;
-            }
-        }
-        else rightN = atof(rightT);
+        if (leftN == big_num || rightN == big_num) return big_num;
 
         free(leftT);
         free(rightT);
@@ -83,19 +75,9 @@ double solve(Node_s *node)
           && node->left->right == NULL)
     {
         char *text = lexems_to_text(node->left->lexems, node->left->length);
-        double n;
+        double n = get_value(text);
 
-        if (text[0] >= 'a' && text[0] <= 'z') 
-        {
-            n = get_constant(text);
-
-            if (n == -1) 
-            {
-                printf("\"%s\" is not defined\n", text);
-                return (unsigned)-1;
-            }
-        }
-        else n = atof(text);
+        if (n == big_num) return big_num;
         
         free(text);
 
@@ -105,19 +87,9 @@ double solve(Node_s *node)
           && node->right->right == NULL)
     {
         char *text = lexems_to_text(node->right->lexems, node->right->length);
-        double n;
+        double n = get_value(text);
 
-        if (text[0] >= 'a' && text[0] <= 'z') 
-        {
-            n = get_constant(text);
-
-            if (n == -1) 
-            {
-                printf("\"%s\" is not defined\n", text);
-                return (unsigned)-1;
-            }
-        }
-        else n = atof(text);
+        if (n == big_num) return big_num;
 
         free(text);
 
