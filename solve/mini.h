@@ -1,3 +1,5 @@
+#include <math.h>
+
 double mini(double left, double right, short oper)
 {
     switch (oper)
@@ -6,5 +8,6 @@ double mini(double left, double right, short oper)
         case '-': return left - right;
         case '*': return left * right;
         case '/': return left / right;
+        case '^': return pow(left, right);
     }
 }

@@ -1,1 +1,1 @@
-gcc main.c && ./a.out
+gcc main.c -lm && ./a.out

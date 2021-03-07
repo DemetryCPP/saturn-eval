@@ -7,8 +7,7 @@
 
 size_t find_divider_pos(Lexem_s **lexems, size_t length)
 {
-    size_t position = -1;
-    size_t brackets = 0;
+    size_t position = -1, brackets = 0, priority = 3;
 
     for (int i = 0; i < length; i++)
     {
@@ -24,7 +23,12 @@ size_t find_divider_pos(Lexem_s **lexems, size_t length)
         if (current->Type != 3) continue;
         
         if (current->Data == '+' || current->Data == '-') return i;
-        else if (current->Data == '/' || current->Data == '*') position = i;
+        else if ((current->Data == '/' || current->Data == '*')) 
+        {
+            position = i;
+            priority = 2;
+        }
+        else if (current->Data == '^' && priority == 3) position = i;
     }
 
     if (brackets != 0) 
