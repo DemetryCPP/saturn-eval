@@ -58,7 +58,7 @@ int main(int argc, char const *argv[])
         if (strcmp(expression, ".exit\n") == 0) exit(1);
         if (strcmp(expression, "\n\0") == 0) continue;
 
-        double result = eval(expression);   
+        double result = eval(expression);
 
         if (result == (unsigned)-1) continue;
 
