@@ -60,7 +60,7 @@ int main(int argc, char const *argv[])
 
         double result = eval(expression);
 
-        if (result == (unsigned)-1) continue;
+        if (result == big_num) continue;
 
         printf("%lf\n", result);
     }

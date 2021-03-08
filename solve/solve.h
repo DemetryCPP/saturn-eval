@@ -93,8 +93,18 @@ double solve(Node_s *node)
 
         free(text);
 
-        return mini(solve(node->left), n, node->Operator);
+        double left = solve(node->left);
+        if (left == big_num) return big_num;
+
+        return mini(left, n, node->Operator);
     }
     else
-        return mini(solve(node->left), solve(node->right), node->Operator);
+    {
+        double left = solve(node->left);
+        double right = solve(node->right);
+
+        if (left == big_num || right == big_num) return big_num;
+
+        return mini(left, right, node->Operator);
+    }
 }
