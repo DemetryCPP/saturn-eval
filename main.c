@@ -97,5 +97,8 @@ int main(int argc, char const *argv[])
         printf("%lf\n", result);
     }
     
+    for (size_t i = 0; i < constant_count; i++) free(constants[i]);
+    free(constants);
+
     return 0;
 }
