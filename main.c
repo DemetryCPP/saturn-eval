@@ -64,6 +64,11 @@ int main(int argc, char const *argv[])
                     strcpy(copy, argv[i] + 2);
 
                     char *name = strtok(copy, "=");
+                    if (name == NULL)
+                    {
+                        printf("invalid -d flag use.\n");
+                        return 1;
+                    }
                     double value = atof(strtok(NULL, "="));
 
                     constants[constant_count] = (constant_s *)malloc(sizeof(constant_s *));
@@ -77,12 +82,14 @@ int main(int argc, char const *argv[])
         }
     }
 
+    constants = realloc(constants, constant_count);
+
     while (1)
     {
         printf("> ");
         fgets(expression, TEXT_SIZE, stdin);
 
-        if (strcmp(expression, ".exit\n") == 0) exit(1);
+        if (strcmp(expression, ".exit\n") == 0) exit(0);
         if (strcmp(expression, ".help\n") == 0)
         {
             printf("\t7 operators: '+', '-', '*', '/', '\\', '%%'\n\tbracketing: ()\n\treal numbers: 1.2\n\tconstants: e and pi\n\tcustom constants, for define use -d flag: -dname=value.\n");
