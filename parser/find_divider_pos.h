@@ -23,7 +23,8 @@ size_t find_divider_pos(Lexem_s **lexems, size_t length)
         if (current->Type != 3) continue;
         
         if (current->Data == '+' || current->Data == '-') return i;
-        else if ((current->Data == '/' || current->Data == '*')) 
+        else if ((current->Data == '/' || current->Data == '*' 
+               || current->Data == '\\' || current->Data == '%')) 
         {
             position = i;
             priority = 2;

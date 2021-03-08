@@ -48,6 +48,7 @@ Lexem_s **lexer(char *expression, size_t *lexemsLength)
         else if (current == '.')                    type = 2;
         else if (current == '+' || current == '-' 
             || current == '*' || current == '/'
+            || current == '\\' || current == '%'
             || current == '^')                      type = 3;
         else if (current == '(' || current == ')')  type = 4;
         else if (current >= 'a' && current <= 'z')  type = 5;
