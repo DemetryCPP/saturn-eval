@@ -51,7 +51,7 @@ int main(int argc, char const *argv[])
     constant_s **constants = (constant_s **)malloc(argc * sizeof(constant_s *));
     size_t constant_count = 0;
 
-    printf("Eval Mathematic Expressions 2.0\nType \".exit\" for exit.\n");
+    printf("Evaluate Mathematic Expressions 2.3\nType \".exit\" for exit, \"help\" for more information.\n");
 
     for (size_t i = 1; i < argc; i++)
     {
@@ -83,6 +83,11 @@ int main(int argc, char const *argv[])
         fgets(expression, TEXT_SIZE, stdin);
 
         if (strcmp(expression, ".exit\n") == 0) exit(1);
+        if (strcmp(expression, ".help\n") == 0)
+        {
+            printf("\t7 operators: '+', '-', '*', '/', '\\', '%%'\n\tbracketing: ()\n\treal numbers: 1.2\n\tconstants: e and pi\n\tcustom constants, for define use -d flag: -dname=value.\n");
+            continue;
+        }
         if (strcmp(expression, "\n\0") == 0) continue;
 
         double result = eval(expression, constants, constant_count);
