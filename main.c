@@ -16,7 +16,7 @@
 
 #define TEXT_SIZE 100
 
-double eval(char* expression, constant_s **constants, size_t constants_count)
+double eval(char* expression, constant_s **constants, size_t constants_count, short show_solve)
 {
     // printf("\nLexing...\n\n");
 
@@ -36,7 +36,9 @@ double eval(char* expression, constant_s **constants, size_t constants_count)
     if (check_valid(Head->lexems, Head->length)) return (unsigned)-1;
     parser(Head);
 
-    double result = solve(Head, constants, constants_count);
+    double result = solve(Head, constants, constants_count, show_solve);
+
+    if (show_solve) printf("\n");
 
     for (int i = 0; i < lexemsCount; i++) free(lexems[i]);
     free(lexems);
@@ -50,6 +52,7 @@ int main(int argc, char const *argv[])
     char expression[TEXT_SIZE];
     constant_s **constants = (constant_s **)malloc(argc * sizeof(constant_s *));
     size_t constant_count = 0;
+    short show_solve = 0;
 
     printf("Evaluate Mathematic Expressions 2.3\nType \".exit\" for exit, \"help\" for more information.\n");
 
@@ -78,6 +81,7 @@ int main(int argc, char const *argv[])
 
                     constant_count++;
                 } break;
+                case 's': show_solve = 1;
             }
         }
     }
@@ -97,7 +101,7 @@ int main(int argc, char const *argv[])
         }
         if (strcmp(expression, "\n\0") == 0) continue;
 
-        double result = eval(expression, constants, constant_count);
+        double result = eval(expression, constants, constant_count, show_solve);
 
         if (result == big_num) continue;
 

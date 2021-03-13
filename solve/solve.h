@@ -47,7 +47,7 @@ double get_value(char *text, constant_s **constants, size_t constants_count)
     return result;
 }
 
-double solve(Node_s *node, constant_s **constants, size_t constants_count)
+double solve(Node_s *node, constant_s **constants, size_t constants_count, short show_solve)
 {
     if (node->right == NULL && node->left == NULL)
     {
@@ -66,12 +66,17 @@ double solve(Node_s *node, constant_s **constants, size_t constants_count)
     double left, right;
 
     if (node->left->left == NULL && node->left->right == NULL) left = get_value(leftT, constants, constants_count);
-    else left = solve(node->left, constants, constants_count);
+    else left = solve(node->left, constants, constants_count, show_solve);
 
     if (node->right->left == NULL && node->right->right == NULL) right = get_value(rightT, constants, constants_count);
-    else right = solve(node->right, constants, constants_count);
+    else right = solve(node->right, constants, constants_count, show_solve);
 
     if (right == big_num || left == big_num) return big_num;
 
-    return mini(left, right, node->Operator);
+    double result = mini(left, right, node->Operator);
+
+    if (show_solve)
+        printf("%lf %c %lf = %lf\n", left,  node->Operator, right, result);
+
+    return result;
 }
