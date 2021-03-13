@@ -20,7 +20,7 @@ short check_valid(Lexem_s **lexems, size_t length)
                 (last->Type != 1 && last->Type != 5 && last->Data != ')')) ||       // check operators
             (current->Type == 4 &&                                                  // check brackets
                 (current->Data == '(' && last->Type != 3 && last->Data != '(') ||
-                (current->Data == ')' && (last->Type != 1 && last->Data != ')'))) ||
+                (current->Data == ')' && (last->Type != 1 && last->Type != 5 && last->Data != ')'))) ||
             (current->Type == 5 && 
                 (last->Type != 3 && last->Data != '(' && last->Type != 5))          // check text
         ) return lexer_error(current->Data, i);
