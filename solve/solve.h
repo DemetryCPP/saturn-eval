@@ -76,7 +76,7 @@ double solve(Node_s *node, constant_s **constants, size_t constants_count, short
     double result = mini(left, right, node->Operator);
 
     if (show_solve)
-        printf("%lf %c %lf = %lf\n", left,  node->Operator, right, result);
+        printf("%g %c %g = %g\n", left,  node->Operator, right, result);
 
     return result;
 }
