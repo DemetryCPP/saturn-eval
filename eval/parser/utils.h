@@ -3,18 +3,17 @@
 
 #pragma once
 
-typedef struct Node // структура ноды (ветки) 
+typedef struct Node
 {
-    struct Node *left;       // левое разветвление
-    struct Node *right;      // правое разветвление
-    Token_s **tokens;   // массив (указателей) токенов
-    char operator_sign; // оператор ветки
-    size_t divider_pos; // позиция по которой было разделено выражение
-    size_t length;      // длинна ветки или количество токенов
+    struct Node *left;
+    struct Node *right;
+    Token_s **tokens;
+    char operator_sign;
+    size_t divider_pos;
+    size_t length;
 } Node_s;
 
 Node_s *new_node(Token_s **tokens, size_t length, Node_s *left, Node_s *right, char operator_sign, size_t divider_pos)
-    // функция создания новой ветки
 {
     Node_s *result = (Node_s *)malloc(sizeof(Node_s));
 

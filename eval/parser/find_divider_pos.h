@@ -11,25 +11,25 @@ size_t find_divider_pos(Token_s **tokens, size_t tokens_count, Operator_s **oper
     size_t pos = -1;
     int brackets = 0;
 
-    for (size_t i = tokens_count - 1; i + 1 > 0; i--) // пройтись по токенам с конца
+    for (size_t i = tokens_count - 1; i + 1 > 0; i--)
     {
-        Token_s *current = tokens[i]; // текущий токен
+        Token_s *current = tokens[i];
 
-        if (current->type == t_brackets) // проверка на скобки
+        if (current->type == t_brackets)
         {
-            if (current->value == '(') brackets++; // если открывающаяся - инкреминтируем количество не закрытых скобок
-            else if (current->value == ')') brackets--; // иначе дикреминтируем
+            if (current->value == '(') brackets++;
+            else if (current->value == ')') brackets--;
 
-            continue; // переходим к следующей итерации цикла
+            continue;
         }
-        else if (current->type != t_operators) continue; // если текущий токен не оператор пофакту, скипаем его
+        else if (current->type != t_operators) continue;
 
-        short current_priority = get_priority(current->value, operators); // получить приоритет оператора
+        short current_priority = get_priority(current->value, operators);
 
-        if (current_priority < priority) // если общий минимальный приоритет в выражении
+        if (current_priority < priority)
         {
-            pos = i; // установить текущую позицию
-            priority = current_priority; // записать другую общий приоритет
+            pos = i;
+            priority = current_priority;
         }
     }
 

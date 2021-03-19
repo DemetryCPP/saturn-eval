@@ -12,11 +12,11 @@
 
 double eval(char *expression, size_t *status)
 {
-    size_t tokens_count; //количество токенов (тип правльно)
-    Operator_s **operators = init_operators(); //масив указателей на структуры операторов
-    Token_s **tokens = lexer(expression, &tokens_count, status, operators); //лексинг
+    size_t tokens_count;
+    Operator_s **operators = init_operators();
+    Token_s **tokens = lexer(expression, &tokens_count, status, operators);
 
-	if (*status) // если статус после лексинга не 0, то возвратить ноль.
+	if (*status)
     {
         eval_free(operators, tokens, tokens_count, NULL);
         return 0.0;
@@ -31,6 +31,6 @@ double eval(char *expression, size_t *status)
         return 0.0;
     }
 
-    eval_free(operators, tokens, tokens_count, head); // освобождение памяти
+    eval_free(operators, tokens, tokens_count, head);
     return 0.0;
 }
