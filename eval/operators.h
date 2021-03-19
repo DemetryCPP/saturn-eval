@@ -4,15 +4,14 @@
 
 #pragma once
 
-typedef struct Operator Operator_s;
 typedef double(* operator_action_t)(double left, double right);
 
-struct Operator
+typedef struct Operator
 {
     char sign;
     unsigned short priority;
     operator_action_t action;
-};
+} Operator_s;
 
 #define OPERATORS_COUNT 7
 
@@ -49,7 +48,7 @@ double exponentiation(double base, double exponent)
 Operator_s **init_operators()
 {
     Operator_s **operators = (Operator_s **)malloc(OPERATORS_COUNT * sizeof(Operator_s *));
-    
+
     operators[0] = new_operator('+', 1, add);
     operators[1] = new_operator('-', 1, differency);
     operators[2] = new_operator('*', 2, product);
@@ -64,12 +63,16 @@ Operator_s **init_operators()
 short check_operator(char _char, Operator_s **operators)
 {
     for (size_t i = 0; i < OPERATORS_COUNT; i++)
-    {
         if (operators[i]->sign == _char) 
-        {
             return 1;
-            break;
-        }
-    }
+
     return 0;
+}
+
+short get_priority(char _char, Operator_s **operators)
+{
+    for (size_t i = 0; i < OPERATORS_COUNT; i++)
+        if (operators[i]->sign == _char) return operators[i]->priority;
+
+    return -1;
 }

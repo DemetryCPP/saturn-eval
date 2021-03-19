@@ -1,10 +1,7 @@
 #include <stdlib.h>
 #pragma once
 
-typedef enum Tokens Tokens_e;
-typedef struct Token Token_s;
-
-enum Tokens
+typedef enum Tokens
 {
     t_number,
     t_operators,
@@ -12,18 +9,24 @@ enum Tokens
     t_brackets,
     t_text,
     t_none
-};
+} Tokens_e;
 
 
-struct Token
+typedef struct Token
 {
     Tokens_e type;
     char value;
-};
+} Token_s;
 
 Token_s *new_token(Tokens_e type, char value)
 {
     Token_s *result = (Token_s *)malloc(sizeof(Token_s));
+
+    if (result == NULL)
+    {
+        printf("allocate memory error.\n");
+        exit(1);
+    }
 
     result->type = type;
     result->value = value;
