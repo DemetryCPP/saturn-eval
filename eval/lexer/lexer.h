@@ -71,7 +71,6 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, size_t *status, Oper
             tokens_count++;
         }
     }
-
     free(empty_token);
     *tokens_count_ptr = tokens_count;
     tokens = (Token_s **)realloc(tokens, tokens_count * sizeof(Token_s *));

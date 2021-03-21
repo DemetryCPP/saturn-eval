@@ -52,3 +52,15 @@ void lexer_log(Token_s *token)
 
     printf(" %c\n", token->value);
 }
+
+char *tokens_to_text(Token_s **tokens, size_t length)
+{
+    char *result = malloc(length * sizeof(char));
+
+    for (size_t i = 0; i < length; i++)
+        result[i] = tokens[i]->value;
+
+    result[length] = '\0';
+
+    return result;
+}
