@@ -47,6 +47,6 @@ double solve(Node_s *node, Operator_s **operators)
         }
     }
 
-    // printf("%lf %c %lf = %lf\n", left, node->operator_sign, right, result);
+    printf("%lf %c %lf = %lf\n", left, node->operator_sign, right, result);
     return result;
 }
