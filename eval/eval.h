@@ -9,6 +9,7 @@
 
 #include "operators.h"
 #include "free.h"
+#include "solve.h"
 
 double eval(char *expression, size_t *status)
 {
@@ -16,7 +17,7 @@ double eval(char *expression, size_t *status)
     Operator_s **operators = init_operators();
     Token_s **tokens = lexer(expression, &tokens_count, status, operators);
 
-	if (*status)
+    if (*status)
     {
         eval_free(operators, tokens, tokens_count, NULL);
         return 0.0;
@@ -31,6 +32,8 @@ double eval(char *expression, size_t *status)
         return 0.0;
     }
 
+    double result = solve(head, operators);
     eval_free(operators, tokens, tokens_count, head);
-    return 0.0;
+
+    return result;
 }

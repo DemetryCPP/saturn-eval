@@ -14,7 +14,6 @@ size_t find_divider_pos(Token_s **tokens, size_t tokens_count, Operator_s **oper
     for (size_t i = tokens_count - 1; i + 1 > 0; i--)
     {
         Token_s *current = tokens[i];
-
         if (current->type == t_brackets)
         {
             if (current->value == '(') brackets++;
