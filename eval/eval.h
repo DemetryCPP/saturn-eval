@@ -11,7 +11,7 @@
 #include "free.h"
 #include "solve.h"
 
-double eval(char *expression, size_t *status)
+double eval(char *expression, size_t *status, Constant_s **constants)
 {
     size_t tokens_count;
     Operator_s **operators = init_operators();
@@ -32,7 +32,7 @@ double eval(char *expression, size_t *status)
         return 0.0;
     }
 
-    double result = solve(head, operators);
+    double result = solve(head, status, operators, constants);
     eval_free(operators, tokens, tokens_count, head);
 
     return result;
