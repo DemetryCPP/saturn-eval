@@ -18,7 +18,7 @@ double get_value(char *text, Constant_s **constants, size_t *status)
             if (strcmp(current->name, text) == 0) return current->value;
         }
 
-        printf("\"%s\" is not defined.\n");
+        printf("\"%s\" is not defined.\n", text);
         *status = 1;
         return 0;
     }
@@ -44,7 +44,7 @@ double solve(Node_s *node, size_t *status, Operator_s **operators, Constant_s **
     {
         char *leftt = tokens_to_text(node->left->tokens, node->left->length);
         left = get_value(leftt, constants, status);
-        if (*status) return;
+        if (*status) return 0;
         free(leftt);
     }
     else
@@ -54,7 +54,7 @@ double solve(Node_s *node, size_t *status, Operator_s **operators, Constant_s **
     {
         char *rightt = tokens_to_text(node->right->tokens, node->right->length);
         right = get_value(rightt, constants, status);
-        if (*status) return;
+        if (*status) return 0;
         free(rightt);
     }
     else

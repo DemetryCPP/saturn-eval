@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define _USE_MISC 1
 #include <math.h>
 
 #include "../eval/eval.h"
@@ -8,9 +9,6 @@
 
 #define BUFF_SIZE 100
 #define VERSION "3.0.0"
-
-#define M_E        2.71828182845904523536
-#define M_PI       3.14159265358979323846
 
 int main(size_t argc, char *argv[])
 {
@@ -80,7 +78,7 @@ int main(size_t argc, char *argv[])
         double result = eval(input, &status, constants);
         if (status) continue;
 
-        printf("%lf\n", result);
+        printf("%g\n", result);
     }
 
     free(input);
