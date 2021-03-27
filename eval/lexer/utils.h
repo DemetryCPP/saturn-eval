@@ -3,12 +3,12 @@
 
 typedef enum Tokens
 {
+    t_none,
     t_number,
     t_operators,
     t_decimal_seporator,
     t_brackets,
-    t_text,
-    t_none
+    t_text
 } Tokens_e;
 
 
