@@ -48,7 +48,7 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, size_t *status, Oper
                 *status = 1;
             type = t_text;
         }
-        else if (current >= 15)
+        else if (current >= 33)
             *status = 1;
 
         if (*status)
