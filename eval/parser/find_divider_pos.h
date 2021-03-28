@@ -3,7 +3,7 @@
 #pragma once
 
 #include "../lexer/utils.h"
-#include "../operators.h"
+#include "../solve/operators.h"
 
 size_t find_divider_pos(Token_s **tokens, size_t tokens_count, Operator_s **opreators, size_t *status)
 {

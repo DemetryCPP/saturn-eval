@@ -3,7 +3,8 @@
 
 #include "utils.h"
 #include "find_divider_pos.h"
-#include "../operators.h"
+
+#include "../solve/operators.h"
 
 short check_brackets(Node_s *node)
 {

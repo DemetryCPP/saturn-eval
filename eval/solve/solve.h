@@ -2,11 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "lexer/utils.h"
-#include "parser/utils.h"
+#include "../lexer/utils.h"
+#include "../parser/utils.h"
+
 #include "operators.h"
 #include "constants.h"
-#include "function.h"
+#include "functions.h"
 
 #define status_ret if (*status) return -1;
 

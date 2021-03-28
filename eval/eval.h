@@ -7,9 +7,10 @@
 #include "parser/find_divider_pos.h"
 #include "parser/parser.h"
 
-#include "operators.h"
+#include "solve/operators.h"
+#include "solve/solve.h"
+
 #include "free.h"
-#include "solve.h"
 
 double eval(char *expression, size_t *status, Constant_s **constants)
 {

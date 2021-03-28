@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #include "lexer/utils.h"
-#include "operators.h"
+#include "solve/operators.h"
 #include "parser/utils.h"
 
 void free_tree(Node_s *node)

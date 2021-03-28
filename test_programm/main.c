@@ -5,7 +5,7 @@
 #include <math.h>
 
 #include "../eval/eval.h"
-#include "../eval/constants.h"
+#include "../eval/solve/constants.h"
 
 #define BUFF_SIZE 100
 #define VERSION "3.0.0"
