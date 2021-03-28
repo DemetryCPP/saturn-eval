@@ -29,11 +29,9 @@ double get_value(char *text, Constant_s **constants, size_t *status)
 
 double solve(Node_s *node, size_t *status, Operator_s **operators, Constant_s **constants)
 {
-    double left;
-    double right;
-    double result;
+    double left, right, result;
 
-    if (node->left == NULL && node->right == NULL)
+    if (node->operator_sign == '\0')
     {
         char *text = tokens_to_text(node->tokens, node->length);
         double result = get_value(text, constants, status);
@@ -51,25 +49,8 @@ double solve(Node_s *node, size_t *status, Operator_s **operators, Constant_s **
         return result;
     }
 
-    if (node->left->operator_sign == '\0')
-    {
-        char *leftt = tokens_to_text(node->left->tokens, node->left->length);
-        left = get_value(leftt, constants, status);
-        if (*status) return 0;
-        free(leftt);
-    }
-    else
-        left = solve(node->left, status, operators, constants);
-
-    if (node->right->operator_sign == '\0')
-    {
-        char *rightt = tokens_to_text(node->right->tokens, node->right->length);
-        right = get_value(rightt, constants, status);
-        if (*status) return 0;
-        free(rightt);
-    }
-    else
-        right = solve(node->right, status, operators, constants);
+    left = solve(node->left, status, operators, constants);
+    right = solve(node->right, status, operators, constants);
 
     for (size_t i = 0; i < OPERATORS_COUNT; i++)
     {
