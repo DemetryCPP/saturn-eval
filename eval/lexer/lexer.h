@@ -6,7 +6,8 @@
 Token_s **lexer(char *expression, size_t *tokens_count_ptr, size_t *status, Operator_s **operators)
 {
     size_t expression_length = strlen(expression), 
-        tokens_count = 0;
+        tokens_count = 0,
+        brackets = 0;
     
     Token_s **tokens = (Token_s **)calloc(expression_length, sizeof(Token_s *)), 
         *empty_token = new_token(t_none, '\0');
@@ -41,6 +42,12 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, size_t *status, Oper
                 (current == '(' && last->type != t_operators && last->type != t_text && last->value != '(') ||
                 (current == ')' && last->type != t_number && last->value != ')' && last->type != t_text))) 
                     *status = 1;
+
+            if (current == '(') brackets++;
+            else if (current == ')') brackets--;
+
+            if (brackets < 0) *status = 1;
+
             type = t_brackets;
         }
         else if ((current >= 'a' && current <= 'z') || (current >= 'A' && current <= 'Z'))
@@ -66,6 +73,15 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, size_t *status, Oper
             // lexer_log(tokens[tokens_count]);
             tokens_count++;
         }
+    }
+
+    if (brackets != 0) 
+    {
+        *status = 1;
+        *tokens_count_ptr = tokens_count;
+        printf("Expected closed bracket!\n");
+        free(empty_token);
+        return tokens;
     }
 
     free(empty_token);
