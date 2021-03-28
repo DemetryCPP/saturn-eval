@@ -23,6 +23,8 @@ size_t find_divider_pos(Token_s **tokens, size_t tokens_count, Operator_s **opre
         if (brackets != 0) continue;
         if (current->type != t_operators) continue;
         
+        if (i != 0 && current->value == '-' && tokens[i - 1]->type == t_operators) continue;
+
         short current_priority = get_priority(current->value, opreators);
 
         if (current_priority == 1) return i;
