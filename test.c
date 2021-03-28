@@ -26,6 +26,7 @@ int main()
     test("2 ^ 10", 1024, constants);            // exponentation
     test("1 + (2 + 3) + 4", 10, constants);     // brackets
     test("21 * -1 + 19 * -1", -40, constants);  // unary minus
+    test("cos(1)^2 + sin(1)^2", 1, constants);  // functions
 
     return 0;
 }
