@@ -3,7 +3,7 @@
 
 #define isf(name) strcmp(fname, name) == 0 
 
-double function(char *fname, double arg)
+double function(char *fname, double arg, size_t *status)
 {
     if (isf("sin")) return sin(arg);
     if (isf("cos")) return cos(arg);
@@ -19,4 +19,8 @@ double function(char *fname, double arg)
     if (isf("sqrt")) return sqrt(arg);
     if (isf("tan")) return tan(arg);
     if (isf("tanh")) return tanh(arg);
+
+    printf("\"%s\" is not a function\n", fname);
+    *status = 1;
+    return -1;
 }

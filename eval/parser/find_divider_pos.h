@@ -17,6 +17,8 @@ size_t find_divider_pos(Token_s **tokens, size_t tokens_count, Operator_s **opre
             if (current->value == '(') brackets++;
             else if (current->value == ')') brackets--;
 
+            if (brackets != 0) continue;
+
             if (i != 0 && priority > 4 && current->value == '(' && tokens[i - 1]->type == t_text)
             {
                 priority = 4;

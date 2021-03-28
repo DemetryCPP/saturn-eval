@@ -8,6 +8,8 @@
 #include "constants.h"
 #include "function.h"
 
+#define status_ret if (*status) return -1;
+
 double get_value(char *text, Constant_s **constants, size_t *status)
 {
     if (text[0] >= 'a' && text[0] <= 'z' || text[0] >= 'A' && text[0] <= 'Z')
@@ -29,6 +31,7 @@ double get_value(char *text, Constant_s **constants, size_t *status)
 
 double solve(Node_s *node, size_t *status, Operator_s **operators, Constant_s **constants)
 {
+    status_ret
     double left, right, result;
 
     if (node->operator_sign == '\0')
@@ -42,15 +45,18 @@ double solve(Node_s *node, size_t *status, Operator_s **operators, Constant_s **
     if (node->operator_sign == 'f')
     {
         double arg = solve(node->right, status, operators, constants);
+        status_ret
         char *fname = tokens_to_text(node->left->tokens, node->left->length);
 
-        double result = function(fname, arg);
+        double result = function(fname, arg, status);
+        status_ret
         free(fname);
         return result;
     }
 
     left = solve(node->left, status, operators, constants);
     right = solve(node->right, status, operators, constants);
+    status_ret
 
     for (size_t i = 0; i < OPERATORS_COUNT; i++)
     {
