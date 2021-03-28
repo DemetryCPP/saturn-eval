@@ -45,7 +45,7 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, size_t *status, Oper
         }
         else if ((current >= 'a' && current <= 'z') || (current >= 'A' && current <= 'Z'))
         {
-            if (last->type && last->type != t_text && last->type != t_operators) 
+            if (last->type && last->type != t_text && last->type != t_operators && last->value != '(') 
                 *status = 1;
             type = t_text;
         }
