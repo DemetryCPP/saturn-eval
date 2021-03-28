@@ -10,7 +10,7 @@
 
 Компилируем: 
 
-```$ gcc test_programm/main.c -o calc```
+```$ gcc test_programm/main.c -lm -o calc```
 
 Запускаем:
 
