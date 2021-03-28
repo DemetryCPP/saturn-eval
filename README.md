@@ -2,11 +2,17 @@
 
 # Запуск:
 
-Для начала было бы не плохо скомпилировать: 
+Скачиваем:
+
+```$ git clone https://github.com/DemetryF/evaluate-mathematic-expressions -b dev-3.0 calc```
+
+```$ cd calc```
+
+Компилируем: 
 
 ```$ gcc test_programm/main.c -o calc```
 
-А потом запустить:
+Запускаем:
 
 ```$ ./calc```
 
