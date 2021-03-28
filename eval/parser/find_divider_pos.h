@@ -7,7 +7,7 @@
 
 size_t find_divider_pos(Token_s **tokens, size_t tokens_count, Operator_s **opreators, size_t *status)
 {
-    int position = -1, brackets = 0, priority = 4;
+    int position = -1, brackets = 0, priority = 5;
     for (int i = tokens_count - 1; i >= 0; i--)
     {
         Token_s *current = tokens[i];
@@ -16,6 +16,12 @@ size_t find_divider_pos(Token_s **tokens, size_t tokens_count, Operator_s **opre
         {
             if (current->value == '(') brackets++;
             else if (current->value == ')') brackets--;
+
+            if (i != 0 && priority > 4 && current->value == '(' && tokens[i - 1]->type == t_text)
+            {
+                priority = 4;
+                position = i;
+            }
 
             continue;
         }

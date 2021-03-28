@@ -6,6 +6,7 @@
 #include "parser/utils.h"
 #include "operators.h"
 #include "constants.h"
+#include "function.h"
 
 double get_value(char *text, Constant_s **constants, size_t *status)
 {
@@ -37,6 +38,16 @@ double solve(Node_s *node, size_t *status, Operator_s **operators, Constant_s **
         char *text = tokens_to_text(node->tokens, node->length);
         double result = get_value(text, constants, status);
         free(text);
+        return result;
+    }
+
+    if (node->operator_sign == 'f')
+    {
+        double arg = solve(node->right, status, operators, constants);
+        char *fname = tokens_to_text(node->left->tokens, node->left->length);
+
+        double result = function(fname, arg);
+        free(fname);
         return result;
     }
 

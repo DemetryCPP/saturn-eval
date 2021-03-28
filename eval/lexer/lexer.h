@@ -37,9 +37,10 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, size_t *status, Oper
         }
         else if (current == '(' || current == ')')
         {
-            if (last->type && ((current == '(' && last->type != t_operators && last->value != '(') ||
-                 (current == ')' && last->type != t_number && last->value != ')' && last->type != t_text))) 
-                 *status = 1;
+            if (last->type && (
+                (current == '(' && last->type != t_operators && last->type != t_text && last->value != '(') ||
+                (current == ')' && last->type != t_number && last->value != ')' && last->type != t_text))) 
+                    *status = 1;
             type = t_brackets;
         }
         else if ((current >= 'a' && current <= 'z') || (current >= 'A' && current <= 'Z'))
