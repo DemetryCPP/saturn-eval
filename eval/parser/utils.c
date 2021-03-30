@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <stdio.h>
+
 #include "../headers/lexer_types.h"
 #include "../headers/parser_types.h"
 
