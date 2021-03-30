@@ -17,6 +17,12 @@ int main(size_t argc, char *argv[])
     Constant_s **constants = (Constant_s **)malloc((argc + 2) * sizeof(Constant_s *));
     size_t constant_count = 0;
 
+    if (constants == NULL || input == NULL)
+    {
+        printf("allocate memory error.\n");
+        exit(1);
+    }
+
     constants[constant_count++] = new_constant("e", M_E);
     constants[constant_count++] = new_constant("pi", M_PI);
 
@@ -31,6 +37,13 @@ int main(size_t argc, char *argv[])
             case 'd':
             {
                 char *copy = malloc(strlen(argv[i] + 2) * sizeof(char));
+
+                if (copy == NULL)
+                {
+                    printf("allocate memory error.\n");
+                    exit(1);
+                }
+
                 strcpy(copy, argv[i] + 2);
 
                 char *name = strtok(copy, "=");

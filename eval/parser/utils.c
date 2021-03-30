@@ -6,6 +6,12 @@ Node_s *new_node(Token_s **tokens, size_t length, Node_s *left, Node_s *right, c
 {
     Node_s *result = (Node_s *)malloc(sizeof(Node_s));
 
+    if (result == NULL)
+    {
+        printf("allocate memory error.\n");
+        exit(1);
+    }
+
     result->tokens = tokens;
     result->length = length;
     result->left = left;

@@ -12,8 +12,14 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, size_t *status, Oper
         tokens_count = 0,
         brackets = 0;
     
-    Token_s **tokens = (Token_s **)calloc(expression_length, sizeof(Token_s *)), 
+    Token_s **tokens = (Token_s **)malloc(expression_length, sizeof(Token_s *)), 
         *empty_token = new_token(t_none, '\0');
+
+    if (tokens == NULL)
+    {
+        printf("allocate memory error.\n");
+        exit(1);
+    }
 
     for (size_t i = 0; i < expression_length; i++)
     {
@@ -90,5 +96,12 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, size_t *status, Oper
     free(empty_token);
     *tokens_count_ptr = tokens_count;
     tokens = (Token_s **)realloc(tokens, tokens_count * sizeof(Token_s *));
+
+    if (tokens == NULL)
+    {
+        printf("allocate memory error.\n");
+        exit(1);
+    }
+
     return tokens;
 }

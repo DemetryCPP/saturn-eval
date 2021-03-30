@@ -6,6 +6,13 @@
 Operator_s *new_operator(char sign, unsigned short priority, operator_action_t action)
 {
     Operator_s *result = (Operator_s *)malloc(sizeof(Operator_s));
+    
+    if (result == NULL)
+    {
+        printf("allocate memory error.\n");
+        exit(1);
+    }
+    
     result->sign = sign;
     result->priority = priority;
     result->action = action;
@@ -36,6 +43,12 @@ double exponentiation(double base, double exponent)
 Operator_s **init_operators()
 {
     Operator_s **operators = (Operator_s **)malloc(OPERATORS_COUNT * sizeof(Operator_s *));
+
+    if (operators == NULL)
+    {
+        printf("allocate memory error.\n");
+        exit(1);
+    }
 
     operators[0] = new_operator('+', 1, add);
     operators[1] = new_operator('-', 1, differency);

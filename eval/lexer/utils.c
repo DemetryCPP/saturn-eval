@@ -40,6 +40,12 @@ char *tokens_to_text(Token_s **tokens, size_t length)
 {
     char *result = malloc(length * sizeof(char));
 
+    if (result == NULL)
+    {
+        printf("allocate memory error.\n");
+        exit(1);
+    }
+
     for (size_t i = 0; i < length; i++)
         result[i] = tokens[i]->value;
 
