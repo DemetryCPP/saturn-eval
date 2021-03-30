@@ -4,8 +4,6 @@
 
 #include "../headers/solve_types.h"
 
-// #define isf(name) strcmp(fname, name) == 0 
-
 double function(char *fname, double arg, size_t *status)
 {
     if (isf("sin")) return sin(arg);

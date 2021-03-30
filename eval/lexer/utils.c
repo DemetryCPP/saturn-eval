@@ -1,23 +1,6 @@
 #include <stdlib.h>
 #include "../headers/lexer.h"
 
-// typedef enum Tokens
-// {
-//     t_none,
-//     t_number,
-//     t_operators,
-//     t_decimal_seporator,
-//     t_brackets,
-//     t_text
-// } Tokens_e;
-
-
-// typedef struct Token
-// {
-//     Tokens_e type;
-//     char value;
-// } Token_s;
-
 Token_s *new_token(Tokens_e type, char value)
 {
     Token_s *result = (Token_s *)malloc(sizeof(Token_s));
