@@ -4,8 +4,7 @@
 #define _USE_MISC 1
 #include <math.h>
 
-#include "../eval/eval.h"
-#include "../eval/solve/constants.h"
+#include "../eval/headers/eval.h"
 
 #define BUFF_SIZE 100
 #define VERSION "3.0.0"

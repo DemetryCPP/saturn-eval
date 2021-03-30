@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "lexer/utils.h"
-#include "solve/operators.h"
-#include "parser/utils.h"
+#include "headers/eval.h"
 
 void free_tree(Node_s *node)
 {
@@ -13,7 +11,7 @@ void free_tree(Node_s *node)
     free(node);
 }
 
-void eval_free(Operator_s **operators,  Token_s **tokens, size_t tokens_count, Node_s *head)
+void eval_free(Operator_s **operators, Token_s **tokens, size_t tokens_count, Node_s *head)
 {
     if (operators != NULL)
     {

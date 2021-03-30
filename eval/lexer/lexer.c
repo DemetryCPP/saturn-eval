@@ -1,7 +1,10 @@
 #include <string.h>
+#include <stdlib.h>
 
-#include "utils.h"
-#include "../solve/operators.h"
+#include "../headers/lexer_types.h"
+#include "../headers/lexer.h"
+#include "../headers/solve.h"
+#include "../headers/solve_types.h"
 
 Token_s **lexer(char *expression, size_t *tokens_count_ptr, size_t *status, Operator_s **operators)
 {

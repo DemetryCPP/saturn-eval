@@ -1,11 +1,11 @@
 #include <stdlib.h>
-#pragma once
+#include "../headers/solve_types.h"
 
-typedef struct Constant
-{
-    char *name;
-    double value;
-} Constant_s;
+// typedef struct Constant
+// {
+//     char *name;
+//     double value;
+// } Constant_s;
 
 Constant_s *new_constant(char *name, double value)
 {

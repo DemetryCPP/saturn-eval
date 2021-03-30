@@ -1,10 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "utils.h"
-#include "find_divider_pos.h"
-
-#include "../solve/operators.h"
+#include "../headers/parser_types.h"
+#include "../headers/lexer_types.h"
 
 short check_brackets(Node_s *node)
 {

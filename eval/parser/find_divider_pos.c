@@ -1,11 +1,10 @@
 #include <stdlib.h>
 
-#pragma once
+#include "../headers/lexer_types.h"
+#include "../headers/solve_types.h"
+#include "../headers/solve.h"
 
-#include "../lexer/utils.h"
-#include "../solve/operators.h"
-
-size_t find_divider_pos(Token_s **tokens, size_t tokens_count, Operator_s **opreators, size_t *status)
+size_t find_divider_pos(Token_s **tokens, size_t tokens_count, Operator_s **operators, size_t *status)
 {
     int position = -1, brackets = 0, priority = 5;
     for (int i = tokens_count - 1; i >= 0; i--)
@@ -33,7 +32,7 @@ size_t find_divider_pos(Token_s **tokens, size_t tokens_count, Operator_s **opre
         
         if (i != 0 && current->value == '-' && tokens[i - 1]->type == t_operators) continue;
 
-        short current_priority = get_priority(current->value, opreators);
+        short current_priority = get_priority(current->value, operators);
 
         if (current_priority == 1) return i;
 

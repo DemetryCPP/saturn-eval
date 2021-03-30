@@ -1,7 +1,10 @@
+#include <stdio.h>
 #include <string.h>
 #include <math.h>
 
-#define isf(name) strcmp(fname, name) == 0 
+#include "../headers/solve_types.h"
+
+// #define isf(name) strcmp(fname, name) == 0 
 
 double function(char *fname, double arg, size_t *status)
 {

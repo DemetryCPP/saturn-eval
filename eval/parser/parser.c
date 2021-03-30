@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "utils.h"
-#include "find_divider_pos.h"
-#include "remove_brackets.h"
+#include "../headers/parser_types.h"
+#include "../headers/parser.h"
+#include "../headers/solve_types.h"
 
 void parser(Node_s *node, size_t *status, Operator_s **operators)
 {

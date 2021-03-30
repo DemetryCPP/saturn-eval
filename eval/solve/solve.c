@@ -2,14 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../lexer/utils.h"
-#include "../parser/utils.h"
-
-#include "operators.h"
-#include "constants.h"
-#include "functions.h"
-
-#define status_ret if (*status) return -1;
+#include "../headers/lexer_types.h"
+#include "../headers/lexer.h"
+#include "../headers/parser_types.h"
+#include "../headers/solve_types.h"
+#include "../headers/solve.h"
 
 double get_value(char *text, Constant_s **constants, size_t *status)
 {

@@ -1,16 +1,5 @@
 #include <stdlib.h>
-
-#include "lexer/utils.h"
-#include "lexer/lexer.h"
-
-#include "parser/utils.h"
-#include "parser/find_divider_pos.h"
-#include "parser/parser.h"
-
-#include "solve/operators.h"
-#include "solve/solve.h"
-
-#include "free.h"
+#include "headers/eval.h"
 
 double eval(char *expression, size_t *status, Constant_s **constants)
 {
