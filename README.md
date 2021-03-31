@@ -4,7 +4,7 @@
 
 Скачиваем:
 
-```$ git clone https://github.com/DemetryF/evaluate-mathematic-expressions -b dev-3.0 calc```
+```$ git clone https://github.com/DemetryF/evaluate-mathematic-expressions calc```
 
 ```$ cd calc```
 
