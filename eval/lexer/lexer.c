@@ -36,7 +36,7 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, Status_s *status, Op
         }
         else if (check_operator(current, operators))
         {
-            if (last->type && last->type != t_text && last->type != t_number && last->value != ')' && !(last->type == t_operators && current == '-'))
+            if (last->type && last->type != t_text && last->type != t_number && last->value != ')' && last->value != '(' && !(last->type == t_operators && current == '-'))
                 status->code = sc_unexped_token; 
             type = t_operators;
         }
@@ -50,8 +50,8 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, Status_s *status, Op
         {
             if (last->type && (
                 (current == '(' && last->type != t_operators && last->type != t_text && last->value != '(') ||
-                (current == ')' && last->type != t_number && last->value != ')' && last->type != t_text))) 
-                    status->code = sc_unexped_token; 
+                (current == ')' && last->type != t_number && last->value != ')' && last->type != t_text)))
+                    status->code = sc_unexped_token;
 
             if (current == '(') brackets++;
             else if (current == ')') brackets--;
@@ -67,7 +67,7 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, Status_s *status, Op
             type = t_text;
         }
         else if (current >= 33)
-                status->code = sc_unexped_token; 
+                status->code = sc_unexped_token;
 
         if (status->code != sc_ok)
         {
