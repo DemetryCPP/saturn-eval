@@ -3,6 +3,7 @@
 #include "parser.h"
 #include "parser_types.h"
 #include "solve_types.h"
+#include "status.h"
 
 Constant_s *new_constant(char *name, double value);
 Operator_s *new_operator(char sign, unsigned short priority, operator_action_t aciton);
@@ -19,7 +20,7 @@ Operator_s **init_operators();
 
 short check_operator(char _char, Operator_s **operators);
 short get_priority(char _char, Operator_s **operators);
-double function(char *fname, double arg, size_t *status);
+double function(char *fname, double arg, Status_s *status);
 
-double get_value(char *text, Constant_s **constants, size_t *status);
-double solve(Node_s *node, size_t *status, Operator_s **operators, Constant_s **constants);
+double get_value(char *text, Constant_s **constants, Status_s *status);
+double solve(Node_s *node, Status_s *status, Operator_s **operators, Constant_s **constants);

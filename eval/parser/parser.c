@@ -4,17 +4,18 @@
 #include "../headers/parser_types.h"
 #include "../headers/parser.h"
 #include "../headers/solve_types.h"
+#include "../headers/status.h"
 
-void parser(Node_s *node, size_t *status, Operator_s **operators)
+void parser(Node_s *node, Status_s *status, Operator_s **operators)
 {
-    node->divider_pos = find_divider_pos(node->tokens, node->length, operators, status);
+    node->divider_pos = find_divider_pos(node->tokens, node->length, operators);
     if (node->divider_pos == -1)
     {
         remove_brackets(node);
-        node->divider_pos = find_divider_pos(node->tokens, node->length, operators, status);
+        node->divider_pos = find_divider_pos(node->tokens, node->length, operators);
     }
 
-    if (*status) return;
+    if (status->code != sc_ok) return;
     if (node->divider_pos == -1) return;
 
     node->operator_sign = node->tokens[node->divider_pos]->value;

@@ -7,8 +7,9 @@
 #include "../headers/parser_types.h"
 #include "../headers/solve_types.h"
 #include "../headers/solve.h"
+#include "../headers/status.h"
 
-double get_value(char *text, Constant_s **constants, size_t *status)
+double get_value(char *text, Constant_s **constants, Status_s *status)
 {
     if (text[0] >= 'a' && text[0] <= 'z' || text[0] >= 'A' && text[0] <= 'Z')
     {
@@ -19,15 +20,18 @@ double get_value(char *text, Constant_s **constants, size_t *status)
             if (strcmp(current->name, text) == 0) return current->value;
         }
 
-        printf("\"%s\" is not defined.\n", text);
-        *status = 1;
+        // printf("\"%s\" is not defined.\n", text);
+        status->code = sc_is_not_defined;
+        status->data2 = malloc(strlen(text) * sizeof(char));
+        strcpy(status->data2, text);
+        
         return 0;
     }
     else
         return atof(text);
 }
 
-double solve(Node_s *node, size_t *status, Operator_s **operators, Constant_s **constants)
+double solve(Node_s *node, Status_s *status, Operator_s **operators, Constant_s **constants)
 {
     status_ret
     double left, right, result;

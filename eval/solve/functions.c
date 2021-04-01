@@ -1,10 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <math.h>
 
 #include "../headers/solve_types.h"
+#include "../headers/status.h"
 
-double function(char *fname, double arg, size_t *status)
+double function(char *fname, double arg, Status_s *status)
 {
     if (isf("sin")) return sin(arg);
     if (isf("cos")) return cos(arg);
@@ -21,7 +23,10 @@ double function(char *fname, double arg, size_t *status)
     if (isf("tan")) return tan(arg);
     if (isf("tanh")) return tanh(arg);
 
-    printf("\"%s\" is not a function\n", fname);
-    *status = 1;
+    // printf("\"%s\" is not a function\n", fname);
+    status->code = sc_is_not_a_function;
+    status->data2 = malloc(strlen(fname) * sizeof(char));
+    strcpy(status->data2, fname);
+
     return -1;
 }

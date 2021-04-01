@@ -15,6 +15,7 @@ int main(size_t argc, char *argv[])
 
     char *input = calloc(BUFF_SIZE, sizeof(char));
     Constant_s **constants = (Constant_s **)malloc((argc + 2) * sizeof(Constant_s *));
+    Status_s *status = (Status_s *)malloc(sizeof(Status_s));
     size_t constant_count = 0;
 
     if (constants == NULL || input == NULL)
@@ -72,7 +73,9 @@ int main(size_t argc, char *argv[])
     while (1)
     {
         memset(input, 0, BUFF_SIZE);
-        size_t status = 0;
+        memset(status, 0, sizeof(Status_s));
+        status->code = sc_ok;
+
         printf("> ");
         fgets(input, BUFF_SIZE, stdin);     
 
@@ -87,8 +90,29 @@ int main(size_t argc, char *argv[])
             continue;
         }
 
-        double result = eval(input, &status, constants);
-        if (status) continue;
+        double result = eval(input, status, constants);
+        if (status->code != sc_ok) 
+        {
+            switch (status->code)
+            {
+            case sc_unexped_token:
+                printf("Unexped token '%c' at %ld\n", status->data3, status->data1 + 1);
+            break;
+            
+            case sc_brackets_error:
+                printf("Brackets error\n");
+            break;
+
+            case sc_is_not_defined:
+                printf("'%s' is not defined\n", status->data2);
+            break;
+
+            case sc_is_not_a_function:
+                printf("'%s' is not a function\n", status->data2);
+            break;
+            }
+            continue;
+        }
 
         printf("%g\n", result);
     }

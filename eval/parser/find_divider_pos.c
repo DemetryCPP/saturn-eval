@@ -4,7 +4,7 @@
 #include "../headers/solve_types.h"
 #include "../headers/solve.h"
 
-size_t find_divider_pos(Token_s **tokens, size_t tokens_count, Operator_s **operators, size_t *status)
+size_t find_divider_pos(Token_s **tokens, size_t tokens_count, Operator_s **operators)
 {
     int position = -1, brackets = 0, priority = 5;
     for (int i = tokens_count - 1; i >= 0; i--)

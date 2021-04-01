@@ -1,7 +1,7 @@
 #pragma once
 #define OPERATORS_COUNT 7
 #define isf(name) strcmp(fname, name) == 0 
-#define status_ret if (*status) return -1;
+#define status_ret if (status->code != sc_ok) return -1;
 
 typedef double(* operator_action_t)(double left, double right);
 typedef struct Constant

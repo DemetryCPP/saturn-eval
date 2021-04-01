@@ -5,8 +5,9 @@
 #include "../headers/lexer.h"
 #include "../headers/solve.h"
 #include "../headers/solve_types.h"
+#include "../headers/status.h"
 
-Token_s **lexer(char *expression, size_t *tokens_count_ptr, size_t *status, Operator_s **operators)
+Token_s **lexer(char *expression, size_t *tokens_count_ptr, Status_s *status, Operator_s **operators)
 {
     size_t expression_length = strlen(expression), 
         tokens_count = 0,
@@ -30,19 +31,19 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, size_t *status, Oper
         if (current >= '0' && current <= '9')
         {
             if (last->type && last->value != '(' && last->type != t_number && last->type != t_decimal_seporator && last->type != t_operators) 
-                *status = 1; 
+                status->code = sc_unexped_token; 
             type = t_number;
         }
         else if (check_operator(current, operators))
         {
             if (last->type && last->type != t_text && last->type != t_number && last->value != ')' && !(last->type == t_operators && current == '-'))
-                *status = 1;
+                status->code = sc_unexped_token; 
             type = t_operators;
         }
         else if (current == '.')
         {
             if (last->type && last->type != t_number) 
-                *status = 1;
+                status->code = sc_unexped_token; 
             type = t_decimal_seporator;
         }
         else if (current == '(' || current == ')')
@@ -50,29 +51,31 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, size_t *status, Oper
             if (last->type && (
                 (current == '(' && last->type != t_operators && last->type != t_text && last->value != '(') ||
                 (current == ')' && last->type != t_number && last->value != ')' && last->type != t_text))) 
-                    *status = 1;
+                    status->code = sc_unexped_token; 
 
             if (current == '(') brackets++;
             else if (current == ')') brackets--;
 
-            if (brackets < 0) *status = 1;
+            if (brackets < 0) status->code = sc_brackets_error;
 
             type = t_brackets;
         }
         else if ((current >= 'a' && current <= 'z') || (current >= 'A' && current <= 'Z'))
         {
             if (last->type && last->type != t_text && last->type != t_operators && last->value != '(') 
-                *status = 1;
+                status->code = sc_unexped_token; 
             type = t_text;
         }
         else if (current >= 33)
-            *status = 1;
+                status->code = sc_unexped_token; 
 
-        if (*status)
+        if (status->code != sc_ok)
         {
-            lexer_unexped_token(current, i);
+            // lexer_unexped_token(current, i);
             *tokens_count_ptr = tokens_count;
             free(empty_token);
+            status->data1 = i;
+            status->data3 = current;
             return tokens;
         }
 
@@ -86,9 +89,9 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, size_t *status, Oper
 
     if (brackets != 0) 
     {
-        *status = 1;
+        status->code = sc_brackets_error;
         *tokens_count_ptr = tokens_count;
-        printf("Expected closed bracket!\n");
+        // printf("Expected closed bracket!\n");
         free(empty_token);
         return tokens;
     }
