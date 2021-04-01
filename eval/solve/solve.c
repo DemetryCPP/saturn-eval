@@ -12,7 +12,7 @@ double get_value(char *text, Constant_s **constants, size_t *status)
 {
     if (text[0] >= 'a' && text[0] <= 'z' || text[0] >= 'A' && text[0] <= 'Z')
     {
-        for (size_t i = 0; constants[i]->name != ""; i++)
+        for (size_t i = 0; constants[i]->name[0] != '\0'; i++)
         {
             Constant_s *current = constants[i];
 
