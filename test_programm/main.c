@@ -18,7 +18,7 @@ int main(size_t argc, char *argv[])
     Status_s *status = (Status_s *)malloc(sizeof(Status_s));
     size_t constant_count = 0;
 
-    if (constants == NULL || input == NULL)
+    if (constants == NULL || input == NULL || status == NULL)
     {
         printf("allocate memory error.\n");
         exit(1);
