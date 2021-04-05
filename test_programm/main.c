@@ -82,10 +82,13 @@ int main(size_t argc, char *argv[])
         if (strcmp(input, "\n") == 0)
             continue;
 
-        if (input[0] == '.')
+        if ((input++)[0] == '.')
         {
-            if (strcmp(input + 1, "exit\n") == 0) break;
-            if (strcmp(input + 1, "help\n") == 0) printf("Git repository: https://github.com/DemetryF/evaluate-mathematic-expressions\n\n7 operators: +, -, /, *, %%, \\, ^.\nBrackets: \"()\"\nDouble numbers: 2.1\n");
+            input[strlen(input) - 1] = '\0';
+
+            if (strcmp(input, "exit") == 0) break;
+            else if (strcmp(input, "help") == 0) printf("Git repository: https://github.com/DemetryF/evaluate-mathematic-expressions\n\n7 operators: +, -, /, *, %%, \\, ^.\nBrackets: \"()\"\nDouble numbers: 2.1\n");
+            else printf("'%s' is not system command\n", input + 1);
 
             continue;
         }
