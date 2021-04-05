@@ -7,7 +7,7 @@
 #include "../eval/headers/eval.h"
 
 #define BUFF_SIZE 100
-#define VERSION "3.0.1"
+#define VERSION "3.0.2"
 
 int main(size_t argc, char *argv[])
 {
@@ -87,11 +87,12 @@ int main(size_t argc, char *argv[])
             input[strlen(input) - 1] = '\0';
 
             if (strcmp(input, "exit") == 0) break;
-            else if (strcmp(input, "help") == 0) printf("Git repository: https://github.com/DemetryF/evaluate-mathematic-expressions\n\n7 operators: +, -, /, *, %%, \\, ^.\nBrackets: \"()\"\nDouble numbers: 2.1\n");
+            else if (strcmp(input, "help") == 0) printf("Git repository: https://github.com/DemetryF/evaluate-mathematic-expressions\n\n7 operators: +, -, /, *, %%, \\, ^.\nBrackets: \"()\"\nDouble numbers: 2.1\nFunctions: sin(12)\n");
             else printf("'%s' is not system command\n", input + 1);
 
             continue;
         }
+        input--;
 
         double result = eval(input, status, constants);
         if (status->code != sc_ok) 
