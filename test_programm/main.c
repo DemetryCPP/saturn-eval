@@ -7,7 +7,7 @@
 #include "../eval/headers/eval.h"
 
 #define BUFF_SIZE 100
-#define VERSION "3.0.0"
+#define VERSION "3.0.1"
 
 int main(size_t argc, char *argv[])
 {

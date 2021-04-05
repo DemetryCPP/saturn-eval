@@ -36,21 +36,20 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, Status_s *status, Op
         }
         else if (check_operator(current, operators))
         {
-            if (last->type && last->type != t_text && last->type != t_number && last->value != ')' && last->value != '(' && !(last->type == t_operators && current == '-'))
+            if ((last->type == t_none && current != '-') && last->type != t_text && last->type != t_number && last->value != ')' && last->value != '(' && !(last->type == t_operators && current == '-'))
                 status->code = sc_unexped_token; 
             type = t_operators;
         }
         else if (current == '.')
         {
-            if (last->type && last->type != t_number) 
+            if (last->type != t_number) 
                 status->code = sc_unexped_token; 
             type = t_decimal_seporator;
         }
         else if (current == '(' || current == ')')
         {
-            if (last->type && (
-                (current == '(' && last->type != t_operators && last->type != t_text && last->value != '(') ||
-                (current == ')' && last->type != t_number && last->value != ')' && last->type != t_text)))
+            if ((last->type && current == '(' && last->type != t_operators && last->type != t_text && last->value != '(') ||
+                (current == ')' && last->type != t_number && last->value != ')' && last->type != t_text))
                     status->code = sc_unexped_token;
 
             if (current == '(') brackets++;
