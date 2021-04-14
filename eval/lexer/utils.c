@@ -38,7 +38,7 @@ void lexer_log(Token_s *token)
 
 char *tokens_to_text(Token_s **tokens, size_t length)
 {
-    char *result = malloc(length * sizeof(char));
+    char *result = (char *)malloc(length * sizeof(char));
 
     if (result == NULL)
     {

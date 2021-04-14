@@ -9,11 +9,11 @@
 #define BUFF_SIZE 100
 #define VERSION "3.0.2"
 
-int main(size_t argc, char *argv[])
+int main(int argc, char *argv[])
 {
     printf("Welcome to Evaluate Mathematic Expression v%s\nType \".exit\" to exit, \".help\" to more information.\n", VERSION);
 
-    char *input = calloc(BUFF_SIZE, sizeof(char));
+    char *input = (char *)calloc(BUFF_SIZE, sizeof(char));
     Constant_s **constants = (Constant_s **)malloc((argc + 2) * sizeof(Constant_s *));
     Status_s *status = (Status_s *)malloc(sizeof(Status_s));
     size_t constant_count = 0;
@@ -37,7 +37,7 @@ int main(size_t argc, char *argv[])
             {
             case 'd':
             {
-                char *copy = malloc(strlen(argv[i] + 2) * sizeof(char));
+                char *copy = (char *)malloc(strlen(argv[i] + 2) * sizeof(char));
 
                 if (copy == NULL)
                 {
@@ -92,33 +92,32 @@ int main(size_t argc, char *argv[])
 
             continue;
         }
+        
         input--;
-
         double result = eval(input, status, constants);
-        if (status->code != sc_ok) 
+
+        switch (status->code)
         {
-            switch (status->code)
-            {
-            case sc_unexped_token:
-                printf("Unexped token '%c' at %ld\n", status->data3, status->data1 + 1);
+        case sc_unexped_token:
+            printf("Unexped token '%c' at %ld\n", status->data3, status->data1 + 1);
             break;
-            
-            case sc_brackets_error:
-                printf("Brackets error\n");
+        
+        case sc_brackets_error:
+            printf("Brackets error\n");
             break;
 
-            case sc_is_not_defined:
-                printf("'%s' is not defined\n", status->data2);
+        case sc_is_not_defined:
+            printf("'%s' is not defined\n", status->data2);
             break;
 
-            case sc_is_not_a_function:
-                printf("'%s' is not a function\n", status->data2);
+        case sc_is_not_a_function:
+            printf("'%s' is not a function\n", status->data2);
             break;
-            }
-            continue;
+
+        case sc_ok:
+            printf("%g\n", result);
+            break;
         }
-
-        printf("%g\n", result);
     }
 
     free(input);
