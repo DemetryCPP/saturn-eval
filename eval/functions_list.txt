@@ -1,0 +1,16 @@
+sin, cos - sinus and cosius
+tg or tan - tangent
+
+abs - absolute value of a number
+exp - exponent
+ln - logarithm with rig e
+lg - logarithm with rig 10
+sqrt - square root of number
+
+sh or sinh - hyperbolic sinus
+ch or cosh - hyperbolic cosinus
+tgh or tanh - hyperbolic tangent
+
+asin or arcsin - invert sinus
+acos or arccos - invert cosinus
+atg, arctg, atan or arctan - invert tangent

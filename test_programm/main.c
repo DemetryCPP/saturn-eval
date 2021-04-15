@@ -11,7 +11,7 @@
 
 int main(int argc, char *argv[])
 {
-    printf("Welcome to Evaluate Mathematic Expression v%s\nType \".exit\" to exit, \".help\" to more information.\n", VERSION);
+    printf("Welcome to REPL for Evaluate Mathematic Expression v%s\nType \".exit\" to exit, \".help\" to more information.\n", VERSION);
 
     char *input = (char *)calloc(BUFF_SIZE, sizeof(char));
     Constant_s **constants = (Constant_s **)malloc((argc + 2) * sizeof(Constant_s *));
@@ -87,7 +87,29 @@ int main(int argc, char *argv[])
             input[strlen(input) - 1] = '\0';
 
             if (strcmp(input, "exit") == 0) break;
-            else if (strcmp(input, "help") == 0) printf("Git repository: https://github.com/DemetryF/evaluate-mathematic-expressions\n\n7 operators: +, -, /, *, %%, \\, ^.\nBrackets: \"()\"\nDouble numbers: 2.1\nFunctions: sin(12)\n");
+            else if (strcmp(input, "help") == 0) printf("Git repository: https://github.com/DemetryF/evaluate-mathematic-expressions\n\n7 operators: +, -, /, *, %%, \\, ^.\nBrackets: \"()\"\nDouble numbers: 2.1\nFunctions: sin(12). use .funcs in REPL to check functions list.\n");
+            else if (strcmp(input, "funcs") == 0)
+            {
+                FILE *fptr = fopen("eval/functions_list.txt", "r");
+                char *text = (char *)calloc(400, sizeof(char));
+
+                if (fptr == NULL)
+                {
+                    printf("an error occurred while opening the file\n");
+                    exit(1);
+                }
+
+                if (text == NULL)
+                {
+                    printf("allocate memory error\n");
+                    exit(1);
+                }
+
+                fread(text, 400, 200, fptr);
+                fclose(fptr);
+                printf("%s", text);
+                free(text);
+            }
             else printf("'%s' is not system command\n", input + 1);
 
             continue;
