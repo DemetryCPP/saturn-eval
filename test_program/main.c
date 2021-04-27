@@ -82,13 +82,13 @@ int main(int argc, char *argv[])
         if (strcmp(input, "\n") == 0)
             continue;
 
-        if ((input++)[0] == '.')
+        if (input[0] == '.')
         {
             input[strlen(input) - 1] = '\0';
 
-            if (strcmp(input, "exit") == 0) break;
-            else if (strcmp(input, "help") == 0) printf("Git repository: https://github.com/DemetryF/evaluate-mathematic-expressions\n\n7 operators: +, -, /, *, %%, \\, ^.\nBrackets: \"()\"\nDouble numbers: 2.1\nFunctions: sin(12). use .funcs in REPL to check functions list.\n");
-            else if (strcmp(input, "funcs") == 0)
+            if (strcmp(input + 1, "exit") == 0) break;
+            else if (strcmp(input + 1, "help") == 0) printf("Git repository: https://github.com/DemetryF/evaluate-mathematic-expressions\n\n7 operators: +, -, /, *, %%, \\, ^.\nBrackets: \"()\"\nDouble numbers: 2.1\nFunctions: sin(12). use .funcs in REPL to check functions list.\n");
+            else if (strcmp(input + 1, "funcs") == 0)
             {
                 FILE *fptr = fopen("eval/functions_list.txt", "r");
                 char *text = (char *)calloc(400, sizeof(char));
@@ -115,7 +115,6 @@ int main(int argc, char *argv[])
             continue;
         }
         
-        input--;
         double result = eval(input, status, constants);
 
         switch (status->code)

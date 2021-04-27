@@ -36,8 +36,13 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, Status_s *status, Op
         }
         else if (check_operator(current, operators))
         {
-            if ((last->type == t_none && current != '-') && last->type != t_text && last->type != t_number && last->value != ')' && last->value != '(' && !(last->type == t_operators && current == '-'))
-                status->code = sc_unexped_token; 
+            if((last->type == t_none && current != '-') // если начало и не минус
+            || (last->type != t_text                     // если перед ним не текст
+            && last->type != t_number                   // если перед ним не число
+            && last->value != ')'                       // если перед ним не открывающаяся скобка
+            && (current != '-' && (last->type == t_operators || last->value == '('))) // если минус и перед ним другой оператор или открывающаяся скобка
+            ) status->code = sc_unexped_token; 
+
             type = t_operators;
         }
         else if (current == '.')
