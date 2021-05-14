@@ -9,7 +9,7 @@
 #include "parser_types.h"
 #include "solve_types.h"
 
-#define VERSION "3.0.2"
+#define VERSION "3.0.3"
 
 double eval(char *expression, Status_s *status, Constant_s **constants);
 void free_tree(Node_s *node);
