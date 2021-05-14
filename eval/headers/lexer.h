@@ -6,6 +6,8 @@
 #include "solve_types.h"
 #include "status.h"
 
+#define EMPTY_TOKEN (Token_s){t_none, '\0'}
+
 Token_s *new_token(Tokens_e type, char value);
 void lexer_unexped_token(char token, size_t position);
 void lexer_log(Token_s *token);
