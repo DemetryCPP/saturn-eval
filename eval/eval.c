@@ -15,7 +15,7 @@ double eval(char *expression, Status_s *status, Constant_s **constants)
 
     Node_s *head = new_node(tokens, tokens_count, NULL, NULL, 0, 0);
     parser(head, status, operators);
-
+    
     if (status->code != sc_ok)
     {
         eval_free(operators, tokens, tokens_count, head);

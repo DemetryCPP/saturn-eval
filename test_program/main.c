@@ -126,6 +126,10 @@ int main(int argc, char *argv[])
             printf("'%s' is not a function\n", status->data2);
             break;
 
+        case sc_unexped_end_of_line:
+            printf("Unexped end of input\n");
+            break;
+
         case sc_ok:
             printf("%g\n", result);
             break;
