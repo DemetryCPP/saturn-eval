@@ -10,7 +10,7 @@ Node_s *new_node(Token_s **tokens, size_t length, Node_s *left, Node_s *right, c
 
     if (result == NULL)
     {
-        printf("allocate memory error.\n");
+        puts("memory allocation error.");
         exit(1);
     }
 

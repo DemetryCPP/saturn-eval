@@ -9,7 +9,7 @@ Constant_s *new_constant(char *name, double value)
     
     if (result == NULL)
     {
-        printf("allocate memory error.\n");
+        puts("memory allocation error.");
         exit(1);
     }
 

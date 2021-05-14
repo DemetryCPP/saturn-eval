@@ -10,7 +10,7 @@ Operator_s *new_operator(char sign, unsigned short priority, operator_action_t a
     
     if (result == NULL)
     {
-        printf("allocate memory error.\n");
+        puts("memory allocation error.");
         exit(1);
     }
     
@@ -47,7 +47,7 @@ Operator_s **init_operators()
 
     if (operators == NULL)
     {
-        printf("allocate memory error.\n");
+        puts("memory allocation error.");
         exit(1);
     }
 

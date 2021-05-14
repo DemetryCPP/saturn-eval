@@ -18,7 +18,7 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, Status_s *status, Op
 
     if (tokens == NULL)
     {
-        printf("allocate memory error.\n");
+        puts("memory allocation error.");
         exit(1);
     }
 
@@ -36,11 +36,11 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, Status_s *status, Op
         }
         else if (check_operator(current, operators))
         {
-            if((last->type == t_none && current != '-') // если начало и не минус
-            || (last->type != t_text                     // если перед ним не текст
-            && last->type != t_number                   // если перед ним не число
-            && last->value != ')'                       // если перед ним не открывающаяся скобка
-            && (current != '-' && (last->type == t_operators || last->value == '('))) // если минус и перед ним другой оператор или открывающаяся скобка
+            if((last->type == t_none && current != '-')
+                || (last->type != t_text
+                && last->type != t_number
+                && last->value != ')'
+                && (current != '-' && (last->type == t_operators || last->value == '(')))
             ) status->code = sc_unexped_token; 
 
             type = t_operators;
@@ -75,7 +75,6 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, Status_s *status, Op
 
         if (status->code != sc_ok)
         {
-            // lexer_unexped_token(current, i);
             *tokens_count_ptr = tokens_count;
             free(empty_token);
             status->data1 = i;
@@ -86,7 +85,6 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, Status_s *status, Op
         if (type != t_none)
         {
             tokens[tokens_count] = new_token(type, current);
-            // lexer_log(tokens[tokens_count]);
             tokens_count++;
         }
     }
@@ -95,7 +93,6 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, Status_s *status, Op
     {
         status->code = sc_brackets_error;
         *tokens_count_ptr = tokens_count;
-        // printf("Expected closed bracket!\n");
         free(empty_token);
         return tokens;
     }
@@ -106,7 +103,7 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, Status_s *status, Op
 
     if (tokens == NULL)
     {
-        printf("allocate memory error.\n");
+        puts("memory allocation error.");
         exit(1);
     }
 

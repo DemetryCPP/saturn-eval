@@ -7,7 +7,7 @@ Token_s *new_token(Tokens_e type, char value)
 
     if (result == NULL)
     {
-        printf("allocate memory error.\n");
+        puts("memory allocation error.");
         exit(1);
     }
 
@@ -42,7 +42,7 @@ char *tokens_to_text(Token_s **tokens, size_t length)
 
     if (result == NULL)
     {
-        printf("allocate memory error.\n");
+        puts("memory allocation error.\n");
         exit(1);
     }
 
