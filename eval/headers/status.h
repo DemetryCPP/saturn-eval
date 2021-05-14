@@ -7,7 +7,8 @@ typedef enum Status_code
     sc_unexped_token,
     sc_brackets_error,
     sc_is_not_defined,
-    sc_is_not_a_function
+    sc_is_not_a_function,
+    sc_unexped_end_of_line
 } Status_code_e;
 
 typedef struct Status

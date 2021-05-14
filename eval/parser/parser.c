@@ -8,6 +8,12 @@
 
 void parser(Node_s *node, Status_s *status, Operator_s **operators)
 {
+    if (node->length == 0)
+    {
+        status->code = sc_unexped_end_of_line;
+        return;
+    }
+    
     node->divider_pos = find_divider_pos(node->tokens, node->length, operators);
     if (node->divider_pos == -1)
     {
