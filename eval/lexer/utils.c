@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "../headers/lexer.h"
+#include "lexer.h"
 
 Token_s *new_token(Tokens_e type, char value)
 {

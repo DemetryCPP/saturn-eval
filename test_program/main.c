@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define _USE_MISC 1
+#define __USE_MISC 1
 #include <math.h>
 
-#include "../eval/headers/eval.h"
+#include "eval.h"
 
 #define BUFF_SIZE 100
 #define VERSION "3.0.2"

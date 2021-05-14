@@ -1,8 +1,8 @@
 #include <stdlib.h>
 
 #include "../headers/lexer_types.h"
-#include "../headers/solve_types.h"
-#include "../headers/solve.h"
+#include "solve_types.h"
+#include "solve.h"
 
 size_t find_divider_pos(Token_s **tokens, size_t tokens_count, Operator_s **operators)
 {

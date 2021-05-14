@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../headers/parser_types.h"
-#include "../headers/parser.h"
-#include "../headers/solve_types.h"
-#include "../headers/status.h"
+#include "parser_types.h"
+#include "parser.h"
+#include "solve_types.h"
+#include "status.h"
 
 void parser(Node_s *node, Status_s *status, Operator_s **operators)
 {

@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "../headers/lexer_types.h"
-#include "../headers/parser_types.h"
+#include "lexer_types.h"
+#include "parser_types.h"
 
 Node_s *new_node(Token_s **tokens, size_t length, Node_s *left, Node_s *right, char operator_sign, size_t divider_pos)
 {

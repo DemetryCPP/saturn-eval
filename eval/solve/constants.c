@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "../headers/solve_types.h"
+#include "solve_types.h"
 
 Constant_s *new_constant(char *name, double value)
 {

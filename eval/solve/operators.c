@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "../headers/solve_types.h"
+
+#include "solve_types.h"
 
 Operator_s *new_operator(char sign, unsigned short priority, operator_action_t action)
 {

@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../headers/parser_types.h"
-#include "../headers/lexer_types.h"
+#include "parser_types.h"
+#include "lexer_types.h"
 
 short check_brackets(Node_s *node)
 {

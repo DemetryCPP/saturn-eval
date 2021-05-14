@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../headers/lexer_types.h"
-#include "../headers/lexer.h"
-#include "../headers/parser_types.h"
-#include "../headers/solve_types.h"
-#include "../headers/solve.h"
-#include "../headers/status.h"
+#include "lexer_types.h"
+#include "lexer.h"
+#include "parser_types.h"
+#include "solve_types.h"
+#include "solve.h"
+#include "status.h"
 
 double get_value(char *text, Constant_s **constants, Status_s *status)
 {

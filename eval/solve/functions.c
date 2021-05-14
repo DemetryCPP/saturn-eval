@@ -3,8 +3,8 @@
 #include <string.h>
 #include <math.h>
 
-#include "../headers/solve_types.h"
-#include "../headers/status.h"
+#include "solve_types.h"
+#include "status.h"
 
 double function(char *fname, double arg, Status_s *status)
 {
