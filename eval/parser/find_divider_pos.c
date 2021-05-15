@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "../headers/lexer_types.h"
+#include "lexer.h"
 #include "solve_types.h"
 #include "solve.h"
 

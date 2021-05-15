@@ -1,5 +1,5 @@
 #pragma once
-#include "lexer_types.h"
+#include "lexer.h"
 typedef struct Node
 {
     struct Node *left;

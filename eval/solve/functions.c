@@ -6,6 +6,8 @@
 #include "solve_types.h"
 #include "status.h"
 
+#define isf(name) strcmp(fname, name) == 0 
+
 double function(char *fname, double arg, Status_s *status)
 {
     if (isf("sin")) return sin(arg);

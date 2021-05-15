@@ -15,8 +15,7 @@ void eval_free(Operator_s **operators, Token_s **tokens, size_t tokens_count, No
 {
     if (operators)
     {
-        for (size_t i = 0; i < OPERATORS_COUNT; i++) free(operators[i]);
-        free(operators);
+        free_operators(operators);
     }
 
     if (tokens)

@@ -3,7 +3,7 @@
 #include <stdbool.h>
 
 #include "parser_types.h"
-#include "lexer_types.h"
+#include "lexer.h"
 
 bool check_brackets(Node_s *node)
 {

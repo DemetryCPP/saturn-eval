@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 #include "solve_types.h"
+#define OPERATORS_COUNT 7
 
 Operator_s *new_operator(char sign, unsigned short priority, operator_action_t action)
 {
@@ -78,4 +79,19 @@ short get_priority(char _char, Operator_s **operators)
         if (operators[i]->sign == _char) return operators[i]->priority;
 
     return -1;
+}
+
+void free_operators(Operator_s **operators)
+{
+    for (size_t i = 0; i < OPERATORS_COUNT; i++) free(operators[i]);
+    free(operators);
+}
+
+double execute_operator(char sign, Operator_s **operators, double left, double right)
+{
+    for (size_t i = 0; i < OPERATORS_COUNT; i++)
+        if (operators[i]->sign == sign)
+            return operators[i]->action(left, right);
+
+    return 0;
 }

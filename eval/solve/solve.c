@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "lexer_types.h"
 #include "lexer.h"
 #include "parser_types.h"
 #include "solve_types.h"
 #include "solve.h"
 #include "status.h"
+
+#define status_ret if (status->code != sc_ok) return -1;
 
 double get_value(char *text, Constant_s **constants, Status_s *status)
 {
@@ -58,7 +59,5 @@ double solve(Node_s *node, Status_s *status, Operator_s **operators, Constant_s 
     right = solve(node->right, status, operators, constants);
     status_ret
 
-    for (size_t i = 0; i < OPERATORS_COUNT; i++)
-        if (operators[i]->sign == node->operator_sign)
-            return operators[i]->action(left, right);
+    return execute_operator(node->operator_sign, operators, left, right);
 }
