@@ -52,6 +52,12 @@ int main(int argc, char *argv[])
                 exit(1);
             }
 
+            if (strcmp(name, "e") == 0 || strcmp(name, "pi") == 0)
+            {
+                puts("name of constant cannot coincide with standard.");
+                exit(1);
+            }
+
             double value = atof(strtok(NULL, "="));
             Constant_s *new_const = new_constant(name, value);
             new_const->name = name;
