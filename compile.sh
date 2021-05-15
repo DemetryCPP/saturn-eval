@@ -11,7 +11,6 @@ FILES="eval/lexer/utils.c
        eval/solve/operators.c 
        eval/solve/solve.c 
        eval/free.c 
-       eval/eval.c 
-       test_program/main.c"
+       eval/eval.c"
 
-$CC $FILES $FLAGS
+$CC $FILES $1 $FLAGS
