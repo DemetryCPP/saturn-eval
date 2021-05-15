@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#define __USE_MISC 1
 #include <math.h>
 #include <string.h>
-#define __USE_MISC 1
 #include "eval.h"
 
 void REPL(Constant_s **constants);
@@ -11,8 +11,8 @@ int main(int argc, char *argv[])
 {
     printf("Welcome to REPL for Saturn Eval v%s\nType \".exit\" to exit, \".help\" to more information\n", VERSION);
 
-    Constant_s **constants = malloc((argc + 2) * sizeof(Constant_s));
-    size_t constants_count = 3;
+    Constant_s **constants = malloc((argc + 2) * sizeof(Constant_s *));
+    size_t constants_count = 2;
 
     if (!constants)
     {
@@ -58,6 +58,8 @@ int main(int argc, char *argv[])
         }
         }
     }
+
+    constants[constants_count] = new_constant("", 0);
 
     REPL(constants);
 }
