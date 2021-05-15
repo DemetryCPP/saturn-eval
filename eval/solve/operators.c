@@ -9,7 +9,7 @@ Operator_s *new_operator(char sign, unsigned short priority, operator_action_t a
 {
     Operator_s *result = (Operator_s *)malloc(sizeof(Operator_s));
     
-    if (result == NULL)
+    if (!result)
     {
         puts("memory allocation error.");
         exit(1);
@@ -46,7 +46,7 @@ Operator_s **init_operators()
 {
     Operator_s **operators = (Operator_s **)malloc(OPERATORS_COUNT * sizeof(Operator_s *));
 
-    if (operators == NULL)
+    if (!operators)
     {
         puts("memory allocation error.");
         exit(1);

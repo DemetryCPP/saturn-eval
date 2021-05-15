@@ -7,7 +7,7 @@ Constant_s *new_constant(char *name, double value)
 {
     Constant_s *result = (Constant_s *)malloc(sizeof(Constant_s));
     
-    if (result == NULL)
+    if (!result)
     {
         puts("memory allocation error.");
         exit(1);

@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     Status_s *status = (Status_s *)malloc(sizeof(Status_s));
     size_t constants_count = 0;
 
-    if (constants == NULL || input == NULL || status == NULL)
+    if (!constants || !input || !status)
     {
         puts("memory allocation error.");
         exit(1);
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
             {
                 char *copy = (char *)malloc(strlen(argv[i] + 2) * sizeof(char)), *name;
 
-                if (copy == NULL)
+                if (!copy)
                 {
                     puts("memory allocation error.");
                     exit(1);
@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
                 strcpy(copy, argv[i] + 2);
                 name = strtok(copy, "=");
 
-                if (name == NULL)
+                if (!name)
                 {
                     puts("invalid -d flag use.");
                     exit(1);
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
                 FILE *fptr = fopen("eval/functions_list.txt", "r");
                 char *text = (char *)calloc(400, sizeof(char));
 
-                if (fptr == NULL || text == NULL)
+                if (!fptr || !text)
                 {
                     printf("an error occurred while opening the file\n");
                     exit(1);

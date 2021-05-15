@@ -5,7 +5,7 @@ Token_s *new_token(Tokens_e type, char value)
 {
     Token_s *result = (Token_s *)malloc(sizeof(Token_s));
 
-    if (result == NULL)
+    if (!result)
     {
         puts("memory allocation error.");
         exit(1);
@@ -40,7 +40,7 @@ char *tokens_to_text(Token_s **tokens, size_t length)
 {
     char *result = (char *)malloc(length * sizeof(char));
 
-    if (result == NULL)
+    if (!result)
     {
         puts("memory allocation error.\n");
         exit(1);
