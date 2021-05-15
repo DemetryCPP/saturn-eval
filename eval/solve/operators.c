@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdbool.h>
 
 #include "solve_types.h"
 
@@ -62,13 +63,13 @@ Operator_s **init_operators()
     return operators;
 }
 
-short check_operator(char _char, Operator_s **operators)
+bool check_operator(char _char, Operator_s **operators)
 {
     for (size_t i = 0; i < OPERATORS_COUNT; i++)
         if (operators[i]->sign == _char) 
-            return 1;
+            return true;
 
-    return 0;
+    return false;
 }
 
 short get_priority(char _char, Operator_s **operators)

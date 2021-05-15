@@ -1,5 +1,8 @@
 #pragma once
+
 #include <stdio.h>
+#include <stdbool.h>
+
 #include "parser.h"
 #include "parser_types.h"
 #include "solve_types.h"
@@ -18,7 +21,7 @@ double exponentation(double left, double right);
 
 Operator_s **init_operators();
 
-short check_operator(char _char, Operator_s **operators);
+bool check_operator(char _char, Operator_s **operators);
 short get_priority(char _char, Operator_s **operators);
 double function(char *fname, double arg, Status_s *status);
 
