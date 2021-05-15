@@ -7,6 +7,8 @@
 
 void REPL(Constant_s **constants)
 {
+    printf("Welcome to REPL for Saturn Eval v%s\nType \".exit\" to exit, \".help\" to more information\n", VERSION);
+
     char *input = malloc(BUFF_SIZE * sizeof(char));
     Status_s *status = malloc(sizeof(Status_s));
     while (1)

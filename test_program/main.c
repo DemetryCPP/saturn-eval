@@ -9,8 +9,6 @@ void REPL(Constant_s **constants);
 
 int main(int argc, char *argv[])
 {
-    printf("Welcome to REPL for Saturn Eval v%s\nType \".exit\" to exit, \".help\" to more information\n", VERSION);
-
     Constant_s **constants = malloc((argc + 2) * sizeof(Constant_s *));
     size_t constants_count = 2;
 
@@ -33,6 +31,13 @@ int main(int argc, char *argv[])
         {
             char *copy = malloc(strlen(current + 2) * sizeof(char)), 
                  *name;
+
+            if (current[2] == '=')
+            {
+                puts("Const name must be no null!");
+                exit(1);
+            }
+            
             if (!copy)
             {
                 puts("memory allocation error.");
@@ -41,7 +46,6 @@ int main(int argc, char *argv[])
 
             strcpy(copy, current + 2);
             name = strtok(copy, "=");
-
             if (!name)
             {
                 puts("invalid -d flag usage.");
