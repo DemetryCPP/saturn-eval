@@ -130,6 +130,9 @@ int main(int argc, char *argv[])
             printf("Unexped end of input\n");
             break;
 
+        case sc_zero_tokens:
+            continue;
+
         case sc_ok:
             printf("%g\n", result);
             break;

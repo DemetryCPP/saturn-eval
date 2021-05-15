@@ -73,13 +73,17 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, Status_s *status, Op
     }
 
     *tokens_count_ptr = tokens_count;
-    tokens = realloc(tokens, tokens_count * sizeof(Token_s *));
+    if (tokens_count == 0)
+        status->code = sc_zero_tokens;
+    else
+        tokens = realloc(tokens, tokens_count * sizeof(Token_s *));
 
     if (!tokens)
     {
         puts("memory allocation error.");
         exit(1);
     }
+
 
     return tokens;
 }
