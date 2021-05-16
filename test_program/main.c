@@ -7,10 +7,6 @@
 
 void REPL(Constant_s **constants);
 
-bool check_coincidences(Constant_s **constants) {
-    
-}
-
 int main(int argc, char *argv[])
 {
     Constant_s **constants = malloc((argc + 2) * sizeof(Constant_s *));

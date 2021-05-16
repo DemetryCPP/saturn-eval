@@ -8,7 +8,7 @@
 
 Operator_s *new_operator(char sign, unsigned short priority, operator_action_t action)
 {
-    Operator_s *result = (Operator_s *)malloc(sizeof(Operator_s));
+    Operator_s *result = malloc(sizeof(Operator_s));
     
     if (!result)
     {
@@ -45,7 +45,7 @@ double exponentiation(double base, double exponent)
 
 Operator_s **init_operators()
 {
-    Operator_s **operators = (Operator_s **)malloc(OPERATORS_COUNT * sizeof(Operator_s *));
+    Operator_s **operators = malloc(OPERATORS_COUNT * sizeof(Operator_s *));
 
     if (!operators)
     {

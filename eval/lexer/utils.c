@@ -3,7 +3,7 @@
 
 Token_s *new_token(Tokens_e type, char value)
 {
-    Token_s *result = (Token_s *)malloc(sizeof(Token_s));
+    Token_s *result = malloc(sizeof(Token_s));
 
     if (!result)
     {
@@ -38,7 +38,7 @@ void lexer_log(Token_s *token)
 
 char *tokens_to_text(Token_s **tokens, size_t length)
 {
-    char *result = (char *)malloc(length * sizeof(char));
+    char *result = malloc(length * sizeof(char));
 
     if (!result)
     {

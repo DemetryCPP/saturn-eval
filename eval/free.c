@@ -14,9 +14,7 @@ void free_tree(Node_s *node)
 void eval_free(Operator_s **operators, Token_s **tokens, size_t tokens_count, Node_s *head)
 {
     if (operators)
-    {
         free_operators(operators);
-    }
 
     if (tokens)
     {
@@ -24,5 +22,6 @@ void eval_free(Operator_s **operators, Token_s **tokens, size_t tokens_count, No
         free(tokens);
     }
 
-    if (head) free_tree(head);
+    if (head) 
+        free_tree(head);
 }

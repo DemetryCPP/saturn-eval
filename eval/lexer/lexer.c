@@ -11,7 +11,7 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, Status_s *status, Op
            tokens_count = 0,
            brackets = 0;
 
-    Token_s **tokens = (Token_s **)malloc(expression_length * sizeof(Token_s *)),
+    Token_s **tokens = malloc(expression_length * sizeof(Token_s *)),
             *empty_token = new_token(t_none, '\0');
 
     if (!tokens)
@@ -83,7 +83,6 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, Status_s *status, Op
         puts("memory allocation error.");
         exit(1);
     }
-
 
     return tokens;
 }

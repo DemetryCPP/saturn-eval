@@ -30,7 +30,7 @@ void REPL(Constant_s **constants)
             else if (strcmp(input, "funcs")) 
             {
                 FILE *fptr = fopen("eval/functions_list.txt", "r");
-                char *text = (char *)calloc(400, sizeof(char));
+                char *text = calloc(400, sizeof(char));
 
                 if (!fptr || !text)
                 {

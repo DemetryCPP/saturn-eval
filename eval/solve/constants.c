@@ -5,7 +5,7 @@
 
 Constant_s *new_constant(char *name, double value)
 {
-    Constant_s *result = (Constant_s *)malloc(sizeof(Constant_s));
+    Constant_s *result = malloc(sizeof(Constant_s));
     
     if (!result)
     {

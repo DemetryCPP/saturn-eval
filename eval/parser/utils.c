@@ -6,7 +6,7 @@
 
 Node_s *new_node(Token_s **tokens, size_t length, Node_s *left, Node_s *right, char operator_sign, size_t divider_pos)
 {
-    Node_s *result = (Node_s *)malloc(sizeof(Node_s));
+    Node_s *result = malloc(sizeof(Node_s));
 
     if (!result)
     {

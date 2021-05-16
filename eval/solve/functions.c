@@ -35,7 +35,7 @@ double function(char *fname, double arg, Status_s *status)
      || isf("tgh")) return tanh(arg);
 
     status->code = sc_is_not_a_function;
-    status->data2 = (char *)malloc(strlen(fname) * sizeof(char));
+    status->data2 = malloc(strlen(fname) * sizeof(char));
     strcpy(status->data2, fname);
 
     return -1;
