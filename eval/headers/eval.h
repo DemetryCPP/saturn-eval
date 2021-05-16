@@ -5,7 +5,7 @@
 #include "solve.h"
 #include "status.h"
 
-#define VERSION "3.0.3"
+#define VERSION "3.0.4"
 
 double eval(char *, Status_s *, Constant_s **);
 void free_tree(Node_s *);

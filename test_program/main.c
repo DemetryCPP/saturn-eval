@@ -7,6 +7,10 @@
 
 void REPL(Constant_s **constants);
 
+bool check_coincidences(Constant_s **constants) {
+    
+}
+
 int main(int argc, char *argv[])
 {
     Constant_s **constants = malloc((argc + 2) * sizeof(Constant_s *));
@@ -57,6 +61,13 @@ int main(int argc, char *argv[])
                 puts("name of constant cannot coincide with standard.");
                 exit(1);
             }
+
+            for (size_t i = 2; i < constants_count; i++)
+                if (strcmp(constants[i]->name, name) == 0) 
+                {
+                    puts("names of constants cannot coincide");
+                    exit(1);
+                }
 
             double value = atof(strtok(NULL, "="));
             Constant_s *new_const = new_constant(name, value);
