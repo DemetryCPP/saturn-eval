@@ -1,5 +1,5 @@
 #pragma once
-typedef enum Tokens
+typedef enum Tokens_t
 {
     t_none,
     t_number,
@@ -7,10 +7,10 @@ typedef enum Tokens
     t_decimal_seporator,
     t_brackets,
     t_text
-} Tokens_e;
+} Tokens_t;
 
-typedef struct Token
+typedef struct Token_t
 {
-    Tokens_e type;
+    Tokens_t type;
     char value;
-} Token_s;
+} Token_t;

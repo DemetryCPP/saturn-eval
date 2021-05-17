@@ -7,6 +7,6 @@
 
 #define VERSION "3.0.4"
 
-double eval(char *, Status_s *, Constant_s **);
-void free_tree(Node_s *);
-void eval_free(Operator_s **, Token_s **, size_t, Node_s *);
+double eval(char *, Status_t *, Constant_t **);
+void free_tree(Node_t *);
+void eval_free(Operator_t **, Token_t **, size_t, Node_t *);

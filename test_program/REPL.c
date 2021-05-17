@@ -5,16 +5,16 @@
 
 #define BUFF_SIZE 100
 
-void REPL(Constant_s **constants)
+void REPL(Constant_t **constants)
 {
     printf("Welcome to REPL for Saturn Eval v%s\nType \".exit\" to exit, \".help\" to more information\n", VERSION);
 
     char *input = malloc(BUFF_SIZE * sizeof(char));
-    Status_s *status = malloc(sizeof(Status_s));
+    Status_t *status = malloc(sizeof(Status_t));
     while (1)
     {
         memset(input, 0, BUFF_SIZE);
-        memset(status, 0, sizeof(Status_s));
+        memset(status, 0, sizeof(Status_t));
 
         printf("> ");
         fgets(input, BUFF_SIZE, stdin);

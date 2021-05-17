@@ -5,13 +5,13 @@
 #include "solve.h"
 #include "status.h"
 
-Token_s **lexer(char *expression, size_t *tokens_count_ptr, Status_s *status, Operator_s **operators)
+Token_t **lexer(char *expression, size_t *tokens_count_ptr, Status_t *status, Operator_t **operators)
 {
     size_t expression_length = strlen(expression),
            tokens_count = 0,
            brackets = 0;
 
-    Token_s **tokens = malloc(expression_length * sizeof(Token_s *)),
+    Token_t **tokens = malloc(expression_length * sizeof(Token_t *)),
             *empty_token = new_token(t_none, '\0');
 
     if (!tokens)
@@ -23,8 +23,8 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, Status_s *status, Op
     for (size_t i = 0; i < expression_length; i++)
     {
         char current = expression[i];
-        Tokens_e type = t_none;
-        Token_s *last = tokens_count ? tokens[tokens_count - 1] : empty_token;
+        Tokens_t type = t_none;
+        Token_t *last = tokens_count ? tokens[tokens_count - 1] : empty_token;
 
         if (current >= '0' && current <= '9'
             && !(last->type && last->value != '(' && last->type != t_number && last->type != t_decimal_seporator && last->type != t_operators))
@@ -76,7 +76,7 @@ Token_s **lexer(char *expression, size_t *tokens_count_ptr, Status_s *status, Op
     if (tokens_count == 0)
         status->code = sc_zero_tokens;
     else
-        tokens = realloc(tokens, tokens_count * sizeof(Token_s *));
+        tokens = realloc(tokens, tokens_count * sizeof(Token_t *));
 
     if (!tokens)
     {

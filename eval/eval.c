@@ -1,11 +1,11 @@
 #include <stdlib.h>
 #include "eval.h"
 
-double eval(char *expression, Status_s *status, Constant_s **constants)
+double eval(char *expression, Status_t *status, Constant_t **constants)
 {
     size_t tokens_count;
-    Operator_s **operators = init_operators();
-    Token_s **tokens = lexer(expression, &tokens_count, status, operators);
+    Operator_t **operators = init_operators();
+    Token_t **tokens = lexer(expression, &tokens_count, status, operators);
 
     if (status->code != sc_ok)
     {
@@ -13,7 +13,7 @@ double eval(char *expression, Status_s *status, Constant_s **constants)
         return 0.0;
     }
 
-    Node_s *head = new_node(tokens, tokens_count, NULL, NULL, 0, 0);
+    Node_t *head = new_node(tokens, tokens_count, NULL, NULL, 0, 0);
     parser(head, status, operators);
     
     if (status->code != sc_ok)

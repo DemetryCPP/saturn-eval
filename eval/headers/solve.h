@@ -8,15 +8,15 @@
 #include "solve_types.h"
 #include "status.h"
 
-Constant_s *new_constant(char *, double);
-Operator_s *new_operator(char, short, operator_action_t);
-Operator_s **init_operators();
+Constant_t *new_constant(char *, double);
+Operator_t *new_operator(char, short, operator_action_t);
+Operator_t **init_operators();
 
-double execute_operator(char, Operator_s **, double, double);
-double function(char *, double, Status_s *);
-double get_value(char *, Constant_s **, Status_s *);
-double solve(Node_s *, Status_s *, Operator_s **, Constant_s **);
+double execute_operator(char, Operator_t **, double, double);
+double function(char *, double, Status_t *);
+double get_value(char *, Constant_t **, Status_t *);
+double solve(Node_t *, Status_t *, Operator_t **, Constant_t **);
 
-short get_priority(char, Operator_s **);
-bool check_operator(char, Operator_s **);
-void free_operators(Operator_s **);
+short get_priority(char, Operator_t **);
+bool check_operator(char, Operator_t **);
+void free_operators(Operator_t **);

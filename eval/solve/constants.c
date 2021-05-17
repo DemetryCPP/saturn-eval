@@ -3,9 +3,9 @@
 
 #include "solve_types.h"
 
-Constant_s *new_constant(char *name, double value)
+Constant_t *new_constant(char *name, double value)
 {
-    Constant_s *result = malloc(sizeof(Constant_s));
+    Constant_t *result = malloc(sizeof(Constant_t));
     
     if (!result)
     {

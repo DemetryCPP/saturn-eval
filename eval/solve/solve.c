@@ -10,13 +10,13 @@
 
 #define status_ret if (status->code != sc_ok) return -1;
 
-double get_value(char *text, Constant_s **constants, Status_s *status)
+double get_value(char *text, Constant_t **constants, Status_t *status)
 {
     if (text[0] >= 'a' && text[0] <= 'z' || text[0] >= 'A' && text[0] <= 'Z')
     {
         for (size_t i = 0; constants[i]->name[0] != '\0'; i++)
         {
-            Constant_s *current = constants[i];
+            Constant_t *current = constants[i];
 
             if (strcmp(current->name, text) == 0) return current->value;
         }
@@ -30,12 +30,12 @@ double get_value(char *text, Constant_s **constants, Status_s *status)
     else return atof(text);
 }
 
-double solve(Node_s *node, Status_s *status, Operator_s **operators, Constant_s **constants)
+double solve(Node_t *node, Status_t *status, Operator_t **operators, Constant_t **constants)
 {
     status_ret
     double left, right, result;
 
-    if (node->operator_sign == '\0')
+    if (node->Operator_tign == '\0')
     {
         char *text = tokens_to_text(node->tokens, node->length);
         double result = get_value(text, constants, status);
@@ -43,7 +43,7 @@ double solve(Node_s *node, Status_s *status, Operator_s **operators, Constant_s 
         return result;
     }
 
-    if (node->operator_sign == 'f')
+    if (node->Operator_tign == 'f')
     {
         double arg = solve(node->right, status, operators, constants);
         status_ret
@@ -59,5 +59,5 @@ double solve(Node_s *node, Status_s *status, Operator_s **operators, Constant_s 
     right = solve(node->right, status, operators, constants);
     status_ret
 
-    return execute_operator(node->operator_sign, operators, left, right);
+    return execute_operator(node->Operator_tign, operators, left, right);
 }

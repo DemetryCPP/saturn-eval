@@ -14,8 +14,8 @@
 
 bool test(char *expression, double expected)
 {
-    Status_s *status = malloc(sizeof(Status_s));
-    Constant_s **constants = malloc(3 * sizeof(Status_s));
+    Status_t *status = malloc(sizeof(Status_t));
+    Constant_t **constants = malloc(3 * sizeof(Status_t));
     constants[0] = new_constant("e", M_E);
     constants[1] = new_constant("pi", M_PI);
     constants[2] = new_constant("", 0);

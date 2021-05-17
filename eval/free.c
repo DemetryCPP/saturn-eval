@@ -3,7 +3,7 @@
 
 #include "eval.h"
 
-void free_tree(Node_s *node)
+void free_tree(Node_t *node)
 {
     if (node->left) free_tree(node->left);
     if (node->right) free_tree (node->right);
@@ -11,7 +11,7 @@ void free_tree(Node_s *node)
     free(node);
 }
 
-void eval_free(Operator_s **operators, Token_s **tokens, size_t tokens_count, Node_s *head)
+void eval_free(Operator_t **operators, Token_t **tokens, size_t tokens_count, Node_t *head)
 {
     if (operators)
         free_operators(operators);

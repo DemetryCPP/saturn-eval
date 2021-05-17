@@ -4,11 +4,13 @@
 #include <stdbool.h>
 
 #include "solve_types.h"
-#define OPERATORS_COUNT 7
 
-Operator_s *new_operator(char sign, unsigned short priority, operator_action_t action)
+#define OPERATORS_COUNT 7
+#define OPERATION(name, action) double name(double left, double right) { return action; }
+
+Operator_t *new_operator(char sign, unsigned short priority, operator_action_t action)
 {
-    Operator_s *result = malloc(sizeof(Operator_s));
+    Operator_t *result = malloc(sizeof(Operator_t));
     
     if (!result)
     {
@@ -22,30 +24,16 @@ Operator_s *new_operator(char sign, unsigned short priority, operator_action_t a
     return result;
 }
 
-double add(double left, double right)
-{ return left + right; }
+OPERATION(add, left + right)
+OPERATION(differency, left - right)
+OPERATION(product, left * right)
+OPERATION(division, left / right)
+OPERATION(modulo_division, left - right * floor(left / right))
+OPERATION(whole_division, round(left / right))
 
-double differency(double left, double right)
-{ return left - right; }
-
-double product(double left, double right) 
-{ return left * right; }
-
-double division(double left, double right)
-{ return left / right; }
-
-double modulo_division(double left, double right) 
-{ return left - right  * floor(left / right);}
-
-double whole_division(double left, double right)
-{ return round(left / right); }
-
-double exponentiation(double base, double exponent)
-{ return pow(base, exponent); }
-
-Operator_s **init_operators()
+Operator_t **init_operators()
 {
-    Operator_s **operators = malloc(OPERATORS_COUNT * sizeof(Operator_s *));
+    Operator_t **operators = malloc(OPERATORS_COUNT * sizeof(Operator_t *));
 
     if (!operators)
     {
@@ -59,12 +47,12 @@ Operator_s **init_operators()
     operators[3] = new_operator('/', 2, division);
     operators[4] = new_operator('%', 2, modulo_division);
     operators[5] = new_operator('\\', 2, whole_division);
-    operators[6] = new_operator('^', 3, exponentiation);
+    operators[6] = new_operator('^', 3, pow);
 
     return operators;
 }
 
-bool check_operator(char _char, Operator_s **operators)
+bool check_operator(char _char, Operator_t **operators)
 {
     for (size_t i = 0; i < OPERATORS_COUNT; i++)
         if (operators[i]->sign == _char) 
@@ -73,7 +61,7 @@ bool check_operator(char _char, Operator_s **operators)
     return false;
 }
 
-short get_priority(char _char, Operator_s **operators)
+short get_priority(char _char, Operator_t **operators)
 {
     for (size_t i = 0; i < OPERATORS_COUNT; i++)
         if (operators[i]->sign == _char) return operators[i]->priority;
@@ -81,13 +69,13 @@ short get_priority(char _char, Operator_s **operators)
     return -1;
 }
 
-void free_operators(Operator_s **operators)
+void free_operators(Operator_t **operators)
 {
     for (size_t i = 0; i < OPERATORS_COUNT; i++) free(operators[i]);
     free(operators);
 }
 
-double execute_operator(char sign, Operator_s **operators, double left, double right)
+double execute_operator(char sign, Operator_t **operators, double left, double right)
 {
     for (size_t i = 0; i < OPERATORS_COUNT; i++)
         if (operators[i]->sign == sign)

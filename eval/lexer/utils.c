@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include "lexer.h"
 
-Token_s *new_token(Tokens_e type, char value)
+Token_t *new_token(Tokens_t type, char value)
 {
-    Token_s *result = malloc(sizeof(Token_s));
+    Token_t *result = malloc(sizeof(Token_t));
 
     if (!result)
     {
@@ -22,7 +22,7 @@ void lexer_unexped_token(char token, size_t position)
     printf("unexted token '%c' at %ld\n", token, position);
 }
 
-void lexer_log(Token_s *token)
+void lexer_log(Token_t *token)
 {
     switch (token->type)
     {
@@ -36,7 +36,7 @@ void lexer_log(Token_s *token)
     printf(" %c\n", token->value);
 }
 
-char *tokens_to_text(Token_s **tokens, size_t length)
+char *tokens_to_text(Token_t **tokens, size_t length)
 {
     char *result = malloc(length * sizeof(char));
 

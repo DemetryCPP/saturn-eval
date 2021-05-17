@@ -5,14 +5,14 @@
 #include "parser_types.h"
 #include "lexer.h"
 
-bool check_brackets(Node_s *node)
+bool check_brackets(Node_t *node)
 {
     size_t brackets = 0;
     if (node->tokens[0]->type != t_brackets || node->tokens[node->length - 1]->type != t_brackets) return false;
 
     for (size_t i = 0; i < node->length; i++)
     {
-        Token_s *current = node->tokens[i];
+        Token_t *current = node->tokens[i];
 
         if (current->type != t_brackets) continue;
 
@@ -25,7 +25,7 @@ bool check_brackets(Node_s *node)
     return true;
 }
 
-void remove_brackets(Node_s *node)
+void remove_brackets(Node_t *node)
 {
     while (check_brackets(node))
     {

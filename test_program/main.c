@@ -5,11 +5,11 @@
 #include <string.h>
 #include "eval.h"
 
-void REPL(Constant_s **constants);
+void REPL(Constant_t **constants);
 
 int main(int argc, char *argv[])
 {
-    Constant_s **constants = malloc((argc + 2) * sizeof(Constant_s *));
+    Constant_t **constants = malloc((argc + 2) * sizeof(Constant_t *));
     size_t constants_count = 2;
 
     if (!constants)
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
                 }
 
             double value = atof(strtok(NULL, "="));
-            Constant_s *new_const = new_constant(name, value);
+            Constant_t *new_const = new_constant(name, value);
             new_const->name = name;
             new_const->value = value;
             constants[constants_count++] = new_const;

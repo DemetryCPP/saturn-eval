@@ -8,7 +8,7 @@
 
 #define isf(name) strcmp(fname, name) == 0 
 
-double function(char *fname, double arg, Status_s *status)
+double function(char *fname, double arg, Status_t *status)
 {
     if (isf("sin")) return sin(arg);
     if (isf("cos")) return cos(arg);

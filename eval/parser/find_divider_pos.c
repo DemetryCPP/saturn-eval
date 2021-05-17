@@ -4,12 +4,12 @@
 #include "solve_types.h"
 #include "solve.h"
 
-size_t find_divider_pos(Token_s **tokens, size_t tokens_count, Operator_s **operators)
+size_t find_divider_pos(Token_t **tokens, size_t tokens_count, Operator_t **operators)
 {
     int position = -1, brackets = 0, priority = 5;
     for (int i = tokens_count - 1; i >= 0; i--)
     {
-        Token_s *current = tokens[i];
+        Token_t *current = tokens[i];
 
         if (current->type == t_brackets) 
         {

@@ -4,9 +4,9 @@
 #include "lexer.h"
 #include "parser_types.h"
 
-Node_s *new_node(Token_s **tokens, size_t length, Node_s *left, Node_s *right, char operator_sign, size_t divider_pos)
+Node_t *new_node(Token_t **tokens, size_t length, Node_t *left, Node_t *right, char Operator_tign, size_t divider_pos)
 {
-    Node_s *result = malloc(sizeof(Node_s));
+    Node_t *result = malloc(sizeof(Node_t));
 
     if (!result)
     {
@@ -18,7 +18,7 @@ Node_s *new_node(Token_s **tokens, size_t length, Node_s *left, Node_s *right, c
     result->length = length;
     result->left = left;
     result->right = right;
-    result->operator_sign = operator_sign;
+    result->Operator_tign = Operator_tign;
     result->divider_pos = divider_pos;
 
     return result;
