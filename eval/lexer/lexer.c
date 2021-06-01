@@ -31,11 +31,11 @@ Token_t **lexer(char *expression, size_t *tokens_count_ptr, Status_t *status, Op
             type = t_number;
 
         else if (check_operator(current, operators)
-            && !((last->type == t_none && current != '-')
+             && !((last->type == t_none && current != '-')
                 || (last->type != t_text
                 && last->type != t_number
                 && last->value != ')'
-                && (current != '-' && (last->type == t_operators || last->value == '(')))))
+                && (current != '-' && (last->type == t_operators || last->value != '(')))))
             type = t_operators;
 
         else if (current == '.' && last->type == t_number)

@@ -8,13 +8,7 @@
 
 void parser(Node_t *node, Status_t *status, Operator_t **operators)
 {
-    if (node->length == 0)
-    {
-        if (node->tokens[-1]->value != '-') status->code = sc_unexped_end_of_line;
-        return;
-    }
     node->divider_pos = find_divider_pos(node->tokens, node->length, operators);
-
     if (node->divider_pos == -1)
     {
         remove_brackets(node);

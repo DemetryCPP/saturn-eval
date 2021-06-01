@@ -35,4 +35,5 @@ int main()
     test("2^5", 32);
     test("cos(12)^2 + sin(12)^2", 1);
     test("ln(e^10)", 10);
+    test("-1 - sin(-pi)", -1);
 }

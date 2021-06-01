@@ -35,6 +35,8 @@ double solve(Node_t *node, Status_t *status, Operator_t **operators, Constant_t 
     status_ret
     double left, right, result;
 
+    if (node->length == 0) return 0;
+
     if (node->Operator_tign == '\0')
     {
         char *text = tokens_to_text(node->tokens, node->length);
