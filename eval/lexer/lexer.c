@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "lexer.h"
 #include "solve.h"
@@ -14,6 +15,8 @@ Token_t **lexer(char *expression, size_t *tokens_count_ptr, Status_t *status, Op
     Token_t **tokens = malloc(expression_length * sizeof(Token_t *)),
             *empty_token = new_token(t_none, '\0');
 
+    bool operator = false;
+
     if (!tokens)
     {
         puts("memory allocation error.");
@@ -25,6 +28,11 @@ Token_t **lexer(char *expression, size_t *tokens_count_ptr, Status_t *status, Op
         char current = expression[i];
         Tokens_t type = t_none;
         Token_t *last = tokens_count ? tokens[tokens_count - 1] : empty_token;
+        
+        if (current <= 33)
+            continue;
+        else
+            operator = false;
 
         if (current >= '0' && current <= '9'
             && !(last->type && last->value != '(' && last->type != t_number && last->type != t_decimal_seporator && last->type != t_operators))
@@ -36,7 +44,7 @@ Token_t **lexer(char *expression, size_t *tokens_count_ptr, Status_t *status, Op
                 && last->type != t_number
                 && last->value != ')'
                 && (current != '-' && (last->type == t_operators || last->value != '(')))))
-            type = t_operators;
+            type = t_operators, operator = true;
 
         else if (current == '.' && last->type == t_number)
             type = t_decimal_seporator;
@@ -77,6 +85,9 @@ Token_t **lexer(char *expression, size_t *tokens_count_ptr, Status_t *status, Op
         status->code = sc_zero_tokens;
     else
         tokens = realloc(tokens, tokens_count * sizeof(Token_t *));
+
+    if (operator)
+        status->code = sc_unexped_end_of_line;
 
     if (!tokens)
     {
