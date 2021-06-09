@@ -24,10 +24,12 @@ void REPL(Constant_t **constants)
         
         if (input[0] == '.')
         {
-            if (strcmp(input, ".exit\n") == 0) break;
+            input[strlen(input) - 1] = '\0';
+
+            if (strcmp(input, ".exit") == 0) break;
             else if (strcmp(input, ".help") == 0) 
                 printf("Git repository: https://github.com/DemetryF/Saturn-Eval\n\n7 operators: +, -, /, *, %%, \\, ^.\nBrackets: \"()\"\nDouble numbers: 2.1\nFunctions: sin(12). use .funcs in REPL to check functions list.\n");
-            else if (strcmp(input, "funcs")) 
+            else if (strcmp(input, ".funcs") == 0)
             {
                 FILE *fptr = fopen("eval/functions_list.txt", "r");
                 char *text = calloc(400, sizeof(char));
@@ -44,7 +46,6 @@ void REPL(Constant_t **constants)
                 free(text);
             }
             else printf("\"%s\" is not REPL command.\n", input);
-
             continue;
         }
 
