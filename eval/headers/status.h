@@ -4,11 +4,11 @@
 typedef enum Status_code_t
 {
     sc_ok,
-    sc_unexped_token,
+    sc_unexpected_token,
     sc_brackets_error,
     sc_is_not_defined,
     sc_is_not_a_function,
-    sc_unexped_end_of_line,
+    sc_unexpected_end_of_line,
     sc_zero_tokens
 } Status_code_t;
 

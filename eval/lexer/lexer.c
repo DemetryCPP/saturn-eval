@@ -60,7 +60,7 @@ Token_t **lexer(char *expression, size_t *tokens_count_ptr, Status_t *status, Op
 
         else if (current >= 33)
         {
-            status->code = sc_unexped_token;
+            status->code = sc_unexpected_token;
             *tokens_count_ptr = tokens_count;
             free(empty_token);
             status->data1 = i;
@@ -87,7 +87,7 @@ Token_t **lexer(char *expression, size_t *tokens_count_ptr, Status_t *status, Op
         tokens = realloc(tokens, tokens_count * sizeof(Token_t *));
 
     if (operator)
-        status->code = sc_unexped_end_of_line;
+        status->code = sc_unexpected_end_of_line;
 
     if (!tokens)
     {

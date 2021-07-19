@@ -17,7 +17,7 @@ Token_t *new_token(Tokens_t type, char value)
     return result;
 }
 
-void lexer_unexped_token(char token, size_t position)
+void lexer_unexpected_token(char token, size_t position)
 {
     printf("unexted token '%c' at %ld\n", token, position);
 }
