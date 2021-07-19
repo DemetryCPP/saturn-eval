@@ -53,8 +53,8 @@ void REPL(Constant_t **constants)
 
         switch (status->code)
         {
-        case sc_unexped_token:
-            printf("Unexped token '%c' at %ld\n", status->data3, status->data1 + 1);
+        case sc_unexpected_token:
+            printf("Unexpected token '%c' at %ld\n", status->data3, status->data1 + 1);
             break;
         
         case sc_brackets_error:
@@ -69,8 +69,8 @@ void REPL(Constant_t **constants)
             printf("'%s' is not a function\n", status->data2);
             break;
 
-        case sc_unexped_end_of_line:
-            printf("Unexped end of input\n");
+        case sc_unexpected_end_of_line:
+            printf("Unexpected end of input\n");
             break;
 
         case sc_zero_tokens:
