@@ -1,0 +1,7 @@
+expr = expr Add_Op term
+     | term;
+
+term = term Mul_Op fact
+     | fact;
+
+fact = num;
