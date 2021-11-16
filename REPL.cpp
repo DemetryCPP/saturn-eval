@@ -19,6 +19,18 @@ int main(int argc, char const *argv[])
         if (input == ".exit")
             break;
 
-        std::cout << eval(input) << std::endl;
+        double result;    
+
+        try
+        {
+            result = eval(input);
+        }
+        catch(const std::exception& e)
+        {
+            std::cout << e.what() << std::endl;
+            continue;
+        }
+
+        std::cout << result << std::endl;
     }
 }

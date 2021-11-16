@@ -5,6 +5,7 @@
 #include "lexer.hpp"
 
 Token::Token(Token::Type type, std::string value) : type(type), value(value){};
+Token::Token() : type(Token::Type::Null), value("") {};
 Token::Lexer::Lexer(std::string expression) : expression(expression){};
 
 bool Token::isNumber(char c)
@@ -48,8 +49,18 @@ Token Token::Lexer::next()
     // check number
     if (Token::isNumber(this->current()))
     {
-        while (Token::isNumber(this->current()))
+        bool isDouble = false;
+
+        while (Token::isNumber(this->current()) || this->current() == '.')
+        {
             buffer += this->peek();
+
+            if (this->current() == '.')
+                if (isDouble) 
+                    throw std::invalid_argument(std::string(2 + this->index, ' ') + "^\nUnexpected token '.'");
+                else
+                    isDouble = true;
+        }
 
         Token newtoken(Token::Type::Number, buffer);
 
@@ -78,11 +89,19 @@ std::vector<Token> Token::Lexer::allTokens()
 {
     std::vector<Token> tokens;
     Token token = this->next();
+    Token last{};
 
     while (token.type != Token::Type::Null)
     {
         tokens.push_back(token);
+        last = token;
         token = this->next();
+
+        if (token.type == last.type)
+            throw std::invalid_argument(
+                std::string(2 + this->index - token.value.length(), ' ') + 
+                "^" + std::string(token.value.length() - 1, '~') +
+                "\nUnexpected token \"" + token.value + "\"");
     }
 
     return tokens;

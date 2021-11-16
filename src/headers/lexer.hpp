@@ -16,6 +16,7 @@ public:
     };
 
     Token(Token::Type type, std::string value);
+    Token();
 
     Token::Type type;
     std::string value;

@@ -7,7 +7,7 @@
 double solve(Node node)
 {
     if (node.operators.size() == 0)
-        return std::stoi(node.value[0].value);
+        return std::stof(node.value[0].value);
 
     double result = solve(node.nodes[0]);
 
