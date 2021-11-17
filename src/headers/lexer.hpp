@@ -12,6 +12,8 @@ public:
         Number,
         Additive_Operator,
         Multiplicative_Operator,
+        Open_Bracket,
+        Closing_Bracket,
         Null
     };
 
@@ -46,6 +48,7 @@ public:
         std::vector<Token> allTokens();
 
         static void log(Token *token);
+        static void unexpectedToken(size_t pos, Token token);
         
         std::string expression;
     };

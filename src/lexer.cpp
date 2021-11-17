@@ -5,8 +5,16 @@
 #include "lexer.hpp"
 
 Token::Token(Token::Type type, std::string value) : type(type), value(value){};
-Token::Token() : type(Token::Type::Null), value("") {};
+Token::Token() : type(Token::Type::Null), value(""){};
 Token::Lexer::Lexer(std::string expression) : expression(expression){};
+
+void Token::Lexer::unexpectedToken(size_t pos, Token token)
+{
+    throw std::invalid_argument(
+        std::string(2 + pos - token.value.length(), ' ') +
+        "^" + std::string(token.value.length() - 1, '~') +
+        "\nUnexpected token \"" + token.value + "\"");
+};
 
 bool Token::isNumber(char c)
 {
@@ -56,7 +64,7 @@ Token Token::Lexer::next()
             buffer += this->peek();
 
             if (this->current() == '.')
-                if (isDouble) 
+                if (isDouble)
                     throw std::invalid_argument(std::string(2 + this->index, ' ') + "^\nUnexpected token '.'");
                 else
                     isDouble = true;
@@ -80,6 +88,14 @@ Token Token::Lexer::next()
     case '/':
         type = Token::Type::Multiplicative_Operator;
         break;
+
+    case '(':
+        type = Token::Type::Open_Bracket;
+        break;
+
+    case ')':
+        type = Token::Type::Closing_Bracket;
+        break;
     }
 
     return Token(type, std::string(1, this->peek()));
@@ -89,7 +105,15 @@ std::vector<Token> Token::Lexer::allTokens()
 {
     std::vector<Token> tokens;
     Token token = this->next();
-    Token last{};
+    Token last;
+    int brackets = 0;
+
+    if (token.type == Token::Type::Open_Bracket)
+        brackets++;
+    else if (token.type == Token::Type::Closing_Bracket 
+          || token.type == Token::Type::Additive_Operator 
+          || token.type == Token::Type::Multiplicative_Operator)
+        unexpectedToken(this->index, token);
 
     while (token.type != Token::Type::Null)
     {
@@ -97,12 +121,36 @@ std::vector<Token> Token::Lexer::allTokens()
         last = token;
         token = this->next();
 
-        if (token.type == last.type)
-            throw std::invalid_argument(
-                std::string(2 + this->index - token.value.length(), ' ') + 
-                "^" + std::string(token.value.length() - 1, '~') +
-                "\nUnexpected token \"" + token.value + "\"");
+        if (token.type == Token::Type::Open_Bracket) 
+        {
+            brackets++;
+
+            if ((last.type != Token::Type::Additive_Operator && last.type != Token::Type::Multiplicative_Operator && this->index != 0)
+            && last.type != Token::Type::Closing_Bracket)
+                Token::Lexer::unexpectedToken(this->index, token);
+        }
+        else if (token.type == Token::Type::Closing_Bracket)
+        {
+            brackets--;
+
+            if ((last.type != Token::Type::Number && last.type != Token::Type::Closing_Bracket) || brackets < 0)
+                Token::Lexer::unexpectedToken(this->index, token);
+
+            if (brackets < 0)
+                Token::Lexer::unexpectedToken(this->index, token);
+        } else if (((token.type == Token::Type::Number 
+                || token.type == Token::Type::Additive_Operator 
+                || token.type == Token::Type::Multiplicative_Operator)
+                && last.type == token.type)
+
+                || ((token.type == Token::Type::Additive_Operator
+                || token.type == Token::Type::Multiplicative_Operator)
+                && last.type == Token::Type::Open_Bracket))
+            Token::Lexer::unexpectedToken(this->index, token);
     }
+
+    if (brackets > 0)
+        throw std::invalid_argument("Unexpected end of input");
 
     return tokens;
 }
