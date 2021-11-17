@@ -125,7 +125,7 @@ std::vector<Token> Token::Lexer::allTokens()
         {
             brackets++;
 
-            if ((last.type != Token::Type::Additive_Operator && last.type != Token::Type::Multiplicative_Operator && this->index != 0)
+            if ((last.type != Token::Type::Additive_Operator && last.type != Token::Type::Multiplicative_Operator && last.type != Token::Type::Open_Bracket && this->index != 0)
             && last.type != Token::Type::Closing_Bracket)
                 Token::Lexer::unexpectedToken(this->index, token);
         }

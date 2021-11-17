@@ -36,13 +36,10 @@ void Node::parse()
     Token::Type separator_type = Token::Type::Null;
     int brackets = 0;
 
-    if (this->value[0].value == "(" && this->value[this->value.size() - 1].value == ")")
+    while (this->check_brackets())
     {
-        while (this->check_brackets())
-        {
-            this->value.erase(this->value.begin());
-            this->value.pop_back();
-        }
+        this->value.erase(this->value.begin());
+        this->value.erase(this->value.end());
     }
 
     for (size_t i = 0; i < this->value.size(); i++)
@@ -54,9 +51,12 @@ void Node::parse()
         else if (current.type == Token::Type::Closing_Bracket)
             brackets--;
 
-        if (brackets == 0 && current.type == Token::Type::Additive_Operator)
+        if (brackets != 0)
+            continue;
+
+        if (current.type == Token::Type::Additive_Operator)
             separator_type = Token::Type::Additive_Operator;
-        else if (brackets == 0 && current.type == Token::Type::Multiplicative_Operator && separator_type != Token::Type::Additive_Operator)
+        else if (current.type == Token::Type::Multiplicative_Operator && separator_type != Token::Type::Additive_Operator)
             separator_type = Token::Type::Multiplicative_Operator;
     }
 
@@ -65,11 +65,18 @@ void Node::parse()
 
     std::vector<Token> newvalue;
 
+    brackets = 0;
+
     for (size_t i = 0; i < this->value.size(); i++)
     {
         Token current = this->value[i];
 
-        if (current.type == separator_type)
+        if (current.type == Token::Type::Open_Bracket)
+            brackets++;
+        else if (current.type == Token::Type::Closing_Bracket)
+            brackets--;
+
+        if (current.type == separator_type && brackets == 0)
         {
             this->nodes.push_back(Node(std::vector<Node>(), newvalue));
             this->operators.push_back(current.value[0]);
