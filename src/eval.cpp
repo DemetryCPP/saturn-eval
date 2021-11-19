@@ -4,16 +4,19 @@
 
 #include "lexer.hpp"
 #include "parser.hpp"
+#include "environment.hpp"
 
-double solve(Node node);
+double solve(Node node, Environment env);
 
-double eval(std::string expr)
+double eval(std::string expr, Environment env)
 {
-    Token::Lexer lexer{expr};
+    env.stdinit();
+
+    Token::Lexer lexer{expr, env};
     std::vector<Token> tokens = lexer.allTokens();
 
     Node head = Node{tokens};
-    head.parse();
+    head.parse(env);
 
-    return solve(head);
+    return solve(head, env);
 }

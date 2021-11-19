@@ -2,6 +2,7 @@
 #include <string>
 
 #include "lexer.hpp"
+#include "environment.hpp"
 
 #pragma once
 
@@ -18,5 +19,5 @@ public:
     std::vector<Token> value;
     std::vector<char> operators;
 
-    void parse();
+    void parse(Environment env);
 };

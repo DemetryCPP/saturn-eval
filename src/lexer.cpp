@@ -3,10 +3,11 @@
 #include <iostream>
 
 #include "lexer.hpp"
+#include "environment.hpp"
 
 Token::Token(Token::Type type, std::string value) : type(type), value(value){};
 Token::Token() : type(Token::Type::Null), value(""){};
-Token::Lexer::Lexer(std::string expression) : expression(expression){};
+Token::Lexer::Lexer(std::string expression, Environment env) : expression(expression), env(env){};
 
 void Token::Lexer::unexpectedToken(size_t pos, Token token)
 {
@@ -28,15 +29,11 @@ void Token::Lexer::log(Token *token)
     switch (token->type)
     {
     case Token::Type::Number:
-        type = "[ NUMBER ]";
+        type = "[  NUMBER  ]";
         break;
 
-    case Token::Type::Additive_Operator:
-        type = "[ ADD_OP ]";
-        break;
-
-    case Token::Type::Multiplicative_Operator:
-        type = "[ MUL_OP ]";
+    case Token::Type::Operator:
+        type = "[ OPERATOR ]";
         break;
     }
 
@@ -65,38 +62,22 @@ Token Token::Lexer::next()
 
             if (this->current() == '.')
                 if (isDouble)
-                    throw std::invalid_argument(std::string(2 + this->index, ' ') + "^\nUnexpected token '.'");
+                    throw std::invalid_argument(std::string(2 + this->index, ' ') + "^\nUnexpected token '.'"); // ????
                 else
                     isDouble = true;
         }
-
-        Token newtoken(Token::Type::Number, buffer);
 
         return Token(Token::Type::Number, buffer);
     }
 
     Token::Type type;
 
-    switch (this->current())
-    {
-    case '+':
-    case '-':
-        type = Token::Type::Additive_Operator;
-        break;
-
-    case '*':
-    case '/':
-        type = Token::Type::Multiplicative_Operator;
-        break;
-
-    case '(':
+    if (this->env.isOperator(this->current()))
+        type = Token::Type::Operator;
+    else if (this->current() == '(')
         type = Token::Type::Open_Bracket;
-        break;
-
-    case ')':
+    else if (this->current() == ')')
         type = Token::Type::Closing_Bracket;
-        break;
-    }
 
     return Token(type, std::string(1, this->peek()));
 }
@@ -110,9 +91,7 @@ std::vector<Token> Token::Lexer::allTokens()
 
     if (token.type == Token::Type::Open_Bracket)
         brackets++;
-    else if (token.type == Token::Type::Closing_Bracket 
-          || token.type == Token::Type::Additive_Operator 
-          || token.type == Token::Type::Multiplicative_Operator)
+    else if (token.type == Token::Type::Closing_Bracket || token.type == Token::Type::Operator)
         unexpectedToken(this->index, token);
 
     while (token.type != Token::Type::Null)
@@ -121,12 +100,11 @@ std::vector<Token> Token::Lexer::allTokens()
         last = token;
         token = this->next();
 
-        if (token.type == Token::Type::Open_Bracket) 
+        if (token.type == Token::Type::Open_Bracket)
         {
             brackets++;
 
-            if ((last.type != Token::Type::Additive_Operator && last.type != Token::Type::Multiplicative_Operator && last.type != Token::Type::Open_Bracket && this->index != 0)
-            && last.type != Token::Type::Closing_Bracket)
+            if ((last.type != Token::Type::Operator && last.type != Token::Type::Open_Bracket && this->index != 0) && last.type != Token::Type::Closing_Bracket)
                 Token::Lexer::unexpectedToken(this->index, token);
         }
         else if (token.type == Token::Type::Closing_Bracket)
@@ -138,14 +116,8 @@ std::vector<Token> Token::Lexer::allTokens()
 
             if (brackets < 0)
                 Token::Lexer::unexpectedToken(this->index, token);
-        } else if (((token.type == Token::Type::Number 
-                || token.type == Token::Type::Additive_Operator 
-                || token.type == Token::Type::Multiplicative_Operator)
-                && last.type == token.type)
-
-                || ((token.type == Token::Type::Additive_Operator
-                || token.type == Token::Type::Multiplicative_Operator)
-                && last.type == Token::Type::Open_Bracket))
+        }
+        else if (((token.type == Token::Type::Number || token.type == Token::Type::Operator) && last.type == token.type) || (token.type == Token::Type::Operator && last.type == Token::Type::Open_Bracket))
             Token::Lexer::unexpectedToken(this->index, token);
     }
 

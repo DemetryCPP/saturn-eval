@@ -31,10 +31,10 @@ bool Node::check_brackets()
     return true;
 }
 
-void Node::parse()
+void Node::parse(Environment env)
 {
-    Token::Type separator_type = Token::Type::Null;
     int brackets = 0;
+    int priority = 4;
 
     while (this->check_brackets())
     {
@@ -51,16 +51,16 @@ void Node::parse()
         else if (current.type == Token::Type::Closing_Bracket)
             brackets--;
 
-        if (brackets != 0)
+        if (brackets != 0 || current.type != Token::Type::Operator)
             continue;
 
-        if (current.type == Token::Type::Additive_Operator)
-            separator_type = Token::Type::Additive_Operator;
-        else if (current.type == Token::Type::Multiplicative_Operator && separator_type != Token::Type::Additive_Operator)
-            separator_type = Token::Type::Multiplicative_Operator;
+        int current_priority = env.getOperator(current.value[0]).priority;
+
+        if (current_priority < priority)
+            priority = current_priority;
     }
 
-    if (separator_type == Token::Type::Null)
+    if (priority == 4)
         return;
 
     std::vector<Token> newvalue;
@@ -76,7 +76,7 @@ void Node::parse()
         else if (current.type == Token::Type::Closing_Bracket)
             brackets--;
 
-        if (current.type == separator_type && brackets == 0)
+        if (current.type == Token::Type::Operator && env.getOperator(current.value[0]).priority == priority && brackets == 0)
         {
             this->nodes.push_back(Node(std::vector<Node>(), newvalue));
             this->operators.push_back(current.value[0]);
@@ -90,5 +90,5 @@ void Node::parse()
     this->nodes.push_back(Node(std::vector<Node>(), newvalue));
 
     for (auto &&i : this->nodes)
-        i.parse();
+        i.parse(env);
 }

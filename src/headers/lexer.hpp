@@ -1,4 +1,5 @@
 #include <string>
+#include "environment.hpp"
 #pragma once
 
 class Token
@@ -10,8 +11,7 @@ public:
     using Type = enum Type
     {
         Number,
-        Additive_Operator,
-        Multiplicative_Operator,
+        Operator,
         Open_Bracket,
         Closing_Bracket,
         Null
@@ -42,7 +42,7 @@ public:
         }
 
     public:
-        Lexer(std::string expression);
+        Lexer(std::string expression, Environment env);
         
         Token next();
         std::vector<Token> allTokens();
@@ -51,5 +51,6 @@ public:
         static void unexpectedToken(size_t pos, Token token);
         
         std::string expression;
+        Environment env;
     };
 };

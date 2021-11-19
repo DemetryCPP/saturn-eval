@@ -23,7 +23,7 @@ int main(int argc, char const *argv[])
 
         try
         {
-            result = eval(input);
+            result = eval(input, env);
         }
         catch(const std::exception& e)
         {

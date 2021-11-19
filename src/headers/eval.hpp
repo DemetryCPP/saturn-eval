@@ -1,5 +1,6 @@
 #include <string>
+#include "environment.hpp"
 
-#define VERSION "4.1.1"
+#define VERSION "4.2.0"
 
-double eval(std::string);
+double eval(std::string, Environment);

@@ -1,8 +1,11 @@
 expr = expr Add_Op term
      | term;
 
-term = term Mul_Op fact
-     | fact;
+term = term Mul_Op exp
+     | exp;
+
+exp  = term exp_op fact
+     | fact
 
 fact = num
      | '(' expr ')';
