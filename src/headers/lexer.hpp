@@ -44,11 +44,11 @@ public:
     public:
         Lexer(std::string expression, Environment env);
         
-        Token next();
-        std::vector<Token> allTokens();
+        Token *next();
+        std::vector<Token*> allTokens();
 
         static void log(Token *token);
-        static void unexpectedToken(size_t pos, Token token);
+        static void unexpectedToken(size_t pos, Token *token);
         
         std::string expression;
         Environment env;

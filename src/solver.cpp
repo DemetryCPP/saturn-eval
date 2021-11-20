@@ -8,7 +8,7 @@
 double solve(Node node, Environment env)
 {
     if (node.operators.size() == 0)
-        return std::stod(node.value[0].value);
+        return std::stod(node.value[0]->value);
 
     double result = solve(node.nodes[0], env);
 
