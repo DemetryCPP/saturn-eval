@@ -28,18 +28,9 @@ public:
     private:
         int index = 0;
         
-        char current() {
-            return this->expression[this->index];
-        }
-
-        char previous() {
-            return this->expression[this->index - 1];
-        }
-
-        char peek() {
-            this->index++;
-            return this->previous();
-        }
+        char current();
+        char previous();
+        char peek();
 
     public:
         Lexer(std::string expression, Environment env);
