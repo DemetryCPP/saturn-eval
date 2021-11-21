@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <stdexcept>
 
 #include "eval.hpp"
 
@@ -25,7 +26,14 @@ int main(int argc, char const *argv[])
         {
             result = eval(input, env);
         }
-        catch(const std::exception& e)
+        catch(const Environment::UnexpectedToken& e)
+        {
+            std::cout << std::string(2 + e.pos - e.token.length(), ' ')
+                      << "^" + std::string(e.token.length() - 1, '~') << std::endl
+                      << e.what() << std::endl;
+            continue;
+        }
+        catch(const std::invalid_argument& e)
         {
             std::cout << e.what() << std::endl;
             continue;

@@ -7,38 +7,30 @@
 
 Token::Token(Token::Type type, std::string value) : type(type), value(value){};
 Token::Token() : type(Token::Type::Null), value(""){};
-Token::Lexer::Lexer(std::string expression, Environment env) : expression(expression), env(env){};
+Lexer::Lexer(std::string expression, Environment env) : expression(expression), env(env){};
 
-char Token::Lexer::current() 
+char Lexer::current() 
 { return this->expression[this->index]; }
 
-char Token::Lexer::previous() 
+char Lexer::previous() 
 { return this->expression[this->index - 1]; }
 
-char Token::Lexer::peek()
+char Lexer::peek()
 {
     this->index++;
     return this->previous();
 }
-
-void Token::Lexer::unexpectedToken(size_t pos, Token *token)
-{
-    throw std::invalid_argument(
-        std::string(2 + pos - token->value.length(), ' ') +
-        "^" + std::string(token->value.length() - 1, '~') +
-        "\nUnexpected token \"" + token->value + "\"");
-};
 
 bool Token::isNumber(char c)
 {
     return c >= '0' && c <= '9';
 }
 
-void Token::Lexer::log(Token *token)
+void Token::log()
 {
     std::string type;
 
-    switch (token->type)
+    switch (this->type)
     {
     case Token::Type::Number:
         type = "[  NUMBER  ]";
@@ -47,7 +39,15 @@ void Token::Lexer::log(Token *token)
     case Token::Type::Operator:
         type = "[ OPERATOR ]";
         break;
+
+    case Token::Type::Closing_Bracket:
+        type = "[ CLOS_BRK ]";
+        break;
+
+    case Token::Type::Open_Bracket:
+        type = "[ OPEN_BRK ]";
+        break;
     }
 
-    std::cout << type << " " << token->value << std::endl;
+    std::cout << type << " " << this->value << std::endl;
 }

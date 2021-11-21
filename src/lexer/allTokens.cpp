@@ -5,7 +5,7 @@
 #include "lexer.hpp"
 #include "environment.hpp"
 
-std::vector<Token*> Token::Lexer::allTokens()
+std::vector<Token*> Lexer::allTokens()
 {
     std::vector<Token*> tokens;
     Token *token = this->next(), *last;
@@ -14,7 +14,7 @@ std::vector<Token*> Token::Lexer::allTokens()
     if (token->type == Token::Type::Open_Bracket)
         brackets++;
     else if (token->type == Token::Type::Closing_Bracket || token->type == Token::Type::Operator)
-        unexpectedToken(this->index, token);
+        throw Environment::UnexpectedToken(this->index, token->value);
 
     while (token->type != Token::Type::Null)
     {
@@ -28,21 +28,21 @@ std::vector<Token*> Token::Lexer::allTokens()
 
             if ((last->type != Token::Type::Operator && last->type != Token::Type::Open_Bracket && this->index != 0) 
               && last->type != Token::Type::Closing_Bracket)
-                Token::Lexer::unexpectedToken(this->index, token);
+                throw Environment::UnexpectedToken(this->index, token->value);
         }
         else if (token->type == Token::Type::Closing_Bracket)
         {
             brackets--;
 
             if ((last->type != Token::Type::Number && last->type != Token::Type::Closing_Bracket) || brackets < 0)
-                Token::Lexer::unexpectedToken(this->index, token);
+                throw Environment::UnexpectedToken(this->index, token->value);
 
             if (brackets < 0)
-                Token::Lexer::unexpectedToken(this->index, token);
+                throw Environment::UnexpectedToken(this->index, token->value);
         }
         else if (((token->type == Token::Type::Number || token->type == Token::Type::Operator) && last->type == token->type) 
                || (token->type == Token::Type::Operator && last->type == Token::Type::Open_Bracket))
-            Token::Lexer::unexpectedToken(this->index, token);
+            throw Environment::UnexpectedToken(this->index, token->value);
     }
 
     if (brackets > 0)

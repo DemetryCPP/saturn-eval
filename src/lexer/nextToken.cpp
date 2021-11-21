@@ -5,8 +5,9 @@
 #include "lexer.hpp"
 #include "environment.hpp"
 
-Token *Token::Lexer::next()
+Token *Lexer::next()
 {
+    // if end of expression return null token
     if (this->index == this->expression.length())
         return new Token(Token::Type::Null, "");
 
@@ -26,7 +27,7 @@ Token *Token::Lexer::next()
             buffer += this->peek();
 
             if (this->current() == '.')
-                if (isDouble) throw std::invalid_argument(std::string(2 + this->index, ' ') + "^\nUnexpected token '.'"); // ????
+                if (isDouble) throw Environment::UnexpectedToken(this->index, ".");
                 else isDouble = true;
         }
 

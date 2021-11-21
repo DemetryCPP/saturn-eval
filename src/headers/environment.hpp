@@ -1,4 +1,5 @@
 #include <vector>
+#include <stdexcept>
 #pragma once
 
 class Environment
@@ -17,6 +18,15 @@ public:
         Action_t action;
 
         double operator()(double a, double b);
+    };
+
+    class UnexpectedToken : public std::invalid_argument 
+    {
+    public:
+        UnexpectedToken(size_t pos, std::string token);
+
+        std::string token;
+        size_t pos;
     };
 
     Environment(std::vector<Environment::Operator> operators);

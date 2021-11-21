@@ -12,7 +12,7 @@ double eval(std::string expr, Environment env)
 {
     env.stdinit();
 
-    Token::Lexer lexer{expr, env};
+    Lexer lexer{expr, env};
     std::vector<Token*> tokens = lexer.allTokens();
 
     Node head = Node{tokens};

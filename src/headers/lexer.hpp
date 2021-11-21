@@ -8,7 +8,7 @@ public:
     static bool isNumber(char);
     static std::string toString(std::vector<Token> tokens);
 
-    using Type = enum Type
+    enum Type
     {
         Number,
         Operator,
@@ -23,25 +23,24 @@ public:
     Token::Type type;
     std::string value;
 
-    class Lexer
-    {
-    private:
-        int index = 0;
-        
-        char current();
-        char previous();
-        char peek();
+    void log();
+};
 
-    public:
-        Lexer(std::string expression, Environment env);
-        
-        Token *next();
-        std::vector<Token*> allTokens();
+class Lexer
+{
+private:
+    size_t index = 0;
+    
+    char current();
+    char previous();
+    char peek();
 
-        static void log(Token *token);
-        static void unexpectedToken(size_t pos, Token *token);
-        
-        std::string expression;
-        Environment env;
-    };
+public:
+    Lexer(std::string expression, Environment env);
+
+    Token *next();
+    std::vector<Token*> allTokens();
+
+    std::string expression;
+    Environment env;
 };
