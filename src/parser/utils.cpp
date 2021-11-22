@@ -19,10 +19,8 @@ bool Node::check_brackets()
     {
         Token *current = this->value[0];
 
-        if (current->type == Token::Type::Open_Bracket)
-            brackets++;
-        else if (current->type == Token::Type::Closing_Bracket)
-            brackets--;
+        if (current->type == Token::Type::Open_Bracket)         brackets++;
+        else if (current->type == Token::Type::Closing_Bracket) brackets--;
 
         if (brackets == 0 && i != this->value.size() - 1)
             return false;

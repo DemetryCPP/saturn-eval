@@ -7,23 +7,23 @@
 
 void Node::parse(Environment env)
 {
-    int brackets = 0;
-    int priority = 4;
+    if (this->value.size() == 1)
+        return;
+
+    int brackets = 0, priority = 4;
 
     while (this->check_brackets())
     {
         this->value.erase(this->value.begin());
-        this->value.erase(this->value.end());
+        this->value.erase(this->value.end() - 1);
     }
 
     for (size_t i = 0; i < this->value.size(); i++)
     {
         Token *current = this->value[i];
 
-        if (current->type == Token::Type::Open_Bracket)
-            brackets++;
-        else if (current->type == Token::Type::Closing_Bracket)
-            brackets--;
+        if (current->type == Token::Type::Open_Bracket)         brackets++;
+        else if (current->type == Token::Type::Closing_Bracket) brackets--;
 
         if (brackets != 0 || current->type != Token::Type::Operator)
             continue;
@@ -33,9 +33,6 @@ void Node::parse(Environment env)
         if (current_priority < priority)
             priority = current_priority;
     }
-
-    if (priority == 4)
-        return;
 
     std::vector<Token*> newvalue;
 
@@ -50,7 +47,7 @@ void Node::parse(Environment env)
         else if (current->type == Token::Type::Closing_Bracket)
             brackets--;
 
-        if (current->type == Token::Type::Operator && env.getOperator(current->value[0]).priority == priority && brackets == 0)
+        if (brackets == 0 && current->type == Token::Type::Operator && env.getOperator(current->value[0]).priority == priority)
         {
             this->nodes.push_back(Node(std::vector<Node>(), newvalue));
             this->operators.push_back(current->value[0]);

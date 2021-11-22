@@ -20,6 +20,15 @@ public:
         double operator()(double a, double b);
     };
 
+    class Variable
+    {
+    public:
+        Variable(std::string name, double value);
+
+        std::string name;
+        double value;
+    };
+
     class UnexpectedToken : public std::invalid_argument 
     {
     public:
@@ -29,11 +38,18 @@ public:
         size_t pos;
     };
 
-    Environment(std::vector<Environment::Operator> operators);
+    Environment();
+    Environment(std::vector<Environment::Operator> operators,
+                std::vector<Environment::Variable> variables);
+
     std::vector<Environment::Operator> operators;
+    std::vector<Environment::Variable> variables;
 
     Environment::Operator getOperator(char symbol);
+    Environment::Variable getVariable(std::string name);
+
     bool isOperator(char symbol);
+    bool isValidVariable(std::string name);
 
     void stdinit();
 };

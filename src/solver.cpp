@@ -1,5 +1,6 @@
 #include <vector>
 #include <string>
+#include <iostream>
 
 #include "parser.hpp"
 #include "lexer.hpp"
@@ -8,7 +9,15 @@
 double solve(Node node, Environment env)
 {
     if (node.operators.size() == 0)
-        return std::stod(node.value[0]->value);
+    {
+        Token *value = node.value[0];
+
+        if (value->type == Token::Type::Number)
+            return std::stod(value->value);
+
+        if (value->type == Token::Type::Id)
+            return env.getVariable(value->value).value;
+    }
 
     double result = solve(node.nodes[0], env);
 

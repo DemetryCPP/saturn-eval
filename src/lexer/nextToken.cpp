@@ -34,6 +34,16 @@ Token *Lexer::next()
         return new Token(Token::Type::Number, buffer);
     }
 
+    // variables
+    if (Token::isText(this->current()))
+    {
+        while (Token::isText(this->current()))
+            buffer += this->peek();
+
+        return new Token(Token::Type::Id, buffer);
+    }
+
+    // all one-char tokens
     Token::Type type;
 
     if (this->env.isOperator(this->current()))  type = Token::Type::Operator;

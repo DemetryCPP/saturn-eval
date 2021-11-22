@@ -12,14 +12,15 @@ int main(int argc, char const *argv[])
 
     std::string input;
 
+    Environment env;
+    env.stdinit();
+
     while (true)
     {
         std::cout << "> ";
         std::getline(std::cin, input);
 
-        if (input == ".exit")
-            break;
-
+        if (input == ".exit") break;
         double result;    
 
         try

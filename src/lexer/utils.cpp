@@ -15,15 +15,16 @@ char Lexer::current()
 char Lexer::previous() 
 { return this->expression[this->index - 1]; }
 
+bool Token::isNumber(char c)
+{ return c >= '0' && c <= '9'; }
+
+bool Token::isText(char c) 
+{ return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'); }
+
 char Lexer::peek()
 {
     this->index++;
     return this->previous();
-}
-
-bool Token::isNumber(char c)
-{
-    return c >= '0' && c <= '9';
 }
 
 void Token::log()

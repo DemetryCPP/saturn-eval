@@ -6,15 +6,16 @@ class Token
 {
 public:
     static bool isNumber(char);
-    static std::string toString(std::vector<Token> tokens);
+    static bool isText(char);
 
     enum Type
     {
-        Number,
-        Operator,
-        Open_Bracket,
         Closing_Bracket,
-        Null
+        Open_Bracket,
+        Operator,
+        Number,
+        Null,
+        Id
     };
 
     Token(Token::Type type, std::string value);

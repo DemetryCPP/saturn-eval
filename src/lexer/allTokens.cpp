@@ -26,7 +26,7 @@ std::vector<Token*> Lexer::allTokens()
         {
             brackets++;
 
-            if ((last->type != Token::Type::Operator && last->type != Token::Type::Open_Bracket && this->index != 0) 
+            if ((last->type != Token::Type::Operator && last->type != Token::Type::Open_Bracket && this->index != 0)
               && last->type != Token::Type::Closing_Bracket)
                 throw Environment::UnexpectedToken(this->index, token->value);
         }
@@ -34,13 +34,13 @@ std::vector<Token*> Lexer::allTokens()
         {
             brackets--;
 
-            if ((last->type != Token::Type::Number && last->type != Token::Type::Closing_Bracket) || brackets < 0)
-                throw Environment::UnexpectedToken(this->index, token->value);
-
-            if (brackets < 0)
+            if ((last->type != Token::Type::Number && last->type != Token::Type::Id && last->type != Token::Type::Closing_Bracket) || brackets < 0)
                 throw Environment::UnexpectedToken(this->index, token->value);
         }
-        else if (((token->type == Token::Type::Number || token->type == Token::Type::Operator) && last->type == token->type) 
+        else if (
+            (
+                (token->type == Token::Type::Number || token->type == Token::Type::Id || token->type == Token::Type::Operator) 
+            && last->type == token->type) 
                || (token->type == Token::Type::Operator && last->type == Token::Type::Open_Bracket))
             throw Environment::UnexpectedToken(this->index, token->value);
     }

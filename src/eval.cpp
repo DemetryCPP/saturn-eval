@@ -10,12 +10,11 @@ double solve(Node node, Environment env);
 
 double eval(std::string expr, Environment env)
 {
-    env.stdinit();
-
     Lexer lexer{expr, env};
     std::vector<Token*> tokens = lexer.allTokens();
 
     Node head = Node{tokens};
+    std::cout << tokens.size() << std::endl;
     head.parse(env);
 
     return solve(head, env);
