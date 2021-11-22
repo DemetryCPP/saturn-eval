@@ -11,5 +11,5 @@ cd eval
 ```
 Пользуйтесь
 ```sh
-./eval
+./eval [-dname=value]
 ```
