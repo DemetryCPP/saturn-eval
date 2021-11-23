@@ -79,5 +79,4 @@ void Environment::stdinit()
     this->functions.push_back(Environment::Function("log",  log10));
     this->functions.push_back(Environment::Function("sqrt", sqrt));
     this->functions.push_back(Environment::Function("tan",  tan));
-    
 }
