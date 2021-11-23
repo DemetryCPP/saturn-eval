@@ -2,7 +2,7 @@
 
 Склонируйте репозиторий
 ```sh
-git clone https://github.com/demetryf/saturn-eval -b dev-4.0 eval
+git clone https://github.com/demetryf/saturn-eval -b dev-4 eval
 cd eval
 ```
 Скомпилируйте
