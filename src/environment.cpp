@@ -46,7 +46,7 @@ Environment::Variable Environment::getVariable(std::string name)
         if (v.name == name)
             return v;
 
-    throw new std::invalid_argument("\"" + name + "\" is not defined");
+    throw std::invalid_argument("\"" + name + "\" is not defined");
 }
 
 Environment::Function Environment::getFunction(std::string name)
@@ -55,7 +55,7 @@ Environment::Function Environment::getFunction(std::string name)
         if (f.name == name)
             return f;
 
-    throw new std::invalid_argument("\"" + name + "\" is not defined");
+    throw std::invalid_argument("\"" + name + "\" is not defined");
 }
 
 void Environment::stdinit()
