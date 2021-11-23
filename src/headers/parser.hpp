@@ -13,6 +13,8 @@ private:
     void remove_brackets();
     size_t get_priority(Environment env);
 
+    void logTokens();
+
 public:
     Node(std::vector<Node> nodes, std::vector<Token*> value);
     Node(std::vector<Token*> value);

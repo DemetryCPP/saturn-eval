@@ -7,11 +7,13 @@
 
 void Node::parse(Environment env)
 {
+    this->logTokens();
     if (this->value.size() == 1)
         return;
 
     this->remove_brackets();
     size_t priority = this->get_priority(env);
+
     std::vector<Token*> newvalue;
     Token *current = new Token(), *prev;
 
@@ -32,7 +34,7 @@ void Node::parse(Environment env)
 
             newvalue.clear();
         }
-        else if (priority == 4 && prev->type == Token::Type::Id && current->type == Token::Type::Open_Bracket)
+        else if (brackets == 1 && priority == 4 && prev->type == Token::Type::Id && current->type == Token::Type::Open_Bracket)
         {
             this->nodes.push_back(Node(newvalue));
             this->operators.push_back('f');

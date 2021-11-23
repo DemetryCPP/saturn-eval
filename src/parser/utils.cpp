@@ -8,6 +8,14 @@
 Node::Node(std::vector<Node> nodes, std::vector<Token*> value) : nodes(nodes), value(value) {}
 Node::Node(std::vector<Token*> value) : value(value) {}
 
+void Node::logTokens()
+{
+    for (auto &&t : this->value)
+        std::cout << t->value;
+
+    std::cout << std::endl;
+}
+
 bool Node::check_brackets()
 {
     if (this->value[0]->type != Token::Type::Open_Bracket 
