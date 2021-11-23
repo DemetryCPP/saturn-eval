@@ -29,6 +29,19 @@ public:
         double value;
     };
 
+    class Function
+    {
+    public:
+        using func_t = double (*)(double a); 
+
+        Function(std::string name, func_t func);
+
+        std::string name;
+        func_t func;
+
+        double operator()(double a);
+    };
+
     class UnexpectedToken : public std::invalid_argument 
     {
     public:
@@ -40,17 +53,18 @@ public:
 
     Environment();
     Environment(std::vector<Environment::Operator> operators,
-                std::vector<Environment::Variable> variables);
+                std::vector<Environment::Variable> variables,
+                std::vector<Environment::Function> functions);
 
     std::vector<Environment::Operator> operators;
     std::vector<Environment::Variable> variables;
+    std::vector<Environment::Function> functions;
 
     Environment::Operator getOperator(char symbol);
     Environment::Variable getVariable(std::string name);
+    Environment::Function getFunction(std::string name);
 
     bool isOperator(char symbol);
-    bool isValidVariable(std::string name);
-
     void stdinit();
 };
 

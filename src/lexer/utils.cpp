@@ -24,26 +24,33 @@ bool Token::isText(char c)
 
 void Token::checkStartValid(Token *token, size_t index)
 { 
-    if (token->type == Token::Type::Closing_Bracket || token->type == Token::Type::Operator)
+    if (token->type == Token::Type::Closing_Bracket 
+     || token->type == Token::Type::Operator)
         throw Environment::UnexpectedToken(index, token->value);
 }
 
 void Token::checkValidForOpenBracket(Token *last, Token *token, size_t index)
 {
-    if (last->type != Token::Type::Operator && last->type != Token::Type::Open_Bracket && last->type != Token::Type::Closing_Bracket)
+    if (last->type != Token::Type::Operator 
+     && last->type != Token::Type::Open_Bracket 
+     && last->type != Token::Type::Id)
         throw Environment::UnexpectedToken(index, token->value);
 }
 
 void Token::checkValidForClosingBracket(Token *last, Token *token, size_t index)
 {
-    if (last->type != Token::Type::Number && last->type != Token::Type::Id && last->type != Token::Type::Closing_Bracket)
+    if (last->type != Token::Type::Number 
+     && last->type != Token::Type::Id 
+     && last->type != Token::Type::Closing_Bracket)
         throw Environment::UnexpectedToken(index, token->value);
 }
 
 void Token::checkSameTokens(Token *last, Token *token, size_t index)
 {
-    if (((token->type == Token::Type::Number || token->type == Token::Type::Id || token->type == Token::Type::Operator) && last->type == token->type) 
-      || (token->type == Token::Type::Operator && last->type == Token::Type::Open_Bracket))
+    if (((token->type == Token::Type::Number 
+       || token->type == Token::Type::Id 
+       || token->type == Token::Type::Operator) 
+       && last->type == token->type))
         throw Environment::UnexpectedToken(index, token->value);
 }
 

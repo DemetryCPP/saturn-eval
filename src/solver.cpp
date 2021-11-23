@@ -19,6 +19,9 @@ double solve(Node node, Environment env)
             return env.getVariable(value->value).value;
     }
 
+    if (node.operators[0] == 'f')
+        return env.getFunction(node.value[0]->value)(solve(node.nodes[1], env));
+
     double result = solve(node.nodes[0], env);
 
     for (size_t i = 1; i <= node.operators.size(); i++)
