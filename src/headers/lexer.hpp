@@ -8,6 +8,11 @@ public:
     static bool isNumber(char);
     static bool isText(char);
 
+    static void checkStartValid(Token*, size_t index);
+    static void checkValidForOpenBracket(Token *last, Token *token, size_t index);
+    static void checkValidForClosingBracket(Token *last, Token *token, size_t index);
+    static void checkSameTokens(Token *last, Token *token, size_t index);
+
     enum Type
     {
         Closing_Bracket,

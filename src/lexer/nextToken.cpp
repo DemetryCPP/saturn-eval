@@ -22,7 +22,7 @@ Token *Lexer::next()
     {
         bool isDouble = false;
 
-        while (Token::isNumber(this->current()) || this->current() == '.')
+        while (Token::isNumber(this->current()))
         {
             buffer += this->peek();
 

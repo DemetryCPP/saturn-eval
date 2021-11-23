@@ -36,7 +36,8 @@ int main(int argc, char const *argv[])
             for (size_t i = 0; i < value.length(); i++)
             {
                 char current = value[i];
-                if (current == '=') {
+                if (current == '=') 
+                {
                     r = 2;
                     continue;
                 }

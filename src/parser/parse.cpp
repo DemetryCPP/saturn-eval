@@ -36,8 +36,6 @@ void Node::parse(Environment env)
 
     std::vector<Token*> newvalue;
 
-    brackets = 0;
-
     for (size_t i = 0; i < this->value.size(); i++)
     {
         Token *current = this->value[i];

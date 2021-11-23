@@ -16,10 +16,37 @@ char Lexer::previous()
 { return this->expression[this->index - 1]; }
 
 bool Token::isNumber(char c)
-{ return c >= '0' && c <= '9'; }
+{ return c >= '0' && c <= '9' || c == '.'; }
 
 bool Token::isText(char c) 
 { return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'); }
+
+
+void Token::checkStartValid(Token *token, size_t index)
+{ 
+    if (token->type == Token::Type::Closing_Bracket || token->type == Token::Type::Operator)
+        throw Environment::UnexpectedToken(index, token->value);
+}
+
+void Token::checkValidForOpenBracket(Token *last, Token *token, size_t index)
+{
+    if (last->type != Token::Type::Operator && last->type != Token::Type::Open_Bracket && last->type != Token::Type::Closing_Bracket)
+        throw Environment::UnexpectedToken(index, token->value);
+}
+
+void Token::checkValidForClosingBracket(Token *last, Token *token, size_t index)
+{
+    if (last->type != Token::Type::Number && last->type != Token::Type::Id && last->type != Token::Type::Closing_Bracket)
+        throw Environment::UnexpectedToken(index, token->value);
+}
+
+void Token::checkSameTokens(Token *last, Token *token, size_t index)
+{
+    if (((token->type == Token::Type::Number || token->type == Token::Type::Id || token->type == Token::Type::Operator) && last->type == token->type) 
+      || (token->type == Token::Type::Operator && last->type == Token::Type::Open_Bracket))
+        throw Environment::UnexpectedToken(index, token->value);
+}
+
 
 char Lexer::peek()
 {
@@ -47,6 +74,10 @@ void Token::log()
 
     case Token::Type::Open_Bracket:
         type = "[ OPEN_BRK ]";
+        break;
+    
+    case Token::Type::Id:
+        type = "[    ID    ]";
         break;
     }
 
