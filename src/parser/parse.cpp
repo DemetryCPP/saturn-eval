@@ -7,7 +7,6 @@
 
 void Node::parse(Environment env)
 {
-    this->logTokens();
     if (this->value.size() == 1)
         return;
 
