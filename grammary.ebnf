@@ -7,5 +7,6 @@ term = term Mul_Op exp
 exp  = term exp_op fact
      | fact
 
-fact = num
-     | '(' expr ')';
+fact = num | id
+     | '(' expr ')'
+     | id '(' expr ')';
