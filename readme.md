@@ -1,6 +1,6 @@
 # Welcome to the Saturn Eval!
 Saturn Eval is a simple calculator.
-It supports four operators: sum, subtraction, multiply and division.
+It supports common operations like addition, subtraction, multiplication and division.
 Also, it supports functions like `sin(pi)` and `pow(3, 2)`.
 
 # How to compile
