@@ -1,25 +1,25 @@
 # Welcome to the Saturn Eval!
-Saturn Eval is simple calculator.
-He have four operators: sum, difference, multiply, division and unary minus.
-Also he have functions, for example `sin(pi)` or `pow(3, 2)`.
+Saturn Eval is a simple calculator.
+It supports four operators: sum, subtraction, multiply and division.
+Also, it supports functions like `sin(pi)` and `pow(3, 2)`.
 
-# Compiling
+# How to compile
 ```sh
 chmod +x compile.sh
 ./compile.sh REPL.cpp
 ```
 
-# Using
-1. inclide eval.hpp
-2. Create environment:
+# Usage
+1. include eval.hpp
+2. Create an environment:
 ```cpp
 map<string, Function *> functions;
 map<string, double> variables;
 // ...
 Eval::Environment *env = new Eval::Environment(functions, variables);
 ```
-3. Create interpreter instance:
+3. Create an instance of the interpreter:
 ```cpp
 Eval::Interpreter *interpreter = new Eval::Interpreter(env);
 ```
-4. Use he: `interpreter.eval(expression)`.
+4. Usage: `interpreter.eval(expression)`.
