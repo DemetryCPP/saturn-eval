@@ -1,0 +1,9 @@
+expr = term { a term };
+term = fact { a fact };
+
+fact = call | unary | literal | brackets;
+
+call = id '(' expr { ',' expr } ')';
+unary = '-' fact;
+literal = id | num;
+brackets = '(' expr ')';
