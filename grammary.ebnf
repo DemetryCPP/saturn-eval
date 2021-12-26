@@ -1,5 +1,6 @@
 expr = term { a term };
-term = fact { b fact };
+term = expt { b expt };
+expt = fact { c fact };
 
 fact = call | unary | literal | brackets;
 
