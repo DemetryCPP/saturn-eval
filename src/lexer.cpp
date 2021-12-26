@@ -61,6 +61,7 @@ Token *Lexer::single()
 Token *Lexer::id()
 {
     string buffer;
+    buffer += match();
     size_t pos = index;
 
     while (isText())
