@@ -46,9 +46,7 @@ namespace Eval
     class Interpreter
     {
     private:
-        double solveExpr(Node::Expr *);
-        double solveTerm(Node::Term *);
-        double solveFact(Node::Fact *);
+        double solve(Node::Base *, size_t priority);
         
         double call(Token *name, std::vector<double> args);
         double get(Token *name);
@@ -65,5 +63,5 @@ namespace Eval
         double eval(std::string);
     };
 
-    inline const std::string version = "5.1.1";
+    inline const std::string version = "5.1.2";
 }

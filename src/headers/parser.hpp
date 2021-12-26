@@ -4,8 +4,7 @@
 class Parser
 {
 private:
-    Node::Term *term();
-    Node::Fact *fact();
+    Node::Base *parse(size_t priority);
 
     Node::Brackets *brackets();
     Node::Literal  *literal();
@@ -23,6 +22,6 @@ private:
 public:
     Parser(std::vector<Token *> tokens);
 
-    Node::Expr *expr();
+    Node::Base *expr();
     std::vector<Token *> tokens;
 };

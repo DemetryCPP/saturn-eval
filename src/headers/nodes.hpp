@@ -3,54 +3,55 @@
 
 namespace Node
 {
-    class Fact
+    class Base
     {
     public:
         enum class Type
-        {
-            Brackets,
-            Literal,
-            Unary,
-            Call,
-        };
-
-        Fact(Type type) : type(type) {};
+        { Node, Fact };
+        
+        Base(Type type) : type(type) {};
 
         Type type;
     };
 
-    class Term
+    class Fact : public Base
     {
     public:
-        Term(std::vector<Fact *> nodes, std::vector<Operator *> operators)
-            : nodes(nodes)
-            , operators(operators) {};
+        enum class Type
+        {
+            Brackets, Call,
+            Literal, Unary,
+        };
 
-        std::vector<Fact *> nodes;
-        std::vector<Operator *> operators;
+        Fact(Type type)
+            : type(type)
+            , Base(Base::Type::Fact) {};
+
+        Type type;
     };
 
-    class Expr
+    class Node : public Base
     {
     public:
-        Expr(std::vector<Term *> nodes, std::vector<Operator *> operators)
+        Node(std::vector<Base *> nodes, std::vector<Operator *> operators)
             : nodes(nodes)
-            , operators(operators) {};
+            , operators(operators)
+            , Base(Base::Type::Node) {};
 
-        std::vector<Term *> nodes;
+        std::vector<Base *> nodes;
         std::vector<Operator *> operators;
     };
 
     class Call : public Fact
     {
     public:
-        Call(Token *name, std::vector<Expr *> args)
+        Call(Token *name, std::vector<Base *> args)
             : name(name)
             , args(args)
             , Fact(Fact::Type::Call) {};
 
         Token *name;
-        std::vector<Expr *> args;
+        std::vector<Base *> args;
     };
 
     class Unary : public Fact
@@ -76,10 +77,10 @@ namespace Node
     class Brackets : public Fact
     {
     public:
-        Brackets(Expr *expr)
+        Brackets(Base *expr)
             : expr(expr)
             , Fact(Fact::Type::Brackets) {};
 
-        Expr *expr;
+        Base *expr;
     };
 }

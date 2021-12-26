@@ -9,71 +9,66 @@ double Interpreter::eval(string expr)
 {
     Lexer *lexer = new Lexer(expr);
     Parser *parser = new Parser(lexer->tokens);
-    return solveExpr(parser->expr());
+    return solve(parser->expr(), 1);
 }
 
-double Interpreter::solveExpr(Node::Expr *expr)
+double Interpreter::solve(Node::Base *node, size_t priority)
 {
-    double result = solveTerm(expr->nodes[0]);
-
-    for (size_t i = 0; i < expr->operators.size(); i++)
-        result = expr->operators[i]->action(result, solveTerm(expr->nodes[i + 1]));
-
-    return result;
-}
-
-double Interpreter::solveTerm(Node::Term *term)
-{
-    double result = solveFact(term->nodes[0]);
-
-    for (size_t i = 0; i < term->operators.size(); i++)
-        result = term->operators[i]->action(result, solveFact(term->nodes[i + 1]));
-
-    return result;
-}
-
-double Interpreter::solveFact(Node::Fact *fact)
-{
-    double result;
-    switch (fact->type)
+    if (priority <= Operator::maxPriority)
     {
-    case Node::Fact::Type::Call:
-    {
-        auto call = static_cast<Node::Call *>(fact);
+        auto expr = static_cast<Node::Node *>(node);
+        double result = solve(expr->nodes[0], priority + 1);
+
+        for (size_t i = 0; i < expr->operators.size(); i++)
+            result = expr->operators[i]->action(result, solve(expr->nodes[i + 1], priority + 1));
         
-        std::vector<double> args;
-        for (auto &&a : call->args)
-            args.push_back(solveExpr(a));
-
-        result = this->call(call->name, args);
-        break;
+        return result;
     }
-
-    case Node::Fact::Type::Unary:
+    else
     {
-        auto unary = static_cast<Node::Unary *>(fact);
-        result = -solveFact(unary->fact);
-        break;
-    }
+        auto fact = static_cast<Node::Fact *>(node);
+        double result;
 
-    case Node::Fact::Type::Literal:
-    {
-        auto literal = static_cast<Node::Literal *>(fact);
+        switch (fact->type)
+        {
+        case Node::Fact::Type::Call:
+        {
+            auto call = static_cast<Node::Call *>(fact);
+            
+            vector<double> args;
+            for (auto &&a : call->args)
+                args.push_back(solve(a, 1));
 
-        if (literal->token->type == Token::Type::Number) 
-             result = stod(literal->token->value);
-        else result = get(literal->token);
-        break;
-    }
+            result = this->call(call->name, args);
+            break;
+        }
 
-    case Node::Fact::Type::Brackets:
-    {
-        auto brackets = static_cast<Node::Brackets *>(fact);
-        result = solveExpr(brackets->expr);
-        break;
+        case Node::Fact::Type::Unary:
+        {
+            auto unary = static_cast<Node::Unary *>(fact);
+            result = -solve(unary->fact, 3);
+            break;
+        }
+
+        case Node::Fact::Type::Literal:
+        {
+            auto literal = static_cast<Node::Literal *>(fact);
+
+            if (literal->token->type == Token::Type::Number) 
+                result = stod(literal->token->value);
+            else result = get(literal->token);
+            break;
+        }
+
+        case Node::Fact::Type::Brackets:
+        {
+            auto brackets = static_cast<Node::Brackets *>(fact);
+            result = solve(brackets->expr, 1);
+            break;
+        }
+        }
+        return result;
     }
-    }
-    return result;
 }
 
 double Interpreter::call(Token *name, std::vector<double> args)

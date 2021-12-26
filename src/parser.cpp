@@ -8,54 +8,42 @@ using namespace Node;
 Parser::Parser(vector<Token *> tokens)
     : tokens(tokens) {};
 
-Expr *Parser::expr()
+Base *Parser::expr()
+{ return parse(1); }
+
+Base *Parser::parse(size_t priority)
 {
-    vector<Term *> nodes;
-    std::vector<Operator *> operators;
-
-    nodes.push_back(term());
-    while (static_cast<Operator *>(current())->priority == 1)
+    if (priority <= Operator::maxPriority)
     {
-        operators.push_back(static_cast<Operator *>(match()));
-        nodes.push_back(term());
+        vector<Base *> nodes;
+        vector<Operator *> operators;
+
+        nodes.push_back(parse(priority + 1));
+        while (current()->type == Token::Type::Operator && static_cast<Operator *>(current())->priority == priority)
+        {
+            operators.push_back(static_cast<Operator *>(match()));
+            nodes.push_back(parse(priority + 1));
+        }
+
+        return new Node::Node(nodes, operators);
     }
-
-    return new Expr(nodes, operators);
-}
-
-Term *Parser::term()
-{
-    vector<Fact *> nodes;
-    std::vector<Operator *> operators;
-
-    nodes.push_back(fact());
-    while (static_cast<Operator *>(current())->priority == 2)
+    else
     {
-        operators.push_back(static_cast<Operator *>(match()));
-        nodes.push_back(fact());
+        if (current()->type == Token::Type::Number) return literal();
+        else if (current()->type == Token::Type::Id)
+        {
+            Token *id = match();
+            if (current()->value == "(") return call(id);
+            return new Literal(id);
+        }
+        else if (current()->value == "-") return unary();
+        else if (current()->value == "(") return brackets();
     }
-
-    return new Term(nodes, operators);
-}
-
-Fact *Parser::fact()
-{
-    if (current()->type == Token::Type::Number) return literal();
-    else if (current()->type == Token::Type::Id)
-    {
-        Token *id = match();
-        if (current()->value == "(") return call(id);
-        return new Literal(id);
-    }
-    else if (current()->value == "-") return unary();
-    else if (current()->value == "(") return brackets();
-
-    throw new Eval::Error(current()->pos, current()->value, Eval::Error::Type::UnexpectedToken);
 }
 
 Call *Parser::call(Token *id)
 {
-    vector<Expr *> args;
+    vector<Base *> args;
 
     match("(");
     args.push_back(expr());
@@ -70,10 +58,7 @@ Call *Parser::call(Token *id)
 }
 
 Unary *Parser::unary()
-{
-    match("-");
-    return new Unary(fact());
-}
+{ return new Unary((match("-"), static_cast<Node::Fact *>(parse(3)))); }
 
 Literal *Parser::literal()
 { return new Literal(match()); }
@@ -81,7 +66,7 @@ Literal *Parser::literal()
 Brackets *Parser::brackets()
 {
     match("(");
-    Expr *expr = this->expr();
+    auto expr = this->expr();
     match(")");
 
     return new Brackets(expr);

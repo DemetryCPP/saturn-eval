@@ -70,4 +70,6 @@ public:
     size_t priority;
     Action action;
     char id;
+
+    static const size_t maxPriority = 2;
 };
