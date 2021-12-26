@@ -14,7 +14,6 @@
 using namespace std;
 using EType = Eval::Error::Type;
 
-
 int main(int argc, char const *argv[])
 {
     map<string, double> variables;

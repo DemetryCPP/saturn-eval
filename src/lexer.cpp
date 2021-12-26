@@ -47,13 +47,20 @@ Token *Lexer::number()
     return new Token(pos, buffer, Token::Type::Number);
 }
 
+#define o_case(id, action, priority) case id: return new Operator([](double a, double b) {return action;}, index, match(), priority)
+
 Token *Lexer::single()
 {
     if (contains(enlist("(),"), current()))
         return new Token(index, match(), Token::Type::Special);
     
-    if (contains(enlist("+-*/"), current()))
-        return new Token(index, match(), Token::Type::Operator);
+    switch (current())
+    {
+        o_case('+', a + b, 1);
+        o_case('-', a - b, 1);
+        o_case('*', a * b, 2);
+        o_case('/', a / b, 2);
+    }
 
     throw new Eval::Error(index, current(), Eval::Error::Type::UnexpectedToken);
 }

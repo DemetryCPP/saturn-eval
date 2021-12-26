@@ -22,23 +22,23 @@ namespace Node
     class Term
     {
     public:
-        Term(std::vector<Fact *> nodes, std::vector<std::string> operators)
+        Term(std::vector<Fact *> nodes, std::vector<Operator *> operators)
             : nodes(nodes)
             , operators(operators) {};
 
         std::vector<Fact *> nodes;
-        std::vector<std::string> operators;
+        std::vector<Operator *> operators;
     };
 
     class Expr
     {
     public:
-        Expr(std::vector<Term *> nodes, std::vector<std::string> operators)
+        Expr(std::vector<Term *> nodes, std::vector<Operator *> operators)
             : nodes(nodes)
             , operators(operators) {};
 
         std::vector<Term *> nodes;
-        std::vector<std::string> operators;
+        std::vector<Operator *> operators;
     };
 
     class Call : public Fact

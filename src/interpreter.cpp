@@ -17,12 +17,7 @@ double Interpreter::solveExpr(Node::Expr *expr)
     double result = solveTerm(expr->nodes[0]);
 
     for (size_t i = 0; i < expr->operators.size(); i++)
-    {
-        if (expr->operators[i] == "+")
-            result += solveTerm(expr->nodes[i + 1]);
-        else if (expr->operators[i] == "-")
-            result -= solveTerm(expr->nodes[i + 1]);
-    }
+        result = expr->operators[i]->action(result, solveTerm(expr->nodes[i + 1]));
 
     return result;
 }
@@ -32,12 +27,7 @@ double Interpreter::solveTerm(Node::Term *term)
     double result = solveFact(term->nodes[0]);
 
     for (size_t i = 0; i < term->operators.size(); i++)
-    {
-        if (term->operators[i] == "*")
-            result *= solveFact(term->nodes[i + 1]);
-        else if (term->operators[i] == "/")
-            result /= solveFact(term->nodes[i + 1]);
-    }
+        result = term->operators[i]->action(result, solveFact(term->nodes[i + 1]));
 
     return result;
 }

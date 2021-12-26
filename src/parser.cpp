@@ -11,13 +11,12 @@ Parser::Parser(vector<Token *> tokens)
 Expr *Parser::expr()
 {
     vector<Term *> nodes;
-    vector<string> operators;
+    std::vector<Operator *> operators;
 
     nodes.push_back(term());
-    while (current()->value == "+"
-        || current()->value == "-")
+    while (static_cast<Operator *>(current())->priority == 1)
     {
-        operators.push_back(match()->value);
+        operators.push_back(static_cast<Operator *>(match()));
         nodes.push_back(term());
     }
 
@@ -27,13 +26,12 @@ Expr *Parser::expr()
 Term *Parser::term()
 {
     vector<Fact *> nodes;
-    vector<string> operators;
+    std::vector<Operator *> operators;
 
     nodes.push_back(fact());
-    while (current()->value == "*"
-        || current()->value == "/")
+    while (static_cast<Operator *>(current())->priority == 2)
     {
-        operators.push_back(match()->value);
+        operators.push_back(static_cast<Operator *>(match()));
         nodes.push_back(fact());
     }
 

@@ -55,3 +55,19 @@ public:
     std::string expr;
     std::vector<Token *> tokens;
 };
+
+class Operator : public Token
+{
+public:
+    using Action = double (*)(double a, double b);
+
+    Operator(Action action, size_t pos, char id, size_t priority)
+        : action(action)
+        , id(id)
+        , priority(priority)
+        , Token(pos, id, Token::Type::Operator) {};
+
+    size_t priority;
+    Action action;
+    char id;
+};
