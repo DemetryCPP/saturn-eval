@@ -48,6 +48,14 @@ namespace Eval
     private:
         double solve(Node::Base *, size_t priority);
         
+        double solveNode(Node::Node *, size_t priority);
+        double solveFact(Node::Fact *);
+
+        double solveCall(Node::Call *);
+        double solveUnary(Node::Unary *);
+        double solveLiteral(Node::Literal *);
+        double solveBrackets(Node::Brackets *);
+
         double call(Token *name, std::vector<double> args);
         double get(Token *name);
 
@@ -63,5 +71,5 @@ namespace Eval
         double eval(std::string);
     };
 
-    inline const std::string version = "5.1.2";
+    inline const std::string version = "5.2.0";
 }

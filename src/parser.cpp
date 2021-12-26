@@ -5,39 +5,45 @@
 using namespace std;
 using namespace Node;
 
-Parser::Parser(vector<Token *> tokens)
-    : tokens(tokens) {};
-
 Base *Parser::expr()
 { return parse(1); }
 
 Base *Parser::parse(size_t priority)
 {
-    if (priority <= Operator::maxPriority)
-    {
-        vector<Base *> nodes;
-        vector<Operator *> operators;
+    if (priority == Operator::maxPriority + 1)
+        return fact();
 
+    return node(priority);
+}
+
+Node::Node *Parser::node(size_t priority)
+{
+    vector<Base *> nodes;
+    vector<Operator *> operators;
+
+    nodes.push_back(parse(priority + 1));
+    while (checkOperator(priority))
+    {
+        operators.push_back(static_cast<Operator *>(match()));
         nodes.push_back(parse(priority + 1));
-        while (current()->type == Token::Type::Operator && static_cast<Operator *>(current())->priority == priority)
-        {
-            operators.push_back(static_cast<Operator *>(match()));
-            nodes.push_back(parse(priority + 1));
-        }
-
-        return new Node::Node(nodes, operators);
     }
-    else
+
+    return new Node::Node(nodes, operators);
+}
+
+Node::Fact *Parser::fact()
+{
+    if (current()->type == Token::Type::Number) return literal();
+    if (current()->value == "-") return unary();
+    if (current()->value == "(") return brackets();
+    if (current()->type == Token::Type::Id)
     {
-        if (current()->type == Token::Type::Number) return literal();
-        else if (current()->type == Token::Type::Id)
-        {
-            Token *id = match();
-            if (current()->value == "(") return call(id);
-            return new Literal(id);
-        }
-        else if (current()->value == "-") return unary();
-        else if (current()->value == "(") return brackets();
+        auto id = match();
+
+        if (current()->value == "(") 
+            return call(id);
+
+        return new Literal(id);
     }
 }
 
@@ -46,19 +52,18 @@ Call *Parser::call(Token *id)
     vector<Base *> args;
 
     match("(");
+
     args.push_back(expr());
     while (current()->value == ",")
-    {
-        match();
-        args.push_back(expr());
-    }
+        args.push_back(( match(","), expr() ));
+
     match(")");
 
     return new Call(id, args);
 }
 
 Unary *Parser::unary()
-{ return new Unary((match("-"), static_cast<Node::Fact *>(parse(3)))); }
+{ return new Unary(( match("-"), fact() )); }
 
 Literal *Parser::literal()
 { return new Literal(match()); }
@@ -74,14 +79,18 @@ Brackets *Parser::brackets()
 
 void Parser::match(string value)
 {
-    if (current()->value == value) match();
-    else throw new Eval::Error(current()->pos, current()->value, Eval::Error::Type::UnexpectedToken);
+    if (current()->value == value) 
+        match();
+    
+    error();
 }
 
 Token *Parser::match(Token::Type type)
 {
-    if (current()->type == type) return match();
-    else throw new Eval::Error(current()->pos, current()->value, Eval::Error::Type::UnexpectedToken);
+    if (current()->type == type)
+        return match();
+    
+    error();
 }
 
 Token *Parser::match()
@@ -91,5 +100,15 @@ Token *Parser::current()
 { 
     if (index >= tokens.size())
         return new Token(index);
+
     return tokens[index];
+}
+
+void Parser::error()
+{ throw new Eval::Error(current()->pos, current()->value, Eval::Error::Type::UnexpectedToken); }
+
+bool Parser::checkOperator(size_t priority)
+{ 
+    return current()->type == Token::Type::Operator 
+        && static_cast<Operator *>(current())->priority == priority;
 }

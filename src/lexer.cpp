@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cmath>
+
 #include "lexer.hpp"
 #include "utils.hpp"
 #include "eval.hpp"
@@ -32,13 +34,14 @@ Token *Lexer::next()
 Token *Lexer::number()
 {
     bool isDouble = false;
-    size_t pos = index;
     string buffer;
+    buffer += match();
+    size_t pos = index;
 
     while (isNumber())
     {
         if (current() == '.')
-            if (isDouble) throw new Eval::Error(index, '.', Eval::Error::Type::UnexpectedToken);
+            if (isDouble) error();
             else isDouble = true;
 
         buffer += match(); 
@@ -60,9 +63,14 @@ Token *Lexer::single()
         o_case('-', a - b, 1);
         o_case('*', a * b, 2);
         o_case('/', a / b, 2);
+
+        o_case('\\', floor(a / b), 2);
+        o_case('%', a - b * floor(a / b), 2);
+
+        o_case('^', pow(a, b), 3);
     }
 
-    throw new Eval::Error(index, current(), Eval::Error::Type::UnexpectedToken);
+    error();
 }
 
 Token *Lexer::id()
@@ -119,3 +127,6 @@ void Token::log() const
 
     cout << types[(int)type] << " " << value << endl;
 };
+
+void Lexer::error()
+{ throw new Eval::Error(index, current(), Eval::Error::Type::UnexpectedToken); }

@@ -47,6 +47,8 @@ private:
     bool isText();
     bool isVoid();
 
+    void error();
+
     size_t index = 0;
 
 public:
@@ -71,5 +73,5 @@ public:
     Action action;
     char id;
 
-    static const size_t maxPriority = 2;
+    static const size_t maxPriority = 3;
 };
