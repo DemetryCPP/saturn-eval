@@ -65,5 +65,5 @@ namespace Eval
         double eval(std::string);
     };
 
-    inline const std::string version = "5.1.0";
+    inline const std::string version = "5.1.1";
 }
