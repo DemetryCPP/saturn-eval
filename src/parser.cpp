@@ -31,9 +31,10 @@ Node *Parser::node(size_t priority)
     return new Node(nodes, operators);
 }
 
-Fact *Parser::fact()
+Base *Parser::fact()
 {
-    if (current()->type == Token::Type::Number) return literal();
+    if (current()->type == Token::Type::Number) 
+        return new Literal(match());
     if (current()->value == "-") return unary();
     if (current()->value == "(") return brackets();
     if (current()->type == Token::Type::Id)
@@ -45,6 +46,8 @@ Fact *Parser::fact()
 
         return new Literal(id);
     }
+
+    error();
 }
 
 Call *Parser::call(Token *id)
@@ -65,16 +68,13 @@ Call *Parser::call(Token *id)
 Unary *Parser::unary()
 { return new Unary(( match("-"), fact() )); }
 
-Literal *Parser::literal()
-{ return new Literal(match()); }
-
-Brackets *Parser::brackets()
+Base *Parser::brackets()
 {
     match("(");
     auto expr = this->expr();
     match(")");
 
-    return new Brackets(expr);
+    return expr;
 }
 
 void Parser::match(string value)

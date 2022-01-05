@@ -10,49 +10,41 @@ double Interpreter::eval(string expr)
 {
     auto lexer = new Lexer(expr);
     auto parser = new Parser(lexer->tokens);
-    return solve(parser->expr(), 1);
+    return solve(parser->expr());
 }
 
-double Interpreter::solve(Base *node, size_t priority)
+double Interpreter::solve(Base *node)
 {
-    if (priority == Operator::maxPriority + 1)
-        return solveFact(static_cast<Fact *>(node));
-
-    return solveNode(static_cast<Node *>(node), priority);
+    switch (node->type)
+    {
+        case Node::Type::Literal: return solveLiteral(static_cast<Literal *>(node));
+        case Node::Type::Unary:   return solveUnary  (static_cast<Unary   *>(node));
+        case Node::Type::Node:    return solveNode   (static_cast<Node    *>(node));
+        case Node::Type::Call:    return solveCall   (static_cast<Call    *>(node));
+    }
 }
 
-double Interpreter::solveNode(Node *expr, size_t priority)
+double Interpreter::solveNode(Node *expr)
 {
-    double result = solve(expr->nodes[0], priority + 1);
+    double result = solve(expr->nodes[0]);
 
     for (size_t i = 0; i < expr->operators.size(); i++)
-        result = expr->operators[i]->action(result, solve(expr->nodes[i + 1], priority + 1));
+        result = expr->operators[i]->action(result, solve(expr->nodes[i + 1]));
 
     return result;
-}
-
-double Interpreter::solveFact(Fact *fact)
-{
-    switch (fact->type)
-    {
-        case Fact::Type::Brackets: return solveBrackets(static_cast<Brackets *>(fact));
-        case Fact::Type::Literal:  return solveLiteral (static_cast<Literal  *>(fact));
-        case Fact::Type::Unary:    return solveUnary   (static_cast<Unary    *>(fact));
-        case Fact::Type::Call:     return solveCall    (static_cast<Call     *>(fact));
-    }
 }
 
 double Interpreter::solveCall(Call *call)
 {
     vector<double> args;
     for (auto &&a : call->args)
-        args.push_back(solve(a, 1));
+        args.push_back(solve(a));
 
     return this->call(call->name, args);
 }
 
 double Interpreter::solveUnary(Unary *unary)
-{ return -solveFact(unary->fact); }
+{ return -solve(unary->fact); }
 
 double Interpreter::solveLiteral(Literal *literal)
 {
@@ -61,9 +53,6 @@ double Interpreter::solveLiteral(Literal *literal)
     
     return get(literal->token);
 }
-
-double Interpreter::solveBrackets(Brackets *brackets)
-{ return solve(brackets->expr, 1); }
 
 double Interpreter::call(Token *name, std::vector<double> args)
 {

@@ -15,12 +15,12 @@ namespace Eval::AST
         Base *parse(size_t priority);
 
         Node *node(size_t priority);
-        Fact *fact();
+        Base *fact();
 
-        Brackets *brackets();
-        Literal  *literal();
-        Unary    *unary();
-        Call     *call(Token *id);
+        Literal *literal();
+        Unary   *unary();
+        Call    *call(Token *id);
+        Base    *brackets();
 
         Token *current();
         Token *match(Token::Type);

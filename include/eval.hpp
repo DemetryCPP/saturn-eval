@@ -45,15 +45,13 @@ namespace Eval
     class Interpreter
     {
     private:
-        double solve(AST::Base *, size_t priority);
+        double solve(AST::Base *);
         
-        double solveNode(AST::Node *, size_t priority);
-        double solveFact(AST::Fact *);
+        double solveNode(AST::Node *);
 
         double solveCall(AST::Call *);
         double solveUnary(AST::Unary *);
         double solveLiteral(AST::Literal *);
-        double solveBrackets(AST::Brackets *);
 
         double call(Token *name, std::vector<double> args);
         double get(Token *name);

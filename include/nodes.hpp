@@ -6,18 +6,10 @@ namespace Eval::AST
     struct Base
     {
         enum class Type
-        { Node, Fact } type;
-    };
-
-    struct Fact : Base
-    {
-        enum class Type
-        {
-            Brackets, Call,
-            Literal, Unary,
+        { 
+            Node, Literal,
+            Call, Unary,
         } type;
-
-        Fact(Type type) : type(type), Base{Base::Type::Fact} {}
     };
 
     struct Node : Base
@@ -30,40 +22,31 @@ namespace Eval::AST
         std::vector<Operator *> operators;
     };
 
-    struct Call : Fact
+    struct Call : Base
     {
         Call(Token *name, std::vector<Base *> args)
             : name(name), args(args)
-            , Fact(Fact::Type::Call) {};
+            , Base{Base::Type::Call} {};
 
         Token *name;
         std::vector<Base *> args;
     };
 
-    struct Unary : Fact
+    struct Unary : Base
     {
-        Unary(Fact *fact)
+        Unary(Base *fact)
             : fact(fact)
-            , Fact(Fact::Type::Unary) {};
+            , Base{Base::Type::Unary} {};
 
-        Fact *fact;
+        Base *fact;
     };
 
-    struct Literal : Fact
+    struct Literal : Base
     {
         Literal(Token *token)
             : token(token)
-            , Fact(Fact::Type::Literal) {};
+            , Base{Base::Type::Literal} {};
 
         Token *token;
-    };
-
-    struct Brackets : Fact
-    {
-        Brackets(Base *expr)
-            : expr(expr)
-            , Fact(Fact::Type::Brackets) {};
-
-        Base *expr;
     };
 }
