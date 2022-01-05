@@ -4,6 +4,7 @@
 
 using namespace std;
 using namespace Eval;
+using namespace AST;
 
 double Interpreter::eval(string expr)
 {
@@ -12,15 +13,15 @@ double Interpreter::eval(string expr)
     return solve(parser->expr(), 1);
 }
 
-double Interpreter::solve(Node::Base *node, size_t priority)
+double Interpreter::solve(Base *node, size_t priority)
 {
     if (priority == Operator::maxPriority + 1)
-        return solveFact(static_cast<Node::Fact *>(node));
+        return solveFact(static_cast<Fact *>(node));
 
-    return solveNode(static_cast<Node::Node *>(node), priority);
+    return solveNode(static_cast<Node *>(node), priority);
 }
 
-double Interpreter::solveNode(Node::Node *expr, size_t priority)
+double Interpreter::solveNode(Node *expr, size_t priority)
 {
     double result = solve(expr->nodes[0], priority + 1);
 
@@ -30,18 +31,18 @@ double Interpreter::solveNode(Node::Node *expr, size_t priority)
     return result;
 }
 
-double Interpreter::solveFact(Node::Fact *fact)
+double Interpreter::solveFact(Fact *fact)
 {
     switch (fact->type)
     {
-        case Node::Fact::Type::Call: return solveCall(static_cast<Node::Call *>(fact));
-        case Node::Fact::Type::Unary: return solveUnary(static_cast<Node::Unary *>(fact));
-        case Node::Fact::Type::Literal: return solveLiteral(static_cast<Node::Literal *>(fact));
-        case Node::Fact::Type::Brackets: return solveBrackets(static_cast<Node::Brackets *>(fact));
+        case Fact::Type::Brackets: return solveBrackets(static_cast<Brackets *>(fact));
+        case Fact::Type::Literal:  return solveLiteral (static_cast<Literal  *>(fact));
+        case Fact::Type::Unary:    return solveUnary   (static_cast<Unary    *>(fact));
+        case Fact::Type::Call:     return solveCall    (static_cast<Call     *>(fact));
     }
 }
 
-double Interpreter::solveCall(Node::Call *call)
+double Interpreter::solveCall(Call *call)
 {
     vector<double> args;
     for (auto &&a : call->args)
@@ -50,10 +51,10 @@ double Interpreter::solveCall(Node::Call *call)
     return this->call(call->name, args);
 }
 
-double Interpreter::solveUnary(Node::Unary *unary)
+double Interpreter::solveUnary(Unary *unary)
 { return -solveFact(unary->fact); }
 
-double Interpreter::solveLiteral(Node::Literal *literal)
+double Interpreter::solveLiteral(Literal *literal)
 {
     if (literal->token->type == Token::Type::Number) 
         return stod(literal->token->value);
@@ -61,7 +62,7 @@ double Interpreter::solveLiteral(Node::Literal *literal)
     return get(literal->token);
 }
 
-double Interpreter::solveBrackets(Node::Brackets *brackets)
+double Interpreter::solveBrackets(Brackets *brackets)
 { return solve(brackets->expr, 1); }
 
 double Interpreter::call(Token *name, std::vector<double> args)

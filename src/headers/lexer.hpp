@@ -31,6 +31,12 @@ public:
 
 class Lexer
 {
+public:
+    Lexer(std::string expr);
+
+    std::string expr;
+    std::vector<Token *> tokens;
+
 private:
     Token *next();
 
@@ -50,12 +56,6 @@ private:
     void error();
 
     size_t index = 0;
-
-public:
-    Lexer(std::string expr);
-
-    std::string expr;
-    std::vector<Token *> tokens;
 };
 
 class Operator : public Token

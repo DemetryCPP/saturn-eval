@@ -1,33 +1,35 @@
 #include "nodes.hpp"
 #pragma once
 
-class Parser
+namespace Eval::AST
 {
-private:
-    Node::Base *parse(size_t priority);
+    class Parser
+    {
+    public:
+        Parser(std::vector<Token *> tokens) : tokens(tokens) {};
 
-    Node::Node *node(size_t priority);
-    Node::Fact *fact();
+        Node::Base *expr();
+        std::vector<Token *> tokens;
 
-    Node::Brackets *brackets();
-    Node::Literal  *literal();
-    Node::Unary    *unary();
-    Node::Call     *call(Token *id);
+    private:
+        Base *parse(size_t priority);
 
-    Token *current();
-    Token *match(Token::Type);
-    Token *match();
-    void match(std::string);
+        Node *node(size_t priority);
+        Fact *fact();
 
-    bool checkOperator(size_t priority);
-    void error();
+        Brackets *brackets();
+        Literal  *literal();
+        Unary    *unary();
+        Call     *call(Token *id);
 
-    size_t index = 0;
+        Token *current();
+        Token *match(Token::Type);
+        Token *match();
+        void match(std::string);
 
+        bool checkOperator(size_t priority);
+        void error();
 
-public:
-    Parser(std::vector<Token *> tokens) : tokens(tokens) {};
-
-    Node::Base *expr();
-    std::vector<Token *> tokens;
-};
+        size_t index = 0;
+    };
+}

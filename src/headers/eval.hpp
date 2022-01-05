@@ -27,7 +27,6 @@ namespace Eval
         std::string token;
         size_t pos;
         Type type;
-
     };
 
     class Function
@@ -46,15 +45,15 @@ namespace Eval
     class Interpreter
     {
     private:
-        double solve(Node::Base *, size_t priority);
+        double solve(AST::Base *, size_t priority);
         
-        double solveNode(Node::Node *, size_t priority);
-        double solveFact(Node::Fact *);
+        double solveNode(AST::Node *, size_t priority);
+        double solveFact(AST::Fact *);
 
-        double solveCall(Node::Call *);
-        double solveUnary(Node::Unary *);
-        double solveLiteral(Node::Literal *);
-        double solveBrackets(Node::Brackets *);
+        double solveCall(AST::Call *);
+        double solveUnary(AST::Unary *);
+        double solveLiteral(AST::Literal *);
+        double solveBrackets(AST::Brackets *);
 
         double call(Token *name, std::vector<double> args);
         double get(Token *name);

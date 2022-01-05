@@ -3,7 +3,7 @@
 #include "eval.hpp"
 
 using namespace std;
-using namespace Node;
+using namespace Eval::AST;
 
 Base *Parser::expr()
 { return parse(1); }
@@ -16,7 +16,7 @@ Base *Parser::parse(size_t priority)
     return node(priority);
 }
 
-Node::Node *Parser::node(size_t priority)
+Node *Parser::node(size_t priority)
 {
     vector<Base *> nodes;
     vector<Operator *> operators;
@@ -28,10 +28,10 @@ Node::Node *Parser::node(size_t priority)
         nodes.push_back(parse(priority + 1));
     }
 
-    return new Node::Node(nodes, operators);
+    return new Node(nodes, operators);
 }
 
-Node::Fact *Parser::fact()
+Fact *Parser::fact()
 {
     if (current()->type == Token::Type::Number) return literal();
     if (current()->value == "-") return unary();
@@ -79,8 +79,11 @@ Brackets *Parser::brackets()
 
 void Parser::match(string value)
 {
-    if (current()->value == value) 
+    if (current()->value == value)
+    {
         match();
+        return;
+    }
     
     error();
 }

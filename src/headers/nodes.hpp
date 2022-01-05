@@ -1,62 +1,47 @@
 #include "lexer.hpp"
 #pragma once
 
-namespace Node
+namespace Eval::AST
 {
-    class Base
+    struct Base
     {
-    public:
         enum class Type
-        { Node, Fact };
-        
-        Base(Type type) : type(type) {};
-
-        Type type;
+        { Node, Fact } type;
     };
 
-    class Fact : public Base
+    struct Fact : Base
     {
-    public:
         enum class Type
         {
             Brackets, Call,
             Literal, Unary,
-        };
+        } type;
 
-        Fact(Type type)
-            : type(type)
-            , Base(Base::Type::Fact) {};
-
-        Type type;
+        Fact(Type type) : type(type), Base{Base::Type::Fact} {}
     };
 
-    class Node : public Base
+    struct Node : Base
     {
-    public:
         Node(std::vector<Base *> nodes, std::vector<Operator *> operators)
-            : nodes(nodes)
-            , operators(operators)
-            , Base(Base::Type::Node) {};
+            : nodes(nodes), operators(operators)
+            , Base{Base::Type::Node} {};
 
         std::vector<Base *> nodes;
         std::vector<Operator *> operators;
     };
 
-    class Call : public Fact
+    struct Call : Fact
     {
-    public:
         Call(Token *name, std::vector<Base *> args)
-            : name(name)
-            , args(args)
+            : name(name), args(args)
             , Fact(Fact::Type::Call) {};
 
         Token *name;
         std::vector<Base *> args;
     };
 
-    class Unary : public Fact
+    struct Unary : Fact
     {
-    public:
         Unary(Fact *fact)
             : fact(fact)
             , Fact(Fact::Type::Unary) {};
@@ -64,9 +49,8 @@ namespace Node
         Fact *fact;
     };
 
-    class Literal : public Fact
+    struct Literal : Fact
     {
-    public:
         Literal(Token *token)
             : token(token)
             , Fact(Fact::Type::Literal) {};
@@ -74,9 +58,8 @@ namespace Node
         Token *token;
     };
 
-    class Brackets : public Fact
+    struct Brackets : Fact
     {
-    public:
         Brackets(Base *expr)
             : expr(expr)
             , Fact(Fact::Type::Brackets) {};
