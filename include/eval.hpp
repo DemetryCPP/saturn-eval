@@ -5,6 +5,8 @@
 
 namespace Eval
 {
+    using namespace std;
+
     class Error
     {
     public:
@@ -18,13 +20,13 @@ namespace Eval
         };
 
         Error(size_t pos, char token, Type type)
-            : Error(pos, std::string(1, token), type) {};
-        Error(size_t pos, std::string token, Type type)
+            : Error(pos, string(1, token), type) {};
+        Error(size_t pos, string token, Type type)
             : pos(pos)
             , token(token)
             , type(type) {};
 
-        std::string token;
+        string token;
         size_t pos;
         Type type;
     };
@@ -32,7 +34,7 @@ namespace Eval
     class Function
     {
     public:
-        using Action = double (*)(std::vector<double>);
+        using Action = double (*)(vector<double>);
 
         Function(Action action, size_t argsCount)
             : action(action)
@@ -48,25 +50,24 @@ namespace Eval
         double solve(AST::Base *);
         
         double solveNode(AST::Node *);
-
         double solveCall(AST::Call *);
         double solveUnary(AST::Unary *);
         double solveLiteral(AST::Literal *);
 
-        double call(Token *name, std::vector<double> args);
+        double call(Token *name, vector<double> args);
         double get(Token *name);
 
     public:
-        Interpreter(std::map<std::string, double> variables,
-                    std::map<std::string, Function *> functions)
+        Interpreter(map<string, double> variables,
+                    map<string, Function *> functions)
             : variables(variables)
             , functions(functions) {};
 
-        std::map<std::string, double> variables;
-        std::map<std::string, Function *> functions;
+        map<string, double> variables;
+        map<string, Function *> functions;
 
-        double eval(std::string);
+        double eval(string);
     };
 
-    inline const std::string version = "5.2.0";
+    inline const string version = "5.2.0";
 }

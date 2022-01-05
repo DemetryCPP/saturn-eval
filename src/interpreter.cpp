@@ -6,6 +6,11 @@ using namespace std;
 using namespace Eval;
 using namespace AST;
 
+using enum Error::Type;
+
+using T = Token::Type;
+using E = AST::Base::Type;
+
 double Interpreter::eval(string expr)
 {
     auto lexer = new Lexer(expr);
@@ -17,10 +22,10 @@ double Interpreter::solve(Base *node)
 {
     switch (node->type)
     {
-        case Node::Type::Literal: return solveLiteral(static_cast<Literal *>(node));
-        case Node::Type::Unary:   return solveUnary  (static_cast<Unary   *>(node));
-        case Node::Type::Node:    return solveNode   (static_cast<Node    *>(node));
-        case Node::Type::Call:    return solveCall   (static_cast<Call    *>(node));
+        case E::Literal: return solveLiteral(static_cast<Literal *>(node));
+        case E::Unary:   return solveUnary  (static_cast<Unary   *>(node));
+        case E::Node:    return solveNode   (static_cast<Node    *>(node));
+        case E::Call:    return solveCall   (static_cast<Call    *>(node));
     }
 }
 
@@ -48,32 +53,29 @@ double Interpreter::solveUnary(Unary *unary)
 
 double Interpreter::solveLiteral(Literal *literal)
 {
-    if (literal->token->type == Token::Type::Number) 
+    if (literal->token->type == T::Number)
         return stod(literal->token->value);
     
     return get(literal->token);
 }
 
-double Interpreter::call(Token *name, std::vector<double> args)
+double Interpreter::call(Token *name, vector<double> args)
 {
-    if (!contains<std::string, Function *>(functions, name->value))
-        throw new Error(name->pos, name->value, Eval::Error::Type::IsNotAFunction);
+    if (!contains<string, Function *>(functions, name->value))
+        throw new Error(name->pos, name->value, IsNotAFunction);
 
     auto function = functions[name->value];
 
-    if (args.size() > function->argsCount)
-        throw new Error(name->pos, name->value, Eval::Error::Type::TooManyArgs);
-
-    if (args.size() < function->argsCount)
-        throw new Error(name->pos, name->value, Eval::Error::Type::TooFewArgs);
+    if (args.size() > function->argsCount) throw new Error(name->pos, name->value, TooManyArgs);
+    if (args.size() < function->argsCount) throw new Error(name->pos, name->value, TooFewArgs);
 
     return function->action(args);
 }
 
 double Interpreter::get(Token *name)
 {
-    if (!contains<std::string, double>(variables, name->value))
-        throw new Error(name->pos, name->value, Error::Type::IsNotDefined);
+    if (!contains<string, double>(variables, name->value))
+        throw new Error(name->pos, name->value, IsNotDefined);
 
     return variables[name->value];
 }

@@ -50,7 +50,7 @@ Token *Lexer::number()
     return new Token(pos, buffer, Token::Type::Number);
 }
 
-#define o_case(id, action, priority) case id: return new Operator([](double a, double b) {return action;}, index, match(), priority)
+#define o_case(id, action, priority) case id: return new OperatorToken([](double a, double b) {return action;}, index, match(), priority)
 
 Token *Lexer::single()
 {
@@ -86,10 +86,7 @@ Token *Lexer::id()
 }
 
 void Lexer::skipSpaces()
-{
-    while (isVoid())
-        match();
-}
+{ while (isVoid()) match(); }
 
 char Lexer::current()
 { return expr[index]; }
@@ -114,19 +111,6 @@ bool Lexer::isText()
 
 bool Lexer::isVoid()
 { return current() <= ' '; }
-
-void Token::log() const
-{
-    string types[] = { 
-        "[ Operator ]", 
-        "[ SpecialC ]",
-        "[  Number  ]",
-        "[   Null   ]",
-        "[    Id    ]" 
-    };
-
-    cout << types[(int)type] << " " << value << endl;
-};
 
 void Lexer::error()
 { throw new Eval::Error(index, current(), Eval::Error::Type::UnexpectedToken); }

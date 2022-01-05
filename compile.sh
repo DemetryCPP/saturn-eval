@@ -1,7 +1,7 @@
 #!/bin/bash
 
-CC="g++"
-FLAGS="-Iinclude/ -o repl -std=c++17"
+CC="g++-11"
+FLAGS="-Iinclude/ -o repl -std=c++2a"
 FILES="src/lexer.cpp
        src/parser.cpp
        src/interpreter.cpp"

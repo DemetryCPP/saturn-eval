@@ -27,6 +27,8 @@ public:
     Type type;
 
     void log() const;
+
+    friend bool operator==(Token *, Type);
 };
 
 class Lexer
@@ -58,12 +60,12 @@ private:
     size_t index = 0;
 };
 
-class Operator : public Token
+class OperatorToken : public Token
 {
 public:
     using Action = double (*)(double a, double b);
 
-    Operator(Action action, size_t pos, char id, size_t priority)
+    OperatorToken(Action action, size_t pos, char id, size_t priority)
         : action(action)
         , id(id)
         , priority(priority)

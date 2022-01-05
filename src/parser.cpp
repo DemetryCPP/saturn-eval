@@ -5,12 +5,15 @@
 using namespace std;
 using namespace Eval::AST;
 
+using enum Token::Type;
+using enum Eval::Error::Type;
+
 Base *Parser::expr()
 { return parse(1); }
 
 Base *Parser::parse(size_t priority)
 {
-    if (priority == Operator::maxPriority + 1)
+    if (priority == OperatorToken::maxPriority + 1)
         return fact();
 
     return node(priority);
@@ -19,12 +22,12 @@ Base *Parser::parse(size_t priority)
 Node *Parser::node(size_t priority)
 {
     vector<Base *> nodes;
-    vector<Operator *> operators;
+    vector<OperatorToken *> operators;
 
     nodes.push_back(parse(priority + 1));
     while (checkOperator(priority))
     {
-        operators.push_back(static_cast<Operator *>(match()));
+        operators.push_back(static_cast<OperatorToken *>(match()));
         nodes.push_back(parse(priority + 1));
     }
 
@@ -33,11 +36,11 @@ Node *Parser::node(size_t priority)
 
 Base *Parser::fact()
 {
-    if (current()->type == Token::Type::Number) 
+    if (current()->type == Number) 
         return new Literal(match());
     if (current()->value == "-") return unary();
     if (current()->value == "(") return brackets();
-    if (current()->type == Token::Type::Id)
+    if (current()->type == Id)
     {
         auto id = match();
 
@@ -108,10 +111,10 @@ Token *Parser::current()
 }
 
 void Parser::error()
-{ throw new Eval::Error(current()->pos, current()->value, Eval::Error::Type::UnexpectedToken); }
+{ throw new Eval::Error(current()->pos, current()->value, UnexpectedToken); }
 
 bool Parser::checkOperator(size_t priority)
 { 
-    return current()->type == Token::Type::Operator 
-        && static_cast<Operator *>(current())->priority == priority;
+    return current()->type == Operator 
+        && static_cast<OperatorToken *>(current())->priority == priority;
 }

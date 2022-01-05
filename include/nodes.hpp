@@ -3,6 +3,8 @@
 
 namespace Eval::AST
 {
+    using namespace std;
+
     struct Base
     {
         enum class Type
@@ -14,28 +16,27 @@ namespace Eval::AST
 
     struct Node : Base
     {
-        Node(std::vector<Base *> nodes, std::vector<Operator *> operators)
+        Node(vector<Base *> nodes, vector<OperatorToken *> operators)
             : nodes(nodes), operators(operators)
             , Base{Base::Type::Node} {};
 
-        std::vector<Base *> nodes;
-        std::vector<Operator *> operators;
+        vector<Base *> nodes;
+        vector<OperatorToken *> operators;
     };
 
     struct Call : Base
     {
-        Call(Token *name, std::vector<Base *> args)
+        Call(Token *name, vector<Base *> args)
             : name(name), args(args)
             , Base{Base::Type::Call} {};
 
         Token *name;
-        std::vector<Base *> args;
+        vector<Base *> args;
     };
 
     struct Unary : Base
     {
-        Unary(Base *fact)
-            : fact(fact)
+        Unary(Base *fact) : fact(fact)
             , Base{Base::Type::Unary} {};
 
         Base *fact;
