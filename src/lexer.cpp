@@ -6,11 +6,12 @@
 #include "eval.hpp"
 
 using namespace std;
+using namespace Token::Type;
 
 Lexer::Lexer(string expr) : expr(expr)
 {
     Token *newToken = next();
-    while (newToken->type != Token::Type::Null)
+    while (newToken != Null)
     {
         tokens.push_back(newToken);
         // newToken->log();
@@ -47,7 +48,7 @@ Token *Lexer::number()
         buffer += match(); 
     }
 
-    return new Token(pos, buffer, Token::Type::Number);
+    return new Token(pos, buffer, Number);
 }
 
 #define o_case(id, action, priority) case id: return new OperatorToken([](double a, double b) {return action;}, index, match(), priority)
@@ -55,7 +56,7 @@ Token *Lexer::number()
 Token *Lexer::single()
 {
     if (contains(enlist("(),"), current()))
-        return new Token(index, match(), Token::Type::Special);
+        return new Token(index, match(), Special);
     
     switch (current())
     {
@@ -82,7 +83,7 @@ Token *Lexer::id()
     while (isText())
         buffer += match();
 
-    return new Token(pos, buffer, Token::Type::Id);
+    return new Token(pos, buffer, Id);
 }
 
 void Lexer::skipSpaces()

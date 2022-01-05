@@ -12,3 +12,6 @@ void Token::log() const
 
     cout << types[(int)type] << " " << value << endl;
 };
+
+friend operator==(Token *token, Token::Type type)
+{ return token->type == type; }

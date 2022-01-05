@@ -36,11 +36,13 @@ Node *Parser::node(size_t priority)
 
 Base *Parser::fact()
 {
-    if (current()->type == Number) 
+    if (current() == Number) 
         return new Literal(match());
+
     if (current()->value == "-") return unary();
     if (current()->value == "(") return brackets();
-    if (current()->type == Id)
+
+    if (current() == Id)
     {
         auto id = match();
 
@@ -93,7 +95,7 @@ void Parser::match(string value)
 
 Token *Parser::match(Token::Type type)
 {
-    if (current()->type == type)
+    if (current() == type)
         return match();
     
     error();
@@ -115,6 +117,6 @@ void Parser::error()
 
 bool Parser::checkOperator(size_t priority)
 { 
-    return current()->type == Operator 
+    return current() == Operator 
         && static_cast<OperatorToken *>(current())->priority == priority;
 }
