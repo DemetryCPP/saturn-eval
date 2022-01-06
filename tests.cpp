@@ -27,7 +27,7 @@ void assertEqual(Interpreter *i, string expr, double validvalue)
 {
     auto result = i->eval(expr);
     if (result == validvalue)
-        succes();
+        success();
     else
         cout << COLOR_RED "failed " COLOR_RESET + expr + ": expected " << validvalue << ", but got " << result << endl;
 }
