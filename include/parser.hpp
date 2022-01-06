@@ -28,7 +28,7 @@ namespace Eval::AST
         void match(std::string);
 
         bool checkOperator(size_t priority);
-        void error();
+        [[noreturn]] void error();
 
         size_t index = 0;
     };

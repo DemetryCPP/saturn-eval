@@ -26,6 +26,7 @@ double Interpreter::solve(Base *node)
         case E::Unary:   return solveUnary  (static_cast<Unary   *>(node));
         case E::Node:    return solveNode   (static_cast<Node    *>(node));
         case E::Call:    return solveCall   (static_cast<Call    *>(node));
+        default: return 0;
     }
 }
 
