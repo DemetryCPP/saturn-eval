@@ -87,7 +87,7 @@ Token *Lexer::id()
 }
 
 void Lexer::skipSpaces()
-{ while (isVoid()) match(); }
+{ while (current() <= ' ' && index < expr.length()) match(); }
 
 char Lexer::current()
 { return expr[index]; }
@@ -96,22 +96,13 @@ char Lexer::match()
 { return expr[index++]; }
 
 bool Lexer::isNumber()
-{
-    return current() >= '0'
-        && current() <= '9'
-        || current() == '.';
-}
+{ return isdigit(current()) || current() == '.'; }
 
 bool Lexer::isText()
 {
-    return current() >= 'a'
-        && current() <= 'z'
-        || current() >= 'A'
-        && current() <= 'Z';
+    return 'a' <= current() && current() <= 'z'
+        || 'A' <= current() && current() <= 'Z';
 }
 
-bool Lexer::isVoid()
-{ return current() <= ' '; }
-
-void Lexer::error()
+[[noreturn]] void Lexer::error()
 { throw new Eval::Error(index, current(), Eval::Error::Type::UnexpectedToken); }

@@ -50,6 +50,8 @@ int main(int argc, char const *argv[])
         if (input == ".exit")
             break;
 
+        input += " ";
+
         try
         { cout << to_string(interpreter->eval(input)) << endl; }
         catch (Error *e)

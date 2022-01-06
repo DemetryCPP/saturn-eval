@@ -14,7 +14,7 @@ public:
         Id,
     };
 
-    Token(size_t pos) : Token(pos, "__null__", Type::Null) {};
+    Token(size_t pos) : Token(pos, "", Type::Null) {};
     Token(size_t pos, char value, Type type) 
         : Token(pos, std::string(1, value), type) {};
     Token(size_t pos, std::string value, Type type)
@@ -53,9 +53,8 @@ private:
 
     bool isNumber();
     bool isText();
-    bool isVoid();
 
-    void error();
+    [[noreturn]] void error();
 
     size_t index = 0;
 };
