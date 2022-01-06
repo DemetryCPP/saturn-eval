@@ -25,3 +25,16 @@ map<string, double> variables;
 auto interpreter = new Eval::Interpreter(variables, functions);
 ```
 4. Usage: `interpreter.eval(expression)`.
+
+# Catch errors
+
+`Eval::Interpreter::eval` throws `Eval::Error`.
+He has five types (type specified in `Eval::Error::type`):
+
+- `UnexpectedToken`: unexpected token, he specified in field `token`.
+- `IsNotAFunction`: trying to call function, whose name not know to the interpreter (her name specified in field `token`).
+- `IsNotDefined`: trying to get value of variable, whose name not know to the interpreter (her name specified in field `token`).
+- `TooManyArgs`: trying to call function, with extra arguments (func name specified in field `token`).
+- `TooFewArgs`: trying to call function without required amount of arguments (func name specified in field `token`).
+
+Also `Eval::Error` contains index on which the error occured.
