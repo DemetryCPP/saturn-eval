@@ -7,17 +7,15 @@
 #define function(name, argcount, code) functions.insert({ name, new Eval::Function([](std::vector<double> args) { return code ; }, argcount) })
 
 #define COLOR_RED     "\x1b[31m"
-#define COLOR_MAGENTA "\x1b[35m"
 #define COLOR_RESET   "\x1b[0m"
 #define COLOR_BRIGHT  "\x1b[1m"
 
-using namespace std;
-using EType = Eval::Error::Type;
+using namespace Eval;
 
 int main(int argc, char const *argv[])
 {
     map<string, double> variables;
-    map<string, Eval::Function *> functions; 
+    map<string, Function *> functions; 
 
     variables.insert({ "pi", M_PI });
     variables.insert({ "e",  M_E  });
@@ -38,10 +36,10 @@ int main(int argc, char const *argv[])
     function("lg",    1, log10(args[0]));
     function("sqrt",  1, sqrt(args[0]));
 
-    Eval::Interpreter *interpreter = new Eval::Interpreter(variables, functions);
+    auto interpreter = new Interpreter(variables, functions);
     string input;
 
-    cout << "Welcome to the SaturnEval v" + Eval::version + "." << endl
+    cout << "Welcome to the SaturnEval v" + version + "." << endl
          << "Write .exit to exit." << endl;
 
     while (true)
@@ -54,24 +52,10 @@ int main(int argc, char const *argv[])
 
         try
         { cout << to_string(interpreter->eval(input)) << endl; }
-        catch (Eval::Error *e)
+        catch (Error *e)
         {
-            cout << COLOR_BRIGHT COLOR_MAGENTA + string(e->pos + 1, ' ') << '^' << string(e->token.length() - 1, '~') + COLOR_RESET << endl;
-
-            string error,
-                   prefix = COLOR_BRIGHT COLOR_RED "Error at " + to_string(e->pos) + ": " COLOR_RESET,
-                   token = "\"" + e->token + "\"";
-
-            switch (e->type)
-            {
-                case EType::UnexpectedToken: error = "Unexpected token " + token;  break;
-                case EType::IsNotAFunction:  error = token + " is not a function"; break;
-                case EType::IsNotDefined:    error = token + " is not defined";    break;
-                case EType::TooManyArgs:     error = "too many args for " + token; break;
-                case EType::TooFewArgs:      error = "too few args for " + token;  break;
-            }
-
-            cout << prefix << error << endl;
+            cout << COLOR_BRIGHT COLOR_RED + string(e->pos + 1, ' ') << '^' << string(e->token.length() - 1, '~') + COLOR_RESET << endl;
+            cout << e->format() << endl;
         }
     }
 

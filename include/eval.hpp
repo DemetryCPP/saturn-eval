@@ -29,6 +29,8 @@ namespace Eval
         string token;
         size_t pos;
         Type type;
+
+        string format();
     };
 
     class Function

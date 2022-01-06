@@ -6,7 +6,7 @@
 #include "eval.hpp"
 
 using namespace std;
-using namespace Token::Type;
+using enum Token::Type;
 
 Lexer::Lexer(string expr) : expr(expr)
 {
