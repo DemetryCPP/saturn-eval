@@ -9,17 +9,19 @@ chmod +x compile.sh
 ./compile.sh REPL.cpp
 ```
 
+warning: requires C++20. (use 11 version of g++ or 13 of clang).
+
 # Usage
 1. include eval.hpp
 2. Create an environment:
 ```cpp
-map<string, Function *> functions;
+map<string, Eval::Function *> functions;
 map<string, double> variables;
 // ...
-Eval::Environment *env = new Eval::Environment(functions, variables);
+
 ```
 3. Create an instance of the interpreter:
 ```cpp
-Eval::Interpreter *interpreter = new Eval::Interpreter(env);
+auto interpreter = new Eval::Interpreter(variables, functions);
 ```
 4. Usage: `interpreter.eval(expression)`.
